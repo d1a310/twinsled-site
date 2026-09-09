@@ -1,0 +1,1614 @@
+import { useEffect, useMemo, useRef, useState } from 'react'
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  ArrowLeft,
+  ArrowRight,
+  Bold,
+  Check,
+  Image as ImageIcon,
+  Italic,
+  LayoutTemplate,
+  Maximize2,
+  MessageCircle,
+  Minus,
+  Move,
+  Palette,
+  Plus,
+  Redo2,
+  RotateCcw,
+  RotateCw,
+  Ruler,
+  Save,
+  Send,
+  ShoppingCart,
+  SlidersHorizontal,
+  Sparkles,
+  Trash2,
+  Type,
+  Undo2,
+  Upload,
+  X,
+} from 'lucide-react'
+
+import { useCart } from '../../context/CartContext'
+import './Designer.css'
+
+const STORAGE_KEY = 'neonlab-saved-designs'
+
+const neonColors = [
+  { name: 'Beyaz', value: '#ffffff', glow: '255,255,255' },
+  { name: 'Günışığı', value: '#fff3b0', glow: '255,243,176' },
+  { name: 'Amber', value: '#ffb000', glow: '255,176,0' },
+  { name: 'Kırmızı', value: '#ff304f', glow: '255,48,79' },
+  { name: 'Pembe', value: '#ff4fd8', glow: '255,79,216' },
+  { name: 'Mor', value: '#b95cff', glow: '185,92,255' },
+  { name: 'Mavi', value: '#2997ff', glow: '41,151,255' },
+  { name: 'Buz Mavisi', value: '#7fe9ff', glow: '127,233,255' },
+  { name: 'Yeşil', value: '#4cff8f', glow: '76,255,143' },
+]
+
+// Kullanıcının istediği 40 isim korunmuştur.
+// İsimler vitrin adıdır; family alanı CSS/Google Fonts tarafında en yakın görsel karşılıktır.
+const fonts = [
+  { name: 'Alexa', family: 'Allura' },
+  { name: 'Amanda', family: 'Alex Brush' },
+  { name: 'Amsterdam', family: 'Parisienne' },
+  { name: 'Austin', family: 'Great Vibes' },
+  { name: 'Avante', family: 'Josefin Sans' },
+  { name: 'Barcelona', family: 'Lobster' },
+  { name: 'Bayview', family: 'Montserrat' },
+  { name: 'Beachfront', family: 'Sacramento' },
+  { name: 'Bellview', family: 'Playfair Display' },
+  { name: 'Buttercup', family: 'Yellowtail' },
+  { name: 'Chelsea', family: 'Ballet' },
+  { name: 'ClassicType', family: 'Libre Baskerville' },
+  { name: 'Freehand', family: 'Dancing Script' },
+  { name: 'Freespirit', family: 'Italianno' },
+  { name: 'Greenworld', family: 'Kaushan Script' },
+  { name: 'LoveNeon', family: 'Pacifico' },
+  { name: 'LoveNote', family: 'Mrs Saint Delafield' },
+  { name: 'Marquee', family: 'Bebas Neue' },
+  { name: 'Mayfair', family: 'Cormorant Garamond' },
+  { name: 'Melbourne', family: 'Abril Fatface' },
+  { name: 'Monaco', family: 'Space Mono' },
+  { name: 'NeonGlow', family: 'Sora' },
+  { name: 'NeonLite', family: 'Poppins' },
+  { name: 'Neonscript', family: 'Qwitcher Grypen' },
+  { name: 'Neontrace', family: 'Tangerine' },
+  { name: 'NeoTokyo', family: 'Space Grotesk' },
+  { name: 'Nevada', family: 'Oswald' },
+  { name: 'NewCursive', family: 'Allura' },
+  { name: 'Northshore', family: 'Parisienne' },
+  { name: 'Photogenic', family: 'Arizonia' },
+  { name: 'Rocket', family: 'Outfit' },
+  { name: 'Royalty', family: 'Cinzel' },
+  { name: 'SciFi', family: 'Space Grotesk' },
+  { name: 'Signature', family: 'Alex Brush' },
+  { name: 'Sorrento', family: 'DM Serif Display' },
+  { name: 'Typewriter', family: 'Space Mono' },
+  { name: 'Venetian', family: 'Bodoni Moda' },
+  { name: 'Vintage', family: 'Cookie' },
+  { name: 'Waikiki', family: 'Quicksand' },
+  { name: 'WildScript', family: 'Yellowtail' },
+]
+
+const fontImports = `https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alex+Brush&family=Allura&family=Arizonia&family=Ballet&family=Bebas+Neue&family=Bodoni+Moda:opsz@6..96&family=Cookie&family=Cinzel:wght@400..800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Dancing+Script:wght@400..700&family=DM+Serif+Display&family=Great+Vibes&family=Italianno&family=Josefin+Sans:wght@300;400;500;600;700&family=Kaushan+Script&family=Libre+Baskerville:wght@400;700&family=Lobster&family=Mrs+Saint+Delafield&family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Pacifico&family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&family=Qwitcher+Grypen:wght@400;700&family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Sacramento&family=Sora:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Tangerine:wght@400;700&family=Yellowtail&display=swap`
+
+const environments = [
+  {
+    id: 'white',
+    name: 'Beyaz Duvar',
+    type: 'MODERN',
+    image: 'https://images.pexels.com/photos/7794388/pexels-photo-7794388.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'beige',
+    name: 'Bej Duvar',
+    type: 'SOFT',
+    image: 'https://images.pexels.com/photos/7911701/pexels-photo-7911701.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'blue',
+    name: 'Mavi Duvar',
+    type: 'COLOR',
+    image: 'https://images.pexels.com/photos/12131679/pexels-photo-12131679.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'dark',
+    name: 'Koyu Duvar',
+    type: 'DARK',
+    image: 'https://images.pexels.com/photos/18550359/pexels-photo-18550359.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'concrete',
+    name: 'Beton Duvar',
+    type: 'INDUSTRIAL',
+    image: 'https://images.pexels.com/photos/13778388/pexels-photo-13778388.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'brick',
+    name: 'Tuğla Duvar',
+    type: 'LOFT',
+    image: 'https://images.pexels.com/photos/11363697/pexels-photo-11363697.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'gray',
+    name: 'Gri Duvar',
+    type: 'MINIMAL',
+    image: 'https://images.pexels.com/photos/3721374/pexels-photo-3721374.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+  {
+    id: 'soft-blue',
+    name: 'Soft Mavi',
+    type: 'SOFT',
+    image: 'https://images.pexels.com/photos/6102801/pexels-photo-6102801.jpeg?auto=compress&cs=tinysrgb&w=2400',
+  },
+]
+
+const backgrounds = [
+  { id: 'none', name: 'Zemin Yok', short: 'Yok', multiplier: 1, className: 'none' },
+  { id: 'clear', name: 'Şeffaf Pleksi', short: 'Şeffaf', multiplier: 1.1, className: 'clear' },
+  { id: 'black', name: 'Siyah Pleksi', short: 'Siyah', multiplier: 1.16, className: 'black' },
+  { id: 'white', name: 'Beyaz Pleksi', short: 'Beyaz', multiplier: 1.12, className: 'white' },
+  { id: 'wood', name: 'Ahşap', short: 'Ahşap', multiplier: 1.2, className: 'wood' },
+  { id: 'mirror', name: 'Ayna', short: 'Ayna', multiplier: 1.3, className: 'mirror' },
+  { id: 'circle', name: 'Daire', short: 'Daire', multiplier: 1.24, className: 'circle' },
+  { id: 'oval', name: 'Oval', short: 'Oval', multiplier: 1.25, className: 'oval' },
+  { id: 'arch', name: 'Kemer', short: 'Kemer', multiplier: 1.27, className: 'arch' },
+  { id: 'capsule', name: 'Kapsül', short: 'Kapsül', multiplier: 1.26, className: 'capsule' },
+  { id: 'hex', name: 'Altıgen', short: 'Altıgen', multiplier: 1.28, className: 'hex' },
+  { id: 'organic', name: 'Organik', short: 'Organik', multiplier: 1.32, className: 'organic' },
+]
+
+
+const iconLibrary = [
+  { id: 'none', label: 'Yok', char: '' },
+  { id: 'heart', label: 'Kalp', char: '♥' },
+  { id: 'star', label: 'Yıldız', char: '★' },
+  { id: 'spark', label: 'Parıltı', char: '✦' },
+  { id: 'bolt', label: 'Şimşek', char: '⚡' },
+  { id: 'crown', label: 'Taç', char: '♛' },
+  { id: 'music', label: 'Müzik', char: '♫' },
+  { id: 'infinity', label: 'Sonsuzluk', char: '∞' },
+  { id: 'diamond', label: 'Elmas', char: '◆' },
+  { id: 'flower', label: 'Çiçek', char: '✿' },
+  { id: 'moon', label: 'Ay', char: '☾' },
+  { id: 'sun', label: 'Güneş', char: '☼' },
+]
+
+const templates = [
+  {
+    id: 'love',
+    name: 'LOVE',
+    subtitle: 'Romantik',
+    lines: ['LOVE', 'IS HERE'],
+    colors: [4, 3],
+    fonts: [15, 32],
+    icon: 'heart',
+    placement: 'after',
+  },
+  {
+    id: 'coffee',
+    name: 'COFFEE',
+    subtitle: 'Kafe',
+    lines: ['COFFEE', 'FIRST'],
+    colors: [2, 0],
+    fonts: [17, 20],
+    icon: 'diamond',
+    placement: 'before',
+  },
+  {
+    id: 'barber',
+    name: 'BARBER',
+    subtitle: 'Berber',
+    lines: ['BARBER', 'SHOP'],
+    colors: [3, 0],
+    fonts: [17, 24],
+    icon: 'star',
+    placement: 'after',
+  },
+  {
+    id: 'welcome',
+    name: 'WELCOME',
+    subtitle: 'Giriş',
+    lines: ['WELCOME', 'HOME'],
+    colors: [7, 0],
+    fonts: [2, 25],
+    icon: 'spark',
+    placement: 'before',
+  },
+  {
+    id: 'game',
+    name: 'GAME ON',
+    subtitle: 'Gaming',
+    lines: ['GAME', 'ON'],
+    colors: [8, 6],
+    fonts: [25, 32],
+    icon: 'bolt',
+    placement: 'after',
+  },
+  {
+    id: 'marry',
+    name: 'MARRY ME',
+    subtitle: 'Etkinlik',
+    lines: ['MARRY', 'ME'],
+    colors: [4, 0],
+    fonts: [31, 2],
+    icon: 'heart',
+    placement: 'after',
+  },
+]
+
+function createWord(text = '', color = neonColors[4], font = fonts[2]) {
+  return {
+    id: `word-${Math.random().toString(36).slice(2, 10)}`,
+    text,
+    color,
+    font,
+    size: 100,
+    weight: 400,
+    italic: false,
+    letterSpacing: 0,
+    rotate: 0,
+    skew: 0,
+  }
+}
+
+function wordsFromText(text, previousWords = [], color, font) {
+  const tokens = text.match(/\S+/g) || []
+
+  return tokens.map((token, index) => {
+    const previous = previousWords[index]
+    return {
+      ...createWord(token, color, font),
+      ...(previous || {}),
+      id: previous?.id || `word-${Math.random().toString(36).slice(2, 10)}`,
+      text: token,
+      color: previous?.color || color,
+      font: previous?.font || font,
+    }
+  })
+}
+
+function createLine(text, color, font) {
+  return {
+    id: `line-${Math.random().toString(36).slice(2, 10)}`,
+    text,
+    color,
+    font,
+    words: wordsFromText(text, [], color, font),
+    align: 'center',
+    lineSpacing: 1,
+  }
+}
+
+function createInitialDesign() {
+  const lines = [
+    createLine('Kendin', neonColors[4], fonts[2]),
+    createLine('Tasarla!', neonColors[6], fonts[33]),
+  ]
+
+  return {
+    lines,
+    activeLine: 0,
+    activeWord: 0,
+    selectedEnvironment: environments[0],
+    brightness: 100,
+    previewScale: 100,
+    customWidth: 120,
+    customHeight: 45,
+    quantity: 1,
+    background: backgrounds[0],
+    icon: 'none',
+    iconPlacement: 'after',
+    iconSize: 100,
+    iconColor: neonColors[4],
+    logo: '',
+    logoName: '',
+    logoSize: 100,
+    logoX: 80,
+    logoY: 18,
+    previewMode: 'desktop',
+    offsetX: 0,
+    offsetY: 0,
+  }
+}
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value))
+}
+
+function formatPrice(value) {
+  return new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY',
+    maximumFractionDigits: 0,
+  }).format(Number(value) || 0)
+}
+
+function getActiveWord(design) {
+  return design.lines[design.activeLine]?.words?.[design.activeWord] || null
+}
+
+function getBaseWordSize(text, lineCount) {
+  const length = text.trim().length
+  let size = 62
+
+  if (length <= 4) size = 72
+  else if (length <= 7) size = 66
+  else if (length <= 10) size = 60
+  else if (length <= 14) size = 54
+  else if (length <= 20) size = 47
+  else if (length <= 28) size = 40
+  else if (length <= 38) size = 34
+  else size = 29
+
+  if (lineCount >= 3) size *= 0.86
+  if (lineCount >= 5) size *= 0.9
+
+  return Math.max(18, Math.round(size))
+}
+
+function Designer() {
+  const { addToCart } = useCart()
+  const fileInputRef = useRef(null)
+  const historyRef = useRef([])
+  const futureRef = useRef([])
+  const noticeTimerRef = useRef(null)
+
+  const [design, setDesign] = useState(createInitialDesign)
+  const [, forceHistory] = useState(0)
+  const [fontSearch, setFontSearch] = useState('')
+  const [showAllFonts, setShowAllFonts] = useState(false)
+  const [saveName, setSaveName] = useState('')
+  const [savedDesigns, setSavedDesigns] = useState([])
+  const [notice, setNotice] = useState('')
+  const [fullscreen, setFullscreen] = useState(false)
+  const [activePanel, setActivePanel] = useState('design')
+
+  useEffect(() => {
+    document.title = 'Neon Tabela Tasarımı | NeonLab'
+    try {
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      setSavedDesigns(Array.isArray(stored) ? stored : [])
+    } catch {
+      setSavedDesigns([])
+    }
+  }, [])
+
+  const showNotice = (message) => {
+    setNotice(message)
+    if (noticeTimerRef.current) {
+      window.clearTimeout(noticeTimerRef.current)
+    }
+    noticeTimerRef.current = window.setTimeout(() => {
+      setNotice('')
+      noticeTimerRef.current = null
+    }, 1800)
+  }
+
+  useEffect(() => {
+    return () => {
+      if (noticeTimerRef.current) {
+        window.clearTimeout(noticeTimerRef.current)
+      }
+    }
+  }, [])
+
+  const commit = (updater) => {
+    setDesign((current) => {
+      const next = typeof updater === 'function' ? updater(current) : updater
+      historyRef.current.push(clone(current))
+      if (historyRef.current.length > 40) historyRef.current.shift()
+      futureRef.current = []
+      forceHistory((value) => value + 1)
+      return next
+    })
+  }
+
+  const undo = () => {
+    if (!historyRef.current.length) return
+    const previous = historyRef.current.pop()
+    futureRef.current.push(clone(design))
+    setDesign(previous)
+    forceHistory((value) => value + 1)
+  }
+
+  const redo = () => {
+    if (!futureRef.current.length) return
+    const next = futureRef.current.pop()
+    historyRef.current.push(clone(design))
+    setDesign(next)
+    forceHistory((value) => value + 1)
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const modifier = event.ctrlKey || event.metaKey
+
+      if (modifier && event.key.toLowerCase() === 'z') {
+        event.preventDefault()
+        if (event.shiftKey) redo()
+        else undo()
+      }
+
+      if (modifier && event.key.toLowerCase() === 'y') {
+        event.preventDefault()
+        redo()
+      }
+
+      if (event.key === 'Escape') {
+        setFullscreen(false)
+        setActivePanel('design')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [design, redo, undo])
+
+  const lines = design.lines
+  const activeLine = lines[design.activeLine] || lines[0]
+  const activeWord = getActiveWord(design)
+
+  const previewLines = useMemo(
+    () => lines.filter((line) => line.text.trim()),
+    [lines],
+  )
+
+  const totalTextLength = useMemo(
+    () => lines.reduce((sum, line) => sum + line.text.trim().length, 0),
+    [lines],
+  )
+
+  const totalWords = useMemo(
+    () => lines.reduce((sum, line) => sum + line.words.length, 0),
+    [lines],
+  )
+
+  const estimatedPrice = useMemo(() => {
+    const basePrice = 1290
+    const textMultiplier = 1 + Math.min(totalTextLength / 250, 0.5)
+    const lineMultiplier =
+      previewLines.length <= 1
+        ? 1
+        : previewLines.length === 2
+          ? 1.08
+          : previewLines.length === 3
+            ? 1.16
+            : 1.24
+
+    const sizeMultiplier = Math.max(
+      1,
+      Math.min(
+        (design.customWidth * design.customHeight) / (100 * 35),
+        2.8,
+      ),
+    )
+
+    const materialMultiplier = design.background.multiplier
+    const iconMultiplier = design.icon !== 'none' ? 1.08 : 1
+    const logoMultiplier = design.logo ? 1.12 : 1
+
+    return Math.round(
+      (basePrice *
+        textMultiplier *
+        lineMultiplier *
+        sizeMultiplier *
+        materialMultiplier *
+        iconMultiplier *
+        logoMultiplier *
+        design.quantity) /
+        10,
+    ) * 10
+  }, [
+    design,
+    previewLines.length,
+    totalTextLength,
+  ])
+
+  const sizeLabel = `${design.customWidth} × ${design.customHeight} cm`
+
+  const setLineText = (value) => {
+    commit((current) => {
+      const nextLines = current.lines.map((line, index) => {
+        if (index !== current.activeLine) return line
+        const defaultColor = line.color || neonColors[4]
+        const defaultFont = line.font || fonts[2]
+        const words = wordsFromText(value, line.words, defaultColor, defaultFont)
+        return {
+          ...line,
+          text: value,
+          words,
+          color: words[0]?.color || defaultColor,
+          font: words[0]?.font || defaultFont,
+        }
+      })
+
+      return {
+        ...current,
+        lines: nextLines,
+        activeWord: Math.min(
+          current.activeWord,
+          Math.max(nextLines[current.activeLine].words.length - 1, 0),
+        ),
+      }
+    })
+  }
+
+  const updateLine = (key, value) => {
+    commit((current) => ({
+      ...current,
+      lines: current.lines.map((line, index) =>
+        index === current.activeLine ? { ...line, [key]: value } : line,
+      ),
+    }))
+  }
+
+  const updateActiveWord = (key, value) => {
+    commit((current) => ({
+      ...current,
+      lines: current.lines.map((line, lineIndex) => {
+        if (lineIndex !== current.activeLine) return line
+        return {
+          ...line,
+          words: line.words.map((word, wordIndex) =>
+            wordIndex === current.activeWord
+              ? { ...word, [key]: value }
+              : word,
+          ),
+        }
+      }),
+    }))
+  }
+
+  const updateWordColor = (color) => updateActiveWord('color', color)
+  const updateWordFont = (font) => updateActiveWord('font', font)
+
+  const addLine = () => {
+    commit((current) => {
+      const line = createLine('', neonColors[4], fonts[2])
+      const nextLines = [...current.lines, line]
+      return {
+        ...current,
+        lines: nextLines,
+        activeLine: nextLines.length - 1,
+        activeWord: 0,
+      }
+    })
+  }
+
+  const duplicateLine = () => {
+    if (!activeLine) return
+    commit((current) => {
+      const duplicated = clone(activeLine)
+      duplicated.id = `line-${Math.random().toString(36).slice(2, 10)}`
+      duplicated.words = duplicated.words.map((word) => ({
+        ...word,
+        id: `word-${Math.random().toString(36).slice(2, 10)}`,
+      }))
+      const nextLines = [...current.lines]
+      nextLines.splice(current.activeLine + 1, 0, duplicated)
+      return {
+        ...current,
+        lines: nextLines,
+        activeLine: current.activeLine + 1,
+        activeWord: 0,
+      }
+    })
+  }
+
+  const removeLine = () => {
+    if (lines.length <= 1) {
+      setLineText('')
+      return
+    }
+
+    commit((current) => {
+      const nextLines = current.lines.filter(
+        (_, index) => index !== current.activeLine,
+      )
+      return {
+        ...current,
+        lines: nextLines,
+        activeLine: Math.min(current.activeLine, nextLines.length - 1),
+        activeWord: 0,
+      }
+    })
+  }
+
+  const resetDesign = () => {
+    commit(createInitialDesign())
+    showNotice('Tasarım sıfırlandı.')
+  }
+
+  const chooseTemplate = (template) => {
+    commit((current) => {
+      const nextLines = template.lines.map((text, index) =>
+        createLine(
+          text,
+          neonColors[template.colors[index] ?? 0],
+          fonts[template.fonts[index] ?? 0],
+        ),
+      )
+      return {
+        ...current,
+        lines: nextLines,
+        activeLine: 0,
+        activeWord: 0,
+        icon: template.icon,
+        iconPlacement: template.placement,
+        iconColor: neonColors[template.colors[0] ?? 0],
+      }
+    })
+    setActivePanel('design')
+    showNotice(`${template.name} şablonu uygulandı.`)
+  }
+
+  const chooseEnvironment = (environment) =>
+    commit((current) => ({ ...current, selectedEnvironment: environment }))
+
+  const chooseBackground = (background) =>
+    commit((current) => ({ ...current, background }))
+
+  const chooseIcon = (icon) =>
+    commit((current) => ({ ...current, icon }))
+
+  const updateSettings = (key, value) =>
+    commit((current) => ({ ...current, [key]: value }))
+
+  const moveEnvironment = (direction) => {
+    const currentIndex = environments.findIndex(
+      (item) => item.id === design.selectedEnvironment.id,
+    )
+    const nextIndex =
+      (currentIndex + direction + environments.length) % environments.length
+    chooseEnvironment(environments[nextIndex])
+  }
+
+  const handleLogoUpload = (event) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    if (file.size > 5 * 1024 * 1024) {
+      showNotice('Logo dosyası en fazla 5 MB olabilir.')
+      event.target.value = ''
+      return
+    }
+
+    if (!file.type.startsWith('image/')) {
+      showNotice('Lütfen bir görsel dosyası seç.')
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      commit((current) => ({
+        ...current,
+        logo: String(reader.result || ''),
+        logoName: file.name,
+      }))
+      showNotice('Logo tasarıma eklendi.')
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const saveDesign = () => {
+    const name = saveName.trim() || `Neon Tasarım ${savedDesigns.length + 1}`
+    const entry = {
+      id: `saved-${Date.now()}`,
+      name: name.slice(0, 48),
+      createdAt: new Date().toLocaleString('tr-TR'),
+      design: clone(design),
+    }
+
+    const next = [entry, ...savedDesigns].slice(0, 12)
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+      setSavedDesigns(next)
+      setSaveName('')
+      setActivePanel('saved')
+      showNotice('Tasarım kaydedildi.')
+    } catch {
+      showNotice('Tasarım kaydedilemedi. Tarayıcı depolama alanı dolu olabilir.')
+    }
+  }
+
+  const loadSavedDesign = (entry) => {
+    const base = createInitialDesign()
+    const loaded = clone(entry.design || {})
+    const mergedLines = Array.isArray(loaded.lines) && loaded.lines.length
+      ? loaded.lines.map((line) => ({
+          ...createLine(
+            line.text || '',
+            line.color || neonColors[4],
+            line.font || fonts[2],
+          ),
+          ...line,
+          words: Array.isArray(line.words)
+            ? line.words
+            : wordsFromText(
+                line.text || '',
+                [],
+                line.color || neonColors[4],
+                line.font || fonts[2],
+              ),
+        }))
+      : base.lines
+
+    const normalized = {
+      ...base,
+      ...loaded,
+      lines: mergedLines,
+      customWidth: Number(loaded.customWidth) || 120,
+      customHeight: Number(loaded.customHeight) || 45,
+      logoSize: Number(loaded.logoSize) || 100,
+      logoX: Number.isFinite(loaded.logoX) ? loaded.logoX : 80,
+      logoY: Number.isFinite(loaded.logoY) ? loaded.logoY : 18,
+    }
+
+    commit(normalized)
+    setActivePanel('design')
+    showNotice(`${entry.name} açıldı.`)
+  }
+
+  const deleteSavedDesign = (id) => {
+    const next = savedDesigns.filter((item) => item.id !== id)
+    setSavedDesigns(next)
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
+    } catch {
+      showNotice('Kayıt silinirken bir hata oluştu.')
+      return
+    }
+    showNotice('Kayıt silindi.')
+  }
+
+  const buildWhatsAppMessage = () => {
+    const linesForMessage = [
+      'Merhaba, NEONLAB üzerinden özel neon tabela tasarımı oluşturmak istiyorum.',
+      '',
+      '--- TASARIM ---',
+      ...previewLines.flatMap((line, lineIndex) => [
+        `Satır ${lineIndex + 1}: ${line.text}`,
+        ...line.words.map(
+          (word) =>
+            `  ${word.text} → ${word.color?.name || '-'} / ${word.font?.name || '-'}`,
+        ),
+      ]),
+      '',
+      `Ölçü: ${sizeLabel}`,
+      `Zemin: ${design.background.name}`,
+      `Duvar: ${design.selectedEnvironment.name}`,
+      `Parlaklık: %${design.brightness}`,
+      `Yatay konum: ${design.offsetX || 0}px`,
+      `Dikey konum: ${design.offsetY || 0}px`,
+      `İkon: ${iconLibrary.find((item) => item.id === design.icon)?.label || 'Yok'}${design.icon !== 'none' ? ` (${design.iconPlacement === 'before' ? 'önce' : 'sonra'})` : ''}`,
+      `Logo: ${design.logo ? design.logoName || 'Yüklendi' : 'Yok'}`,
+      `Adet: ${design.quantity}`,
+      `Tahmini fiyat: ${formatPrice(estimatedPrice)}`,
+    ]
+
+    return linesForMessage.join('\n')
+  }
+
+  const sendWhatsApp = (number) => {
+    if (!previewLines.length) return
+    const url = `https://wa.me/${number}?text=${encodeURIComponent(buildWhatsAppMessage())}`
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
+
+  const addDesignToCart = () => {
+    if (!previewLines.length) return
+
+    const cartLines = previewLines.map((line) => line.text)
+    const wordStyles = previewLines.map((line) =>
+      line.words.map((word) => ({
+        text: word.text,
+        color: word.color,
+        font: word.font,
+        size: word.size,
+        weight: word.weight,
+        italic: word.italic,
+        letterSpacing: word.letterSpacing,
+        rotate: word.rotate,
+        skew: word.skew,
+      })),
+    )
+
+    addToCart({
+      productId: `custom-${Date.now()}`,
+      name: 'Özel Neon Tasarım',
+      category: 'Özel Tasarım',
+      image: design.selectedEnvironment.image,
+      color: previewLines[0]?.words[0]?.color || neonColors[4],
+      colors: previewLines.map((line) => line.words[0]?.color || line.color),
+      fonts: previewLines.map((line) => line.words[0]?.font || line.font),
+      lines: cartLines,
+      wordStyles,
+      size: {
+        name: sizeLabel,
+        value: sizeLabel,
+        multiplier: Math.max(1, Math.min((design.customWidth * design.customHeight) / (100 * 35), 2.8)),
+      },
+      quantity: design.quantity,
+      totalPrice: estimatedPrice,
+      background: design.background,
+      environment: design.selectedEnvironment.name,
+      icon: design.icon,
+      logo: Boolean(design.logo),
+    })
+
+    showNotice('Tasarım sepete eklendi.')
+  }
+
+  const currentLineText = activeLine?.text || ''
+  const visibleFonts = fonts.filter((font) =>
+    font.name.toLowerCase().includes(fontSearch.toLowerCase()),
+  )
+  const fontItems = showAllFonts ? visibleFonts : visibleFonts.slice(0, 10)
+  const activeColor = activeWord?.color || neonColors[4]
+
+  const productionWarnings = useMemo(() => {
+    const warnings = []
+    if (totalTextLength > 55) warnings.push('Metin oldukça uzun; genişlik/ölçü yeniden değerlendirilmelidir.')
+    if (previewLines.length > 5) warnings.push('5 satırdan fazla tasarımlar üretimde daha küçük yazı gerektirebilir.')
+    if (activeWord && activeWord.size < 75) warnings.push('Seçili kelimenin boyutu normalden küçük.')
+    if (design.customWidth < 50 || design.customHeight < 20) warnings.push('Ölçü çok küçük; üretim uygunluğu teyit edilmelidir.')
+    return warnings
+  }, [activeWord, design.customHeight, design.customWidth, previewLines.length, totalTextLength])
+
+  const setLogoPosition = (x, y) => {
+    setDesign((current) => ({
+      ...current,
+      logoX: Math.max(5, Math.min(95, x)),
+      logoY: Math.max(5, Math.min(95, y)),
+    }))
+  }
+
+  const handleLogoPointerDown = (event) => {
+    if (!design.logo) return
+    const mount = event.currentTarget.closest('.designer-mount')
+    if (!mount) return
+
+    event.preventDefault()
+    const rect = mount.getBoundingClientRect()
+
+    const handleMove = (moveEvent) => {
+      const x = ((moveEvent.clientX - rect.left) / rect.width) * 100
+      const y = ((moveEvent.clientY - rect.top) / rect.height) * 100
+      setLogoPosition(x, y)
+    }
+
+    const handleUp = () => {
+      window.removeEventListener('pointermove', handleMove)
+      window.removeEventListener('pointerup', handleUp)
+    }
+
+    window.addEventListener('pointermove', handleMove)
+    window.addEventListener('pointerup', handleUp, { once: true })
+  }
+
+  const renderNeonLines = (isFullscreen = false) => (
+    <div
+      className={`designer-neon ${isFullscreen ? 'designer-neon--fullscreen' : ''}`}
+      style={{
+        transform: `translate(${design.offsetX}px, ${design.offsetY}px) scale(${design.previewScale / 100})`,
+        filter: `brightness(${design.brightness / 100})`,
+      }}
+    >
+      {previewLines.map((line) => {
+        const originalIndex = lines.findIndex((item) => item.id === line.id)
+        const baseSize = getBaseWordSize(line.text, previewLines.length)
+        const icon = iconLibrary.find((item) => item.id === design.icon)
+
+        return (
+          <div
+            key={line.id}
+            className={`designer-neon__line designer-neon__line--${line.align}`}
+            onClick={() =>
+              commit((current) => ({
+                ...current,
+                activeLine: originalIndex,
+                activeWord: 0,
+              }))
+            }
+            style={{ lineHeight: line.lineSpacing }}
+          >
+            {design.icon !== 'none' && design.iconPlacement === 'before' && originalIndex === 0 && icon && (
+              <span
+                className="designer-neon__icon"
+                style={{
+                  color: design.iconColor.value,
+                  fontSize: `${(baseSize * design.iconSize) / 100}px`,
+                }}
+              >
+                {icon.char}
+              </span>
+            )}
+
+            {(() => {
+              let wordIndex = 0
+
+              return line.text.split(/(\s+)/).map((part, partIndex) => {
+                if (!part) return null
+
+                if (/^\s+$/.test(part)) {
+                  return (
+                    <span
+                      key={`space-${line.id}-${partIndex}`}
+                      className="designer-neon__space"
+                      aria-hidden="true"
+                    >
+                      {part}
+                    </span>
+                  )
+                }
+
+                const currentWordIndex = wordIndex
+                const word = line.words[currentWordIndex] || createWord(part)
+                wordIndex += 1
+
+                const isActive =
+                  originalIndex === design.activeLine &&
+                  currentWordIndex === design.activeWord
+
+                return (
+                  <button
+                    key={word.id || `word-${line.id}-${partIndex}`}
+                    type="button"
+                    className={`designer-neon__word ${isActive ? 'is-active' : ''}`}
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      commit((current) => ({
+                        ...current,
+                        activeLine: originalIndex,
+                        activeWord: currentWordIndex,
+                      }))
+                    }}
+                    style={{
+                      color: word.color.value,
+                      fontFamily: `"${word.font.family}", sans-serif`,
+                      fontSize: `${(baseSize * word.size) / 100}px`,
+                      fontWeight: word.weight,
+                      fontStyle: word.italic ? 'italic' : 'normal',
+                      letterSpacing: `${word.letterSpacing}px`,
+                      transform: `rotate(${word.rotate}deg) skewX(${word.skew}deg)`,
+                      '--word-rgb': word.color.glow,
+                    }}
+                  >
+                    {part}
+                  </button>
+                )
+              })
+            })()}
+
+            {design.icon !== 'none' && design.iconPlacement === 'after' && originalIndex === 0 && icon && (
+              <span
+                className="designer-neon__icon"
+                style={{
+                  color: design.iconColor.value,
+                  fontSize: `${(baseSize * design.iconSize) / 100}px`,
+                }}
+              >
+                {icon.char}
+              </span>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+
+  const backgroundStyle = {
+    '--background-class': design.background.className,
+  }
+
+  return (
+    <main className="designer-page">
+      <div className="designer-page__background" />
+
+      <div className="designer">
+        <header className="designer-header">
+          <div>
+            <div className="designer-header__eyebrow">
+              <Sparkles size={15} />
+              <span>NEON STUDIO / DESIGN LAB</span>
+            </div>
+            <h1>
+              Neon Tabela <span>Tasarım Stüdyosu</span>
+            </h1>
+            <p>
+              Yazını, kelimelerini, renklerini, ölçünü, zemini, ikonu ve logonu tek ekranda tasarla. Önizlemeyi anında gör ve hazır olduğunda sepete gönder.
+            </p>
+          </div>
+
+          <div className="designer-header__actions">
+            <button className="designer-history" type="button" onClick={undo} disabled={!historyRef.current.length}>
+              <Undo2 size={15} />
+            </button>
+            <button className="designer-history" type="button" onClick={redo} disabled={!futureRef.current.length}>
+              <Redo2 size={15} />
+            </button>
+            <button className="designer-reset" type="button" onClick={resetDesign}>
+              <RotateCcw size={16} />
+              Sıfırla
+            </button>
+          </div>
+        </header>
+
+        {notice && (
+          <div className="designer-toast">
+            <Check size={15} />
+            {notice}
+          </div>
+        )}
+
+        <div className="designer-workflow-hint">Ctrl/Cmd + Z: geri al · Ctrl/Cmd + Shift + Z: ileri al · Esc: paneli kapat</div>
+
+        <div className="designer-tabs">
+          {[
+            ['design', 'Tasarım', SlidersHorizontal],
+            ['templates', 'Şablonlar', LayoutTemplate],
+            ['saved', 'Tasarımlarım', Save],
+          ].map(([id, label, Icon]) => (
+            <button
+              key={id}
+              type="button"
+              className={activePanel === id ? 'is-active' : ''}
+              onClick={() => setActivePanel(id)}
+            >
+              <Icon size={15} />
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {activePanel === 'templates' && (
+          <section className="designer-library-card">
+            <div className="library-heading">
+              <div>
+                <span>HAZIR BAŞLANGIÇLAR</span>
+                <h2>Bir tasarımla başla</h2>
+              </div>
+              <LayoutTemplate size={22} />
+            </div>
+            <div className="template-grid">
+              {templates.map((template) => (
+                <button key={template.id} type="button" className="template-card" onClick={() => chooseTemplate(template)}>
+                  <span className="template-card__preview">
+                    {template.lines.map((line, index) => (
+                      <span
+                        key={line}
+                        style={{
+                          color: neonColors[template.colors[index] ?? 0].value,
+                          fontFamily: `"${fonts[template.fonts[index] ?? 0].family}", sans-serif`,
+                        }}
+                      >
+                        {line}
+                      </span>
+                    ))}
+                  </span>
+                  <strong>{template.name}</strong>
+                  <small>{template.subtitle}</small>
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {activePanel === 'saved' && (
+          <section className="designer-library-card">
+            <div className="library-heading">
+              <div>
+                <span>LOCAL STORAGE</span>
+                <h2>Tasarımlarım</h2>
+              </div>
+              <Save size={22} />
+            </div>
+            {savedDesigns.length === 0 ? (
+              <div className="saved-empty">Henüz kaydedilmiş tasarım yok.</div>
+            ) : (
+              <div className="saved-grid">
+                {savedDesigns.map((entry) => (
+                  <article key={entry.id} className="saved-card">
+                    <div>
+                      <strong>{entry.name}</strong>
+                      <small>{entry.createdAt}</small>
+                    </div>
+                    <div>
+                      <button type="button" onClick={() => loadSavedDesign(entry)}>Aç</button>
+                      <button type="button" className="saved-card__danger" onClick={() => deleteSavedDesign(entry.id)}>
+                        <Trash2 size={13} />
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        <section className="designer-workspace">
+          <div className="designer-preview-card">
+            <div className="designer-preview-card__top">
+              <div className="designer-preview-card__status">
+                <span className="status-dot" />
+                <span>CANLI ÖNİZLEME</span>
+              </div>
+
+              <div className="designer-preview-card__top-controls">
+                <div className="preview-mode-switch">
+                  <button type="button" className={design.previewMode === 'desktop' ? 'is-active' : ''} onClick={() => updateSettings('previewMode', 'desktop')}>DESKTOP</button>
+                  <button type="button" className={design.previewMode === 'mobile' ? 'is-active' : ''} onClick={() => updateSettings('previewMode', 'mobile')}>MOBILE</button>
+                </div>
+                <button type="button" onClick={() => moveEnvironment(-1)} aria-label="Önceki ortam"><ArrowLeft size={16} /></button>
+                <button type="button" onClick={() => moveEnvironment(1)} aria-label="Sonraki ortam"><ArrowRight size={16} /></button>
+                <button type="button" onClick={() => setFullscreen(true)} aria-label="Tam ekran"><Maximize2 size={16} /></button>
+              </div>
+            </div>
+
+            <div className={`designer-scene designer-scene--${design.previewMode}`} style={backgroundStyle}>
+              <img src={design.selectedEnvironment.image} alt={design.selectedEnvironment.name} className="designer-scene__image" />
+              <div className="designer-scene__overlay" />
+
+              <div className={`designer-mount designer-mount--${design.background.className}`}>
+                {design.logo && (
+                  <img
+                    src={design.logo}
+                    alt="Yüklenen logo"
+                    className="designer-uploaded-logo"
+                    onPointerDown={handleLogoPointerDown}
+                    style={{
+                      left: `${design.logoX}%`,
+                      top: `${design.logoY}%`,
+                      width: `${110 * ((design.logoSize || 100) / 100)}px`,
+                    }}
+                  />
+                )}
+                {renderNeonLines()}
+              </div>
+
+              <div className="designer-scene__environment">
+                <div><span>DUVAR</span><strong>{design.selectedEnvironment.name}</strong></div>
+                <span>{design.selectedEnvironment.type}</span>
+              </div>
+
+              <div className="designer-scene__scale">
+                <Ruler size={12} />
+                <span>{sizeLabel}</span>
+              </div>
+            </div>
+
+            <div className="environment-selector">
+              <div className="environment-selector__heading">
+                <div>
+                  <span>ORTAM</span>
+                  <strong>Duvarını seç</strong>
+                </div>
+              </div>
+              <div className="environment-grid">
+                {environments.map((environment) => (
+                  <button key={environment.id} type="button" className={`environment-item ${design.selectedEnvironment.id === environment.id ? 'is-active' : ''}`} onClick={() => chooseEnvironment(environment)}>
+                    <img src={environment.image} alt={environment.name} />
+                    <span>{environment.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <aside className="designer-controls">
+            <div className="controls-heading">
+              <div>
+                <span className="control-label">KENDİN TASARLA</span>
+                <h2>Her detayı sen belirle</h2>
+              </div>
+              <div className="controls-heading__icon"><Sparkles size={18} /></div>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Type size={17} /></div>
+                <div><span>METİN</span><strong>{previewLines.length} satır / {totalWords} kelime</strong></div>
+              </div>
+
+              <div className="text-input-wrapper">
+                <textarea
+                  value={currentLineText}
+                  maxLength={250}
+                  onChange={(event) => setLineText(event.target.value)}
+                  placeholder="Metnini yaz..."
+                  rows={4}
+                />
+              </div>
+              <div className="text-stats">Aktif satır {design.activeLine + 1} • {currentLineText.trim().length}/250 karakter</div>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><LayersIconFallback /></div>
+                <div><span>SATIRLAR</span><strong>Yapını düzenle</strong></div>
+              </div>
+
+              <div className="line-list">
+                {lines.map((line, index) => (
+                  <button key={line.id} type="button" className={`line-list__item ${index === design.activeLine ? 'is-active' : ''}`} onClick={() => commit((current) => ({ ...current, activeLine: index, activeWord: 0 }))}>
+                    <span className="line-list__index">{index + 1}</span>
+                    <span className="line-list__text">{line.text.trim() || 'Boş satır'}</span>
+                    <span className="line-list__color" style={{ background: line.words[0]?.color?.value || line.color.value, boxShadow: `0 0 12px ${line.words[0]?.color?.value || line.color.value}` }} />
+                  </button>
+                ))}
+              </div>
+
+              <div className="line-actions">
+                <button type="button" onClick={addLine}><Plus size={14} /> Satır ekle</button>
+                <button type="button" onClick={duplicateLine}><CopyIconFallback /> Kopyala</button>
+                <button type="button" onClick={removeLine}><Trash2 size={14} /> Sil</button>
+              </div>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Type size={17} /></div>
+                <div><span>KELİMELER</span><strong>Kelimeyi seç ve ayrı tasarla</strong></div>
+              </div>
+
+              {activeLine?.words.length ? (
+                <div className="word-picker">
+                  {activeLine.words.map((word, index) => (
+                    <button key={word.id} type="button" className={index === design.activeWord ? 'is-active' : ''} onClick={() => commit((current) => ({ ...current, activeWord: index }))}>
+                      <span>{word.text}</span>
+                      <i style={{ background: word.color.value, boxShadow: `0 0 8px ${word.color.value}` }} />
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <div className="control-empty">Bu satıra kelime eklemek için metin yaz.</div>
+              )}
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Palette size={17} /></div>
+                <div><span>RENK</span><strong>{activeWord ? `${activeWord.text} rengi` : 'Kelime seç'}</strong></div>
+              </div>
+
+              <div className="color-grid">
+                {neonColors.map((color) => (
+                  <button key={color.name} type="button" className={`color-option ${activeColor.name === color.name ? 'is-active' : ''}`} onClick={() => updateWordColor(color)}>
+                    <span className="color-option__dot" style={{ background: color.value, boxShadow: `0 0 14px ${color.value}` }} />
+                    <span>{color.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Type size={17} /></div>
+                <div><span>FONT</span><strong>{activeWord?.font?.name || 'Kelime seç'}</strong></div>
+              </div>
+
+              <input className="font-search" value={fontSearch} onChange={(event) => setFontSearch(event.target.value)} placeholder="Font ara..." />
+              <div className="font-grid">
+                {fontItems.map((font) => (
+                  <button key={font.name} type="button" className={`font-option ${activeWord?.font?.name === font.name ? 'is-active' : ''}`} onClick={() => updateWordFont(font)} style={{ fontFamily: `"${font.family}", sans-serif` }}>
+                    <span>{font.name}</span>
+                  </button>
+                ))}
+              </div>
+              <button type="button" className="font-show-more" onClick={() => setShowAllFonts((value) => !value)}>
+                {showAllFonts ? 'Daha az göster' : `Tüm fontları göster (${visibleFonts.length})`}
+              </button>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><SlidersHorizontal size={17} /></div>
+                <div><span>KELİME STİLİ</span><strong>İnce ayar</strong></div>
+              </div>
+
+              {activeWord ? (
+                <>
+                  <div className="style-row style-row--split">
+                    <label>Boyut <strong>%{activeWord.size}</strong><input type="range" min="60" max="145" value={activeWord.size} onChange={(event) => updateActiveWord('size', Number(event.target.value))} /></label>
+                    <label>Kalınlık <strong>{activeWord.weight}</strong><input type="range" min="300" max="700" step="100" value={activeWord.weight} onChange={(event) => updateActiveWord('weight', Number(event.target.value))} /></label>
+                  </div>
+
+                  <label className="style-range">Harf aralığı <strong>{activeWord.letterSpacing}px</strong><input type="range" min="-2" max="10" step="0.5" value={activeWord.letterSpacing} onChange={(event) => updateActiveWord('letterSpacing', Number(event.target.value))} /></label>
+                  <label className="style-range">Döndürme <strong>{activeWord.rotate}°</strong><input type="range" min="-15" max="15" value={activeWord.rotate} onChange={(event) => updateActiveWord('rotate', Number(event.target.value))} /></label>
+                  <label className="style-range">Eğme <strong>{activeWord.skew}°</strong><input type="range" min="-20" max="20" value={activeWord.skew} onChange={(event) => updateActiveWord('skew', Number(event.target.value))} /></label>
+
+                  <div className="toggle-row">
+                    <button type="button" className={activeWord.weight >= 600 ? 'is-active' : ''} onClick={() => updateActiveWord('weight', activeWord.weight >= 600 ? 400 : 700)}><Bold size={15} /> Kalın</button>
+                    <button type="button" className={activeWord.italic ? 'is-active' : ''} onClick={() => updateActiveWord('italic', !activeWord.italic)}><Italic size={15} /> İtalik</button>
+                  </div>
+                </>
+              ) : (
+                <div className="control-empty">Önizlemeden veya kelime listesinden bir kelime seç.</div>
+              )}
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><AlignCenter size={17} /></div>
+                <div><span>HİZALAMA</span><strong>Satır düzeni</strong></div>
+              </div>
+
+              <div className="align-grid">
+                <button type="button" className={activeLine?.align === 'left' ? 'is-active' : ''} onClick={() => updateLine('align', 'left')}><AlignLeft size={15} /> Sol</button>
+                <button type="button" className={activeLine?.align === 'center' ? 'is-active' : ''} onClick={() => updateLine('align', 'center')}><AlignCenter size={15} /> Orta</button>
+                <button type="button" className={activeLine?.align === 'right' ? 'is-active' : ''} onClick={() => updateLine('align', 'right')}><AlignRight size={15} /> Sağ</button>
+              </div>
+              <label className="style-range">Satır aralığı <strong>{activeLine?.lineSpacing.toFixed(2)}</strong><input type="range" min="0.75" max="1.6" step="0.05" value={activeLine?.lineSpacing || 1} onChange={(event) => updateLine('lineSpacing', Number(event.target.value))} /></label>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><SunIconFallback /></div>
+                <div><span>IŞIK</span><strong>%{design.brightness} parlaklık</strong></div>
+              </div>
+              <input className="range-control" type="range" min="50" max="140" value={design.brightness} onChange={(event) => updateSettings('brightness', Number(event.target.value))} />
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Move size={17} /></div>
+                <div><span>KONUM</span><strong>Önizlemeyi yerleştir</strong></div>
+              </div>
+              <label className="style-range">Yatay <strong>{design.offsetX}px</strong><input type="range" min="-160" max="160" value={design.offsetX} onChange={(event) => updateSettings('offsetX', Number(event.target.value))} /></label>
+              <label className="style-range">Dikey <strong>{design.offsetY}px</strong><input type="range" min="-120" max="120" value={design.offsetY} onChange={(event) => updateSettings('offsetY', Number(event.target.value))} /></label>
+              <label className="style-range">Önizleme ölçeği <strong>%{design.previewScale}</strong><input type="range" min="75" max="125" value={design.previewScale} onChange={(event) => updateSettings('previewScale', Number(event.target.value))} /></label>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Ruler size={17} /></div>
+                <div><span>ÖLÇÜ</span><strong>Müşteri ölçüsünü belirle</strong></div>
+              </div>
+
+              <div className="custom-size-pro">
+                <div className="custom-size-pro__field">
+                  <span>GENİŞLİK</span>
+                  <div>
+                    <input
+                      type="number"
+                      min="30"
+                      max="500"
+                      value={design.customWidth}
+                      onChange={(event) => updateSettings('customWidth', Math.max(30, Math.min(500, Number(event.target.value) || 30)))}
+                    />
+                    <b>cm</b>
+                  </div>
+                </div>
+
+                <div className="custom-size-pro__x">×</div>
+
+                <div className="custom-size-pro__field">
+                  <span>YÜKSEKLİK</span>
+                  <div>
+                    <input
+                      type="number"
+                      min="15"
+                      max="250"
+                      value={design.customHeight}
+                      onChange={(event) => updateSettings('customHeight', Math.max(15, Math.min(250, Number(event.target.value) || 15)))}
+                    />
+                    <b>cm</b>
+                  </div>
+                </div>
+              </div>
+
+              <div className="size-live-info">
+                <span>ÖNİZLEME ÖLÇEK ORANI</span>
+                <strong>{Math.round((design.customWidth / Math.max(design.customHeight, 1)) * 10) / 10} : 1</strong>
+              </div>
+              <p className="control-helper">30–500 cm genişlik, 15–250 cm yükseklik. Üretim ölçüsü sipariş öncesi teyit edilir.</p>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><ImageIcon size={17} /></div>
+                <div><span>ZEMİN</span><strong>Arka plaka</strong></div>
+              </div>
+              <div className="background-grid">
+                {backgrounds.map((background) => (
+                  <button key={background.id} type="button" className={`background-option ${design.background.id === background.id ? 'is-active' : ''}`} onClick={() => chooseBackground(background)}>
+                    <span className={`background-swatch background-swatch--${background.className}`}>
+                      {background.id !== 'none' && <i />}
+                    </span>
+                    <span>
+                      <strong>{background.name}</strong>
+                      <small>{background.short}</small>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Sparkles size={17} /></div>
+                <div><span>İKON</span><strong>Hazır sembol ekle</strong></div>
+              </div>
+              <div className="icon-grid">
+                {iconLibrary.map((icon) => (
+                  <button key={icon.id} type="button" className={design.icon === icon.id ? 'is-active' : ''} onClick={() => chooseIcon(icon.id)} title={icon.label}>
+                    <span style={{ color: design.iconColor.value }}>{icon.char || '—'}</span>
+                    <small>{icon.label}</small>
+                  </button>
+                ))}
+              </div>
+              {design.icon !== 'none' && (
+                <>
+                  <div className="icon-placement">
+                    <button type="button" className={design.iconPlacement === 'before' ? 'is-active' : ''} onClick={() => updateSettings('iconPlacement', 'before')}>Önce</button>
+                    <button type="button" className={design.iconPlacement === 'after' ? 'is-active' : ''} onClick={() => updateSettings('iconPlacement', 'after')}>Sonra</button>
+                  </div>
+                  <div className="mini-palette">
+                    {neonColors.map((color) => (
+                      <button key={color.name} type="button" className={design.iconColor.name === color.name ? 'is-active' : ''} style={{ background: color.value, boxShadow: `0 0 8px ${color.value}` }} onClick={() => updateSettings('iconColor', color)} aria-label={color.name} />
+                    ))}
+                  </div>
+                  <label className="style-range">İkon boyutu <strong>%{design.iconSize}</strong><input type="range" min="60" max="140" value={design.iconSize} onChange={(event) => updateSettings('iconSize', Number(event.target.value))} /></label>
+                </>
+              )}
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><Upload size={17} /></div>
+                <div><span>LOGO / GÖRSEL</span><strong>Logonu sahneye yerleştir</strong></div>
+              </div>
+
+              <input ref={fileInputRef} hidden type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onChange={handleLogoUpload} />
+
+              {!design.logo ? (
+                <button type="button" className="upload-dropzone" onClick={() => fileInputRef.current?.click()}>
+                  <span className="upload-dropzone__icon"><Upload size={20} /></span>
+                  <strong>Logo / görsel yükle</strong>
+                  <small>PNG, JPG, WEBP veya SVG • Maks. 5 MB</small>
+                </button>
+              ) : (
+                <>
+                  <div className="uploaded-file uploaded-file--pro">
+                    <div>
+                      <img src={design.logo} alt="Logo önizleme" />
+                      <span>{design.logoName || 'Logo'}</span>
+                    </div>
+                    <div className="uploaded-file__actions">
+                      <button type="button" onClick={() => fileInputRef.current?.click()}><Upload size={13} /></button>
+                      <button type="button" onClick={() => updateSettings('logo', '')}><X size={14} /></button>
+                    </div>
+                  </div>
+
+                  <div className="logo-stage-help">
+                    <Move size={13} /> Logoyu önizlemede doğrudan sürükleyebilir veya aşağıdaki konumlardan seçebilirsin.
+                  </div>
+
+                  <div className="logo-position-grid">
+                    {[
+                      ['sol-üst', 15, 15],
+                      ['üst', 50, 15],
+                      ['sağ-üst', 85, 15],
+                      ['sol', 15, 50],
+                      ['orta', 50, 50],
+                      ['sağ', 85, 50],
+                      ['sol-alt', 15, 85],
+                      ['alt', 50, 85],
+                      ['sağ-alt', 85, 85],
+                    ].map(([label, x, y]) => (
+                      <button
+                        key={label}
+                        type="button"
+                        className={Math.abs(design.logoX - x) < 1 && Math.abs(design.logoY - y) < 1 ? 'is-active' : ''}
+                        onClick={() => {
+                          updateSettings('logoX', x)
+                          updateSettings('logoY', y)
+                        }}
+                        title={label}
+                      >
+                        <span style={{ left: `${x}%`, top: `${y}%` }} />
+                      </button>
+                    ))}
+                  </div>
+
+                  <label className="style-range">Logo boyutu <strong>%{design.logoSize}</strong><input type="range" min="35" max="220" value={design.logoSize} onChange={(event) => updateSettings('logoSize', Number(event.target.value))} /></label>
+
+                  <div className="logo-position-readout">
+                    <span>X %{Math.round(design.logoX)}</span>
+                    <span>Y %{Math.round(design.logoY)}</span>
+                    <span>%{design.logoSize} boyut</span>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="control-section">
+              <div className="control-section__title">
+                <div className="control-icon"><ShoppingCart size={17} /></div>
+                <div><span>ADET</span><strong>{design.quantity} adet</strong></div>
+              </div>
+              <div className="quantity-selector">
+                <button type="button" onClick={() => updateSettings('quantity', Math.max(1, design.quantity - 1))}><Minus size={15} /></button>
+                <strong>{design.quantity}</strong>
+                <button type="button" onClick={() => updateSettings('quantity', design.quantity + 1)}><Plus size={15} /></button>
+              </div>
+            </div>
+
+            <div className="designer-summary">
+              <div><span>TASARIM</span><strong>{previewLines.length} satır / {totalWords} kelime</strong></div>
+              <div><span>ÖLÇÜ</span><strong>{sizeLabel}</strong></div>
+              <div><span>ZEMİN</span><strong>{design.background.name}</strong></div>
+              <div className="designer-summary__price"><span>TAHMİNİ FİYAT</span><strong>{formatPrice(estimatedPrice)}</strong></div>
+            </div>
+
+            {productionWarnings.length > 0 && (
+              <div className="production-warning">
+                <strong>ÜRETİM KONTROLÜ</strong>
+                {productionWarnings.map((warning) => <span key={warning}>• {warning}</span>)}
+              </div>
+            )}
+
+            <div className="save-design-row">
+              <input value={saveName} onChange={(event) => setSaveName(event.target.value)} placeholder="Tasarım adı..." />
+              <button type="button" onClick={saveDesign}><Save size={15} /> Kaydet</button>
+            </div>
+
+            <button type="button" className="designer-cart-button" onClick={addDesignToCart} disabled={!previewLines.length}><ShoppingCart size={18} /> Sepete Ekle <ArrowRight size={17} /></button>
+
+            <div className="designer-whatsapp-grid">
+              <button type="button" className="designer-whatsapp" onClick={() => sendWhatsApp('905439103247')} disabled={!previewLines.length}><MessageCircle size={16} /> WhatsApp 1</button>
+              <button type="button" className="designer-whatsapp" onClick={() => sendWhatsApp('905439103246')} disabled={!previewLines.length}><MessageCircle size={16} /> WhatsApp 2</button>
+            </div>
+
+            <p className="designer-note">Fiyat ön bilgilendirme amaçlıdır. Nihai üretim fiyatı seçilen ölçü, malzeme ve tasarımın teknik uygunluğuna göre netleştirilir.</p>
+          </aside>
+        </section>
+      </div>
+
+      {fullscreen && (
+        <div className="designer-fullscreen">
+          <button type="button" className="designer-fullscreen__close" onClick={() => setFullscreen(false)}><X size={16} /> Kapat</button>
+          <div className="designer-fullscreen__scene">
+            <img src={design.selectedEnvironment.image} alt={design.selectedEnvironment.name} />
+            <div className="designer-fullscreen__overlay" />
+            <div className={`designer-mount designer-mount--${design.background.className}`}>
+              {design.logo && (
+                <img
+                  src={design.logo}
+                  alt="Logo"
+                  className="designer-uploaded-logo"
+                  style={{
+                    left: `${design.logoX}%`,
+                    top: `${design.logoY}%`,
+                    width: `${110 * ((design.logoSize || 100) / 100)}px`,
+                  }}
+                />
+              )}
+              {renderNeonLines(true)}
+            </div>
+          </div>
+        </div>
+      )}
+    </main>
+  )
+}
+
+function LayersIconFallback() {
+  return <SlidersHorizontal size={17} />
+}
+
+function CopyIconFallback() {
+  return <span className="copy-fallback">⧉</span>
+}
+
+function SunIconFallback() {
+  return <span className="sun-fallback">☼</span>
+}
+
+export default Designer
