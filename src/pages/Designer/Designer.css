@@ -550,574 +550,209 @@
 }
 
 /* =========================================================
-   TWINSLED MOBILE WORKSPACE — PRO
-   Amaç:
-   - Canlı önizleme yazı yazarken görünür kalır.
-   - Kontroller normal akışta kalır.
-   - "Duvarını seç" preview'ın altında kapanmaz.
-   - Küçük telefonlarda klavye açıldığında alan mümkün olduğunca
-     verimli kullanılır.
+   TWINSLED FINAL MOBILE LAYOUT
+   Masaüstü stilleri yukarıdaki taban CSS'ten korunur.
+   Mobilde yalnızca canlı önizleme viewport'a sabitlenir.
+   Ölçü / logo / ortam / diğer kontroller normal akışta kalır.
    ========================================================= */
 
 @media (max-width: 760px) {
-  :root {
-    --tw-mobile-navbar: 64px;
-    --tw-preview-bar: 42px;
-    --tw-preview-height: 210px;
-    --tw-mobile-gap: 10px;
-  }
-
   .designer-page {
-    padding: 72px 10px 40px;
-    overflow-x: clip;
+    overflow-x: hidden;
   }
 
-  .designer-header {
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .designer-header h1 {
-    font-size: clamp(28px, 8.5vw, 38px);
-    line-height: .98;
-    letter-spacing: -.03em;
-  }
-
-  .designer-header p {
-    max-width: 620px;
-    font-size: 10px;
-    line-height: 1.5;
-  }
-
-  .designer-header__actions {
-    gap: 6px;
-  }
-
-  .designer-tabs {
-    position: sticky;
-    top: var(--tw-mobile-navbar);
-    z-index: 90;
-    margin-bottom: 10px;
-    padding: 3px;
-    background: rgba(7,10,14,.90);
-    border: 1px solid rgba(255,255,255,.06);
-    box-shadow: 0 8px 24px rgba(0,0,0,.22);
-    backdrop-filter: blur(16px);
-  }
-
-  .designer-workspace {
-    display: block;
+  .designer {
     width: 100%;
   }
 
-  /* =========================
-     LIVE PREVIEW
-     ========================= */
-
-  .designer-preview-card {
-    position: relative;
-    width: 100%;
-    margin: 0 0 12px;
-    overflow: visible;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-  }
-
-  .designer-preview-card__top {
-    position: sticky;
-    top: calc(var(--tw-mobile-navbar) + 46px);
-    z-index: 85;
-    min-height: var(--tw-preview-bar);
-    height: var(--tw-preview-bar);
-    padding: 5px 8px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-
-    border: 1px solid rgba(255,255,255,.08);
-    border-bottom: 0;
-    border-radius: 14px 14px 0 0;
-
-    background: rgba(7,10,14,.94);
-    box-shadow: 0 8px 18px rgba(0,0,0,.28);
-    backdrop-filter: blur(18px);
-  }
-
-  .designer-preview-card__status {
-    min-width: 0;
-    gap: 6px;
-    font-size: 6px;
-    letter-spacing: .14em;
-    white-space: nowrap;
-  }
-
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    flex: 0 0 auto;
-  }
-
-  .designer-preview-card__top-controls {
-    width: auto;
-    gap: 4px;
-    flex: 0 0 auto;
-  }
-
-  .designer-preview-card__top-controls > button {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
-  }
-
-  .preview-mode-switch {
-    gap: 1px;
-    padding: 2px;
-  }
-
-  .preview-mode-switch button {
-    min-height: 24px;
-    padding: 5px 6px;
-    font-size: 5px;
-  }
-
-  /* The only sticky visual area.
-     Environment selector stays in normal document flow. */
-  .designer-scene,
-  .designer-scene--mobile {
-    position: sticky;
-    top: calc(var(--tw-mobile-navbar) + var(--tw-preview-bar) + 46px);
-    z-index: 80;
-
-    width: 100%;
-    max-width: none;
-    height: var(--tw-preview-height);
-    min-height: 0;
-    aspect-ratio: auto;
-
-    border: 1px solid rgba(255,255,255,.08);
-    border-top: 0;
-    border-radius: 0 0 14px 14px;
-
-    overflow: hidden;
-    background: #11151b;
-    box-shadow:
-      0 12px 30px rgba(0,0,0,.34),
-      0 1px 0 rgba(255,255,255,.03) inset;
-  }
-
-  .designer-mount {
-    padding: 5% 7%;
-  }
-
-  .designer-neon {
-    width: 100%;
-    max-width: 92%;
-    max-height: 74%;
-  }
-
-  .designer-neon__line {
-    line-height: .96;
-  }
-
-  .designer-scene__environment {
-    left: 8px;
-    bottom: 8px;
-    transform: scale(.82);
-    transform-origin: bottom left;
-  }
-
-  .designer-scene__scale {
-    right: 8px;
-    bottom: 8px;
-    transform: scale(.82);
-    transform-origin: bottom right;
-  }
-
-  /* =========================
-     ENVIRONMENT SELECTOR
-     ========================= */
-
-  .environment-selector {
-    position: relative;
-    z-index: 1;
-
-    margin-top: 0;
-    padding: 12px;
-    border: 1px solid rgba(255,255,255,.07);
-    border-top: 0;
-    border-radius: 0 0 14px 14px;
-
-    background: rgba(8,11,15,.96);
-    box-shadow: 0 12px 24px rgba(0,0,0,.18);
-  }
-
-  .environment-selector__heading {
-    margin-bottom: 9px;
-  }
-
-  .environment-selector__heading strong {
-    font-size: 13px;
-  }
-
-  .environment-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 6px;
-  }
-
-  .environment-item {
-    width: 100%;
-    height: 62px;
-    min-width: 0;
-  }
-
-  .environment-item span {
-    font-size: 6px;
-    line-height: 1.1;
-  }
-
-  /* =========================
-     CONTROLS
-     ========================= */
-
-  .designer-controls {
-    position: relative;
-    width: 100%;
-    max-width: none;
-    margin-top: 12px;
-    overflow: visible;
-    border-radius: 16px;
-  }
-
-  .controls-heading {
-    padding: 16px 14px;
-  }
-
-  .control-section {
-    scroll-margin-top: calc(
-      var(--tw-mobile-navbar) +
-      var(--tw-preview-bar) +
-      var(--tw-preview-height) +
-      22px
-    );
-    padding: 14px;
-  }
-
-  .control-section:first-of-type {
-    scroll-margin-top: calc(
-      var(--tw-mobile-navbar) +
-      var(--tw-preview-bar) +
-      var(--tw-preview-height) +
-      22px
-    );
-  }
-
-  /* Avoid iOS/Android zoom when focusing text fields. */
-  .text-input-wrapper textarea,
-  .font-search,
-  .control-section input,
-  .control-section select {
-    font-size: 16px;
-  }
-
-  .text-input-wrapper textarea {
-    min-height: 92px;
-    line-height: 1.45;
-    padding: 12px;
-  }
-
-  .font-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .color-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .designer-summary {
-    margin-left: 14px;
-    margin-right: 14px;
-  }
-
-  .designer-cart-button,
-  .designer-whatsapp {
-    width: calc(100% - 28px);
-    margin-left: 14px;
-    margin-right: 14px;
-  }
-
-  .designer-note {
-    margin-left: 14px;
-    margin-right: 14px;
-  }
-}
-
-@media (max-width: 520px) {
-  :root {
-    --tw-mobile-navbar: 58px;
-    --tw-preview-bar: 40px;
-    --tw-preview-height: 186px;
-  }
-
-  .designer-page {
-    padding: 66px 8px 34px;
-  }
-
-  .designer-header h1 {
-    font-size: clamp(27px, 9vw, 34px);
-  }
-
-  .designer-header p {
-    font-size: 9px;
-  }
-
-  .designer-tabs {
-    top: var(--tw-mobile-navbar);
-  }
-
-  .designer-preview-card__top {
-    top: calc(var(--tw-mobile-navbar) + 44px);
-    min-height: var(--tw-preview-bar);
-    height: var(--tw-preview-bar);
-    padding: 4px 7px;
-  }
-
-  .designer-preview-card__status span:last-child {
-    max-width: 92px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .designer-preview-card__top-controls > button {
-    width: 26px;
-    height: 26px;
-    min-width: 26px;
-  }
-
-  .preview-mode-switch button {
-    min-height: 22px;
-    padding: 4px 5px;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    top: calc(var(--tw-mobile-navbar) + var(--tw-preview-bar) + 44px);
-    height: var(--tw-preview-height);
-  }
-
-  .designer-mount {
-    padding: 5% 6%;
-  }
-
-  .designer-neon {
-    max-width: 94%;
-    max-height: 72%;
-  }
-
-  .designer-scene__environment,
-  .designer-scene__scale {
-    transform: scale(.74);
-  }
-
-  .environment-selector {
-    padding: 10px;
-  }
-
-  .environment-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-  }
-
-  .environment-item {
-    height: 74px;
-  }
-
-  .font-grid,
-  .color-grid,
-  .background-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .icon-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .style-row--split {
-    grid-template-columns: 1fr;
-  }
-
-  .size-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .text-input-wrapper textarea {
-    min-height: 88px;
-  }
-
-  .designer-toast {
-    top: 64px;
-    left: 8px;
-    right: 8px;
-    justify-content: center;
-  }
-}
-
-/* Very small phones: keep the preview compact enough to leave
-   actual editing space above the keyboard. */
-@media (max-width: 380px) {
-  :root {
-    --tw-preview-height: 168px;
-  }
-
-  .designer-preview-card__status {
-    display: none;
-  }
-
-  .designer-preview-card__top {
-    justify-content: flex-end;
-  }
-
-  .environment-item {
-    height: 68px;
-  }
-}
-
-/* =========================================================
-   TWINSLED MOBILE — FIXED LIVE PREVIEW v2
-   ========================================================= */
-@media (max-width: 760px) {
   .designer-workspace {
     display: block;
     position: relative;
   }
 
+  /*
+    Preview kartının kendisini değil, sadece üst bar + sahneyi
+    viewport'a sabitliyoruz. Böylece "Duvarını seç", ölçü,
+    logo ve diğer kontroller layout'tan kopmuyor.
+  */
   .designer-preview-card {
-    position: static;
-    width: 100%;
-    margin: 0 0 18px;
-    overflow: visible;
+    position: static !important;
+    overflow: visible !important;
+    margin-bottom: 18px;
     background: transparent;
-    border: 0;
     box-shadow: none;
     backdrop-filter: none;
   }
 
   .designer-preview-card__top {
     position: fixed !important;
-    top: 56px;
+    top: 54px;
     left: 10px;
     right: 10px;
-    z-index: 1000;
-    min-height: 40px;
+    z-index: 1200;
+
+    min-height: 42px;
     padding: 6px 9px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 14px 14px 0 0;
-    background: rgba(6,9,13,.97);
-    box-shadow: 0 8px 26px rgba(0,0,0,.38);
+
+    background: rgba(6,9,13,.96);
+    box-shadow: 0 8px 24px rgba(0,0,0,.38);
     backdrop-filter: blur(16px);
+  }
+
+  .designer-preview-card__status {
+    font-size: 7px;
+    gap: 6px;
   }
 
   .designer-preview-card__top-controls {
     width: auto;
-    flex: 0 0 auto;
     gap: 4px;
+    flex-shrink: 0;
   }
 
   .designer-preview-card__top-controls > button {
-    width: 28px;
-    height: 28px;
-    min-width: 28px;
+    width: 29px;
+    height: 29px;
+    min-width: 29px;
   }
 
+  .preview-mode-switch button {
+    padding: 6px 7px;
+    font-size: 6px;
+  }
+
+  /*
+    Canlı önizleme gerçekten viewport'a sabit.
+    Klavye açılsa bile input yazılırken preview görünür.
+  */
   .designer-scene,
   .designer-scene--mobile {
     position: fixed !important;
     top: 96px;
     left: 10px;
     right: 10px;
-    z-index: 999;
+
+    z-index: 1190;
+
     width: auto;
-    min-height: 0;
     max-width: none;
+    min-height: 0 !important;
     margin: 0;
-    aspect-ratio: auto;
-    height: min(36vh, 245px);
+
+    height: min(32vh, 230px);
+    aspect-ratio: auto !important;
+
     overflow: hidden;
     border: 1px solid rgba(255,255,255,.08);
     border-top: 0;
     border-radius: 0 0 16px 16px;
+
     background: #11151b;
-    box-shadow: 0 18px 42px rgba(0,0,0,.45);
+    box-shadow: 0 18px 42px rgba(0,0,0,.44);
   }
 
   .designer-scene--mobile {
-    height: min(39vh, 285px);
+    height: min(36vh, 255px);
   }
 
+  /*
+    Fixed preview içerik üzerinde örtü oluşturmasın diye
+    preview kartının normal akışında aynı kadar boşluk bırak.
+  */
   .designer-preview-card::before {
     content: "";
     display: block;
-    height: calc(min(36vh, 245px) + 84px);
+    height: calc(min(32vh, 230px) + 84px);
   }
 
   .designer-preview-card:has(.designer-scene--mobile)::before {
-    height: calc(min(39vh, 285px) + 84px);
+    height: calc(min(36vh, 255px) + 84px);
   }
 
   .designer-mount {
-    padding: 7% 8%;
+    padding: 6% 7%;
   }
 
   .designer-neon {
-    width: 100%;
-    max-width: 92%;
-    max-height: 80%;
+    width: 94%;
+    max-width: 94%;
+    max-height: 88%;
+    overflow: visible !important;
   }
 
   .designer-neon__line {
-    line-height: .98;
+    line-height: .9;
+    padding: 0;
   }
 
+  /*
+    Sahne üzerindeki DUVAR / ÖLÇÜ kartları sahnenin içinde kalır.
+    Bunları fixed panelin dışına taşımıyoruz.
+  */
+  .designer-scene__environment,
+  .designer-scene__scale {
+    z-index: 20;
+    transform: scale(.84);
+  }
+
+  .designer-scene__environment {
+    left: 8px;
+    bottom: 8px;
+    transform-origin: bottom left;
+  }
+
+  .designer-scene__scale {
+    right: 8px;
+    bottom: 8px;
+    transform-origin: bottom right;
+  }
+
+  /*
+    Yüklenen logo sahnenin kendi koordinat sisteminde kalır.
+    Böylece logo gerçekten sahnenin üzerinde durur.
+  */
+  .designer-uploaded-logo {
+    z-index: 25;
+    max-width: 22%;
+    max-height: 62px;
+  }
+
+  /*
+    Ortam / duvar seçici, ölçüler, logo, zemin ve diğer
+    kontroller normal scroll akışında kalır.
+  */
   .environment-selector {
     position: relative;
-    z-index: 20;
-    width: 100%;
-    margin-top: 0;
-    background: rgba(7,10,14,.98);
-    border: 1px solid rgba(255,255,255,.06);
-    border-radius: 16px;
-    box-shadow: 0 12px 30px rgba(0,0,0,.22);
-  }
-
-  .environment-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 6px;
-  }
-
-  .designer-controls {
-    position: static;
-    width: 100%;
-    max-width: none;
-    margin-top: 14px;
+    z-index: 30;
     overflow: visible;
   }
 
+  .designer-controls {
+    position: static !important;
+    width: 100%;
+    max-width: none;
+    overflow: visible;
+    margin-top: 14px;
+  }
+
   .text-input-wrapper textarea {
-    min-height: 92px;
+    min-height: 88px;
     font-size: 16px;
     line-height: 1.35;
   }
 
+  /* iOS/Android'te input odaklanınca gereksiz zoom olmasın. */
+  .designer input,
+  .designer textarea,
+  .designer select {
+    font-size: 16px;
+  }
+
   .control-section {
-    scroll-margin-top: 112px;
+    scroll-margin-top: 110px;
   }
 }
 
@@ -1128,119 +763,76 @@
   }
 
   .designer-preview-card__top {
-    top: 52px;
+    top: 50px;
     left: 9px;
     right: 9px;
+    min-height: 40px;
+    padding: 5px 8px;
   }
 
   .designer-scene,
   .designer-scene--mobile {
-    top: 92px;
+    top: 90px;
     left: 9px;
     right: 9px;
   }
 
   .designer-scene {
-    height: min(34vh, 220px);
+    height: min(31vh, 210px);
   }
 
   .designer-scene--mobile {
-    height: min(37vh, 255px);
+    height: min(35vh, 240px);
   }
 
   .designer-preview-card::before {
-    height: calc(min(34vh, 220px) + 78px);
+    height: calc(min(31vh, 210px) + 76px);
   }
 
   .designer-preview-card:has(.designer-scene--mobile)::before {
-    height: calc(min(37vh, 255px) + 78px);
-  }
-
-  .environment-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .environment-item {
-    height: 72px;
+    height: calc(min(35vh, 240px) + 76px);
   }
 
   .designer-neon {
-    max-width: 90%;
+    width: 92%;
+    max-width: 92%;
+  }
+
+  .designer-scene__environment,
+  .designer-scene__scale {
+    transform: scale(.75);
+  }
+
+  .designer-scene__environment {
+    left: 6px;
+    bottom: 6px;
+  }
+
+  .designer-scene__scale {
+    right: 6px;
+    bottom: 6px;
+  }
+
+  .designer-uploaded-logo {
+    max-width: 24%;
+    max-height: 52px;
   }
 
   .designer-preview-card__top-controls > button {
-    width: 26px;
-    height: 26px;
-    min-width: 26px;
+    width: 27px;
+    height: 27px;
+    min-width: 27px;
+  }
+
+  .preview-mode-switch button {
+    padding: 5px 6px;
   }
 }
+
 
 /* =========================================================
-   TWINSLED DESIGNER FINAL — MULTI-LINE PREVIEW
-   ========================================================= */
-
-.designer-neon {
-  overflow: visible !important;
-  max-height: none !important;
-  width: 100%;
-  min-width: 0;
-}
-
-.designer-neon__line {
-  flex: 0 0 auto;
-  min-height: 0;
-  overflow: visible;
-  width: 100%;
-  line-height: .96;
-  padding: 1px 0;
-}
-
-@media (max-width: 760px) {
-  .designer-neon {
-    width: 96%;
-    max-width: 96%;
-  }
-
-  .designer-neon__line {
-    line-height: .9;
-    padding: 0;
-  }
-
-  /* Üç satır ve üzeri tasarımlarda yazının tamamı preview içinde kalır. */
-  .designer-scene {
-    height: min(36vh, 245px);
-  }
-
-  .designer-scene--mobile {
-    height: min(39vh, 275px);
-  }
-}
-
-@media (max-width: 520px) {
-  .designer-neon {
-    width: 94%;
-    max-width: 94%;
-  }
-
-  .designer-neon__line {
-    line-height: .86;
-  }
-
-  .designer-scene {
-    height: min(35vh, 225px);
-  }
-
-  .designer-scene--mobile {
-    height: min(38vh, 250px);
-  }
-}
-
-/* =========================================================
-   TWINSLED — TURKISH GLYPHS / SAME-FONT CONSTRUCTION
-   Türkçe karakterin ana harfini seçilen neon fontundan,
-   nokta/çentik/umlaut kısmını ise küçük Unicode fallback
-   glyph'inden oluşturur. Böylece kelimenin ana harfi başka
-   fonta düşmez.
+   TURKISH GLYPH OVERLAY
+   JSX tarafındaki İ/Ş/Ğ/Ç/Ö/Ü bileşik karakter render'ı.
    ========================================================= */
 
 .designer-neon__turkish-glyph {
@@ -1259,38 +851,40 @@
 
 .designer-neon__turkish-glyph-mark {
   position: absolute;
-  z-index: 2;
   left: 50%;
+  z-index: 2;
+
   font-family: "Noto Sans", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1;
   color: inherit;
   text-shadow: inherit;
+
   pointer-events: none;
   user-select: none;
   transform: translateX(-50%);
 }
 
 .designer-neon__turkish-glyph--dot .designer-neon__turkish-glyph-mark {
-  top: -0.34em;
+  top: -.34em;
   font-size: .28em;
 }
 
 .designer-neon__turkish-glyph--umlaut .designer-neon__turkish-glyph-mark {
-  top: -0.30em;
+  top: -.30em;
   font-size: .34em;
   letter-spacing: -.12em;
   transform: translateX(-50%) scaleX(.9);
 }
 
 .designer-neon__turkish-glyph--breve .designer-neon__turkish-glyph-mark {
-  top: -0.27em;
+  top: -.27em;
   font-size: .36em;
 }
 
 .designer-neon__turkish-glyph--cedilla .designer-neon__turkish-glyph-mark {
-  bottom: -0.26em;
+  bottom: -.26em;
   font-size: .34em;
 }
 
@@ -1305,15 +899,15 @@
 
 @media (max-width: 760px) {
   .designer-neon__turkish-glyph--dot .designer-neon__turkish-glyph-mark {
-    top: -0.31em;
+    top: -.31em;
   }
 
   .designer-neon__turkish-glyph--umlaut .designer-neon__turkish-glyph-mark {
-    top: -0.28em;
+    top: -.28em;
   }
 
   .designer-neon__turkish-glyph--breve .designer-neon__turkish-glyph-mark {
-    top: -0.25em;
+    top: -.25em;
   }
 }
 
