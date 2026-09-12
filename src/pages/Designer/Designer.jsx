@@ -789,7 +789,6 @@ function Designer() {
       `İkon: ${iconLibrary.find((item) => item.id === design.icon)?.label || 'Yok'}${design.icon !== 'none' ? ` (${design.iconPlacement === 'before' ? 'önce' : 'sonra'})` : ''}`,
       `Logo: ${design.logo ? design.logoName || 'Yüklendi' : 'Yok'}`,
       `Adet: ${design.quantity}`,
-      `Tahmini fiyat: ${formatPrice(estimatedPrice)}`,
     ]
 
     return linesForMessage.join('\n')
@@ -1544,7 +1543,6 @@ function Designer() {
               <div><span>TASARIM</span><strong>{previewLines.length} satır / {totalWords} kelime</strong></div>
               <div><span>ÖLÇÜ</span><strong>{sizeLabel}</strong></div>
               <div><span>ZEMİN</span><strong>{design.background.name}</strong></div>
-              <div className="designer-summary__price"><span>TAHMİNİ FİYAT</span><strong>{formatPrice(estimatedPrice)}</strong></div>
             </div>
 
             {productionWarnings.length > 0 && (
@@ -1566,7 +1564,6 @@ function Designer() {
               <button type="button" className="designer-whatsapp" onClick={() => sendWhatsApp('905439103246')} disabled={!previewLines.length}><MessageCircle size={16} /> WhatsApp 2</button>
             </div>
 
-            <p className="designer-note">Fiyat ön bilgilendirme amaçlıdır. Nihai üretim fiyatı seçilen ölçü, malzeme ve tasarımın teknik uygunluğuna göre netleştirilir.</p>
           </aside>
         </section>
       </div>

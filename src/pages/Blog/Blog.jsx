@@ -18,37 +18,45 @@ const articles = [
     id: 1,
     category: 'TWINSLED',
     date: 'MAĞAZA',
-    title: 'Kayseri’de TWINSLED: ışığın adresi',
+    title: 'TWINSLED mağaza atmosferi',
     excerpt:
-      'Neon LED tabela, dekoratif aydınlatma ve özel tasarım çözümlerimizi Kayseri’de yakından keşfedin.',
+      'Neon tabelalardan vitrin uygulamalarına kadar TWINSLED dünyasının gerçek mağaza atmosferinden bir kare.',
     location: 'Kayseri',
-    image:
-      'https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=1200&q=85',
+    image: '/blog/01-twinsled-magaza.jpg',
     accent: 'pink',
   },
   {
     id: 2,
     category: 'NEON LED',
-    date: 'TASARIM',
-    title: 'Bir fikri neon tabelaya dönüştürmek',
+    date: 'İÇ MEKÂN',
+    title: 'Neon ile mekâna karakter katmak',
     excerpt:
-      'Renk, ölçü, yazı karakteri ve formu bir araya getirerek mekâna özel neon tasarımlar oluşturuyoruz.',
-    location: 'TWINSLED Design Studio',
-    image:
-      'https://images.unsplash.com/photo-1558008258-3256797b43f3?auto=format&fit=crop&w=1200&q=85',
+      'Dekoratif neon uygulamaları, renkli ışıklar ve özel tasarımlar bir araya geldiğinde mekânın havası tamamen değişiyor.',
+    location: 'TWINSLED',
+    image: '/blog/02-twinsled-neon-ic-mekan.jpg',
     accent: 'cyan',
   },
   {
     id: 3,
     category: 'AYDINLATMA',
-    date: 'PROJE',
-    title: 'Işığın mekân karakterine etkisi',
+    date: 'VİTRİN',
+    title: 'Görünürlüğü artıran ışıklı cepheler',
     excerpt:
-      'Bir işletmede doğru ışık yalnızca görünürlüğü değil, mekânın atmosferini ve hissini de değiştirir.',
-    location: 'Kayseri / Türkiye',
-    image:
-      'https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=1200&q=85',
+      'Güçlü cephe tasarımı ve doğru aydınlatma, markanın günün her saatinde daha dikkat çekici görünmesini sağlar.',
+    location: 'Kayseri',
+    image: '/blog/03-twinsled-magaza-vitrin.jpg',
     accent: 'purple',
+  },
+  {
+    id: 4,
+    category: 'PROJE',
+    date: 'SHOWROOM',
+    title: 'Neon, tabela ve aydınlatma bir arada',
+    excerpt:
+      'Tabela, neon ve dekoratif aydınlatmanın birlikte kullanıldığı büyük ölçekli bir TWINSLED uygulamasından detaylar.',
+    location: 'Kayseri',
+    image: '/blog/04-twinsled-aydinlatma-showroom.jpg',
+    accent: 'pink',
   },
 ]
 
@@ -57,7 +65,7 @@ const topics = [
     number: '01',
     icon: Store,
     title: 'Mağazalarımız',
-    text: 'Esentepe ve Eski Sanayi noktalarımızı keşfedin.',
+    text: 'Osman Kavuncu ve Eski Sanayi noktalarımızı keşfedin.',
   },
   {
     number: '02',
@@ -147,7 +155,7 @@ function Blog() {
 
               <img
                 src={articles[0].image}
-                alt="Neon aydınlatma atmosferi"
+                alt="TWINSLED mağaza ve neon aydınlatma"
               />
 
               <div className="blog-photo__scan" />
@@ -218,13 +226,13 @@ function Blog() {
 
               <img
                 src={articles[0].image}
-                alt="TWINSLED neon tasarım"
+                alt="TWINSLED gerçek proje fotoğrafı"
               />
 
               <div className="blog-main-card__overlay" />
 
               <div className="blog-main-card__number">
-                01 / 03
+                01 / 04
               </div>
 
             </div>
@@ -294,7 +302,7 @@ function Blog() {
               <p>
                 TWINSLED'in Kayseri'deki iki şube yapısını
                 blog tarafında da görünür hale getiriyoruz.
-                Esentepe ve Eski Sanayi noktaları için
+                Osman Kavuncu ve Eski Sanayi noktaları için
                 gerçek mağaza fotoğrafları kullanılabilecek
                 şekilde tasarım alanları hazırlandı.
               </p>
@@ -303,7 +311,7 @@ function Blog() {
 
                 <div>
                   <strong>01</strong>
-                  <span>ESENTEPE</span>
+                  <span>OSMAN KAVUNCU</span>
                 </div>
 
                 <div>
@@ -328,18 +336,18 @@ function Blog() {
 
               <div className="blog-store-image blog-store-image--one">
                 <img
-                  src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1000&q=85"
+                  src="/blog/01-twinsled-magaza.jpg"
                   alt="Mağaza atmosferi"
                 />
-                <span>ESENTEPE / 01</span>
+                <span>TWINSLED / 01</span>
               </div>
 
               <div className="blog-store-image blog-store-image--two">
                 <img
-                  src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=85"
+                  src="/blog/02-twinsled-neon-ic-mekan.jpg"
                   alt="Çalışma alanı"
                 />
-                <span>ESKİ SANAYİ / 02</span>
+                <span>TWINSLED / 02</span>
               </div>
 
             </div>
@@ -369,7 +377,7 @@ function Blog() {
             </div>
 
             <span className="blog-counter">
-              03 STORIES
+              04 STORIES
             </span>
 
           </div>

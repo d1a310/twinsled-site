@@ -278,9 +278,9 @@ function Contact() {
             </div>
 
             <p>
-              TWINSLED'in iki farklı noktası için şimdilik
-              ilçe/bölge seviyesinde bilgileri gösteriyoruz.
-              Doğrulanmamış sokak ve kapı numarası kullanmıyoruz.
+              TWINSLED'in iki farklı noktasını şimdilik
+              bölge seviyesinde gösteriyoruz. Doğrulanmamış
+              sokak ve kapı numarası paylaşmıyoruz.
             </p>
 
           </div>
@@ -296,8 +296,8 @@ function Contact() {
 
                 <div className="contact-location-sign">
                   <span>TWINSLED / 01</span>
-                  <strong>ESENTEPE</strong>
-                  <small>MELİKGAZİ / KAYSERİ</small>
+                  <strong>OSMAN KAVUNCU</strong>
+                  <small>KAYSERİ</small>
                 </div>
 
                 <div className="contact-location-card__grid" />
@@ -311,15 +311,14 @@ function Contact() {
                   <span>TWINSLED</span>
                 </div>
 
-                <h3>Esentepe</h3>
+                <h3>Osman Kavuncu</h3>
 
                 <p>
-                  Kayseri / Melikgazi, Esentepe bölgesindeki
-                  TWINSLED noktası.
+                  TWINSLED'in Osman Kavuncu bölgesindeki çalışma noktası.
                 </p>
 
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=TWINSLED+Esentepe+Kayseri"
+                  href="https://www.google.com/maps/search/?api=1&query=TWINSLED+Osman+Kavuncu+Kayseri"
                   target="_blank"
                   rel="noreferrer"
                   className="contact-location-link"

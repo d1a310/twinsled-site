@@ -6,17 +6,9 @@ import {
   Trash2,
   X,
 } from 'lucide-react'
-
 import { useCart } from '../../context/CartContext'
 import './Cart.css'
 
-function formatPrice(value) {
-  return new Intl.NumberFormat('tr-TR', {
-    style: 'currency',
-    currency: 'TRY',
-    maximumFractionDigits: 0,
-  }).format(Number(value) || 0)
-}
 
 function getLineColor(item, index) {
   if (Array.isArray(item.colors) && item.colors[index]) {
@@ -34,15 +26,12 @@ function getLineFont(item, index) {
   return null
 }
 
-function getWordStyles(item, lineIndex) {
-  if (
-    Array.isArray(item.wordStyles) &&
-    Array.isArray(item.wordStyles[lineIndex])
-  ) {
-    return item.wordStyles[lineIndex]
+function getLineText(item, index) {
+  if (Array.isArray(item.lines) && item.lines[index]) {
+    return item.lines[index]
   }
 
-  return []
+  return ''
 }
 
 function isCustomDesign(item) {
@@ -61,7 +50,6 @@ function Cart({
     removeFromCart,
     updateQuantity,
     totalItems,
-    totalPrice,
   } = useCart()
 
   const increase = (item) => {
@@ -82,14 +70,73 @@ function Cart({
     )
   }
 
-  const goToCheckout = () => {
+  const sendWhatsApp = () => {
     if (!cart.length) {
       return
     }
 
-    onClose()
+    const messageLines = [
+      'Merhaba, NEONLAB üzerinden sipariş vermek istiyorum.',
+      '',
+    ]
 
-    window.location.href = '/checkout'
+    cart.forEach((item, index) => {
+      messageLines.push(
+        `${index + 1}. ${item.name}`,
+      )
+
+      if (isCustomDesign(item)) {
+        messageLines.push('Özel Tasarım Detayları:')
+
+        item.lines.forEach((line, lineIndex) => {
+          const color = getLineColor(
+            item,
+            lineIndex,
+          )
+
+          const font = getLineFont(
+            item,
+            lineIndex,
+          )
+
+          messageLines.push(
+            `${lineIndex + 1}. ${line}`,
+          )
+
+          messageLines.push(
+            `   Renk: ${color?.name || '-'}`,
+          )
+
+          messageLines.push(
+            `   Font: ${font?.name || '-'}`,
+          )
+        })
+      } else {
+        messageLines.push(
+          `Renk: ${item.color?.name || '-'}`,
+        )
+      }
+
+      messageLines.push(
+        `Ölçü: ${item.size?.value || '-'}`,
+      )
+
+      messageLines.push(
+        `Adet: ${item.quantity}`,
+      )
+
+
+      messageLines.push('')
+    })
+
+
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(
+        messageLines.join('\n'),
+      )}`,
+      '_blank',
+      'noopener,noreferrer',
+    )
   }
 
   return (
@@ -214,19 +261,13 @@ function Cart({
                                 line,
                                 lineIndex,
                               ) => {
-                                const wordStyles =
-                                  getWordStyles(
-                                    item,
-                                    lineIndex,
-                                  )
-
-                                const fallbackColor =
+                                const color =
                                   getLineColor(
                                     item,
                                     lineIndex,
                                   )
 
-                                const fallbackFont =
+                                const font =
                                   getLineFont(
                                     item,
                                     lineIndex,
@@ -246,78 +287,32 @@ function Cart({
                                         {line}
                                       </strong>
 
-                                      {wordStyles.length > 0 ? (
-                                        <div className="cart-word-styles">
-                                          {wordStyles.map(
-                                            (
-                                              word,
-                                              wordIndex,
-                                            ) => (
-                                              <div
-                                                className="cart-word-style"
-                                                key={`${word.text}-${wordIndex}`}
-                                              >
-                                                <span className="cart-word-style__text">
-                                                  {word.text}
-                                                </span>
-
-                                                <span className="cart-word-style__meta">
-                                                  {word.color && (
-                                                    <span className="cart-word-style__color">
-                                                      <i
-                                                        style={{
-                                                          backgroundColor:
-                                                            word.color.value,
-                                                          boxShadow: `0 0 7px ${word.color.value}`,
-                                                        }}
-                                                      />
-                                                      {word.color.name}
-                                                    </span>
-                                                  )}
-
-                                                  {word.font && (
-                                                    <span
-                                                      className="cart-word-style__font"
-                                                      style={{
-                                                        fontFamily: `"${word.font.family}", sans-serif`,
-                                                      }}
-                                                    >
-                                                      {word.font.name}
-                                                    </span>
-                                                  )}
-                                                </span>
-                                              </div>
-                                            ),
-                                          )}
-                                        </div>
-                                      ) : (
-                                        <div className="cart-custom-line__meta">
-                                          {fallbackColor && (
-                                            <span>
-                                              <i
-                                                style={{
-                                                  backgroundColor:
-                                                    fallbackColor.value,
-                                                  boxShadow: `0 0 7px ${fallbackColor.value}`,
-                                                }}
-                                              />
-
-                                              {fallbackColor.name}
-                                            </span>
-                                          )}
-
-                                          {fallbackFont && (
-                                            <span
-                                              className="cart-custom-line__font"
+                                      <div className="cart-custom-line__meta">
+                                        {color && (
+                                          <span>
+                                            <i
                                               style={{
-                                                fontFamily: `"${fallbackFont.family}", sans-serif`,
+                                                backgroundColor:
+                                                  color.value,
+                                                boxShadow: `0 0 7px ${color.value}`,
                                               }}
-                                            >
-                                              {fallbackFont.name}
-                                            </span>
-                                          )}
-                                        </div>
-                                      )}
+                                            />
+
+                                            {color.name}
+                                          </span>
+                                        )}
+
+                                        {font && (
+                                          <span
+                                            className="cart-custom-line__font"
+                                            style={{
+                                              fontFamily: `"${font.family}", sans-serif`,
+                                            }}
+                                          >
+                                            {font.name}
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
                                 )
@@ -331,6 +326,8 @@ function Cart({
                             <i
                               style={{
                                 backgroundColor:
+                                  item.color?.value,
+                                color:
                                   item.color?.value,
                               }}
                             />
@@ -388,12 +385,6 @@ function Cart({
                             <Plus size={13} />
                           </button>
                         </div>
-
-                        <strong className="cart-item__price">
-                          {formatPrice(
-                            item.totalPrice,
-                          )}
-                        </strong>
                       </div>
                     </div>
                   </article>
@@ -405,27 +396,20 @@ function Cart({
 
         {cart.length > 0 && (
           <div className="cart-drawer__footer">
-            <div className="cart-total">
-              <span>TOPLAM</span>
-
-              <strong>
-                {formatPrice(totalPrice)}
-              </strong>
-            </div>
 
             <button
               type="button"
               className="cart-checkout"
-              onClick={goToCheckout}
+              onClick={sendWhatsApp}
             >
-              Siparişi Tamamla
+              WhatsApp&apos;tan Sipariş Ver
 
               <ArrowRight size={17} />
             </button>
 
             <p className="cart-footer-note">
-              Sipariş bilgilerini bir sonraki
-              adımda tamamlayabilirsiniz.
+              Sipariş detaylarını WhatsApp üzerinden
+              birlikte netleştiriyoruz.
             </p>
           </div>
         )}
