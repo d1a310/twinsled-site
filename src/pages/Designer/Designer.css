@@ -1174,3 +1174,146 @@
     min-width: 26px;
   }
 }
+
+/* =========================================================
+   TWINSLED DESIGNER FINAL — MULTI-LINE PREVIEW
+   ========================================================= */
+
+.designer-neon {
+  overflow: visible !important;
+  max-height: none !important;
+  width: 100%;
+  min-width: 0;
+}
+
+.designer-neon__line {
+  flex: 0 0 auto;
+  min-height: 0;
+  overflow: visible;
+  width: 100%;
+  line-height: .96;
+  padding: 1px 0;
+}
+
+@media (max-width: 760px) {
+  .designer-neon {
+    width: 96%;
+    max-width: 96%;
+  }
+
+  .designer-neon__line {
+    line-height: .9;
+    padding: 0;
+  }
+
+  /* Üç satır ve üzeri tasarımlarda yazının tamamı preview içinde kalır. */
+  .designer-scene {
+    height: min(36vh, 245px);
+  }
+
+  .designer-scene--mobile {
+    height: min(39vh, 275px);
+  }
+}
+
+@media (max-width: 520px) {
+  .designer-neon {
+    width: 94%;
+    max-width: 94%;
+  }
+
+  .designer-neon__line {
+    line-height: .86;
+  }
+
+  .designer-scene {
+    height: min(35vh, 225px);
+  }
+
+  .designer-scene--mobile {
+    height: min(38vh, 250px);
+  }
+}
+
+/* =========================================================
+   TWINSLED — TURKISH GLYPHS / SAME-FONT CONSTRUCTION
+   Türkçe karakterin ana harfini seçilen neon fontundan,
+   nokta/çentik/umlaut kısmını ise küçük Unicode fallback
+   glyph'inden oluşturur. Böylece kelimenin ana harfi başka
+   fonta düşmez.
+   ========================================================= */
+
+.designer-neon__turkish-glyph {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  overflow: visible;
+  vertical-align: baseline;
+}
+
+.designer-neon__turkish-glyph-base {
+  display: inline-block;
+  line-height: 1;
+  font-family: inherit;
+}
+
+.designer-neon__turkish-glyph-mark {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  font-family: "Noto Sans", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  color: inherit;
+  text-shadow: inherit;
+  pointer-events: none;
+  user-select: none;
+  transform: translateX(-50%);
+}
+
+.designer-neon__turkish-glyph--dot .designer-neon__turkish-glyph-mark {
+  top: -0.34em;
+  font-size: .28em;
+}
+
+.designer-neon__turkish-glyph--umlaut .designer-neon__turkish-glyph-mark {
+  top: -0.30em;
+  font-size: .34em;
+  letter-spacing: -.12em;
+  transform: translateX(-50%) scaleX(.9);
+}
+
+.designer-neon__turkish-glyph--breve .designer-neon__turkish-glyph-mark {
+  top: -0.27em;
+  font-size: .36em;
+}
+
+.designer-neon__turkish-glyph--cedilla .designer-neon__turkish-glyph-mark {
+  bottom: -0.26em;
+  font-size: .34em;
+}
+
+.designer-neon__turkish-fallback-glyph {
+  display: inline-block;
+  font-family: "Noto Sans", Arial, sans-serif !important;
+  line-height: 1;
+  vertical-align: baseline;
+  color: inherit;
+  text-shadow: inherit;
+}
+
+@media (max-width: 760px) {
+  .designer-neon__turkish-glyph--dot .designer-neon__turkish-glyph-mark {
+    top: -0.31em;
+  }
+
+  .designer-neon__turkish-glyph--umlaut .designer-neon__turkish-glyph-mark {
+    top: -0.28em;
+  }
+
+  .designer-neon__turkish-glyph--breve .designer-neon__turkish-glyph-mark {
+    top: -0.25em;
+  }
+}
+

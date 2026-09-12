@@ -137,7 +137,20 @@ const customFontFiles = [
   ['WildScript', `https://customneon.com.au/create-neon-sign/css/fonts/custom/WildScript.ttf`],
 ]
 
+const loadTurkishFallbackFonts = () => {
+  const id = 'twinsled-turkish-fallback-fonts'
+  if (document.getElementById(id)) return
+
+  const link = document.createElement('link')
+  link.id = id
+  link.rel = 'stylesheet'
+  link.href = 'https://fonts.googleapis.com/css2?family=Allura&family=Alex+Brush&family=Parisienne&family=Great+Vibes&family=Josefin+Sans&family=Lobster&family=Montserrat&family=Sacramento&family=Playfair+Display&family=Yellowtail&family=Ballet&family=Libre+Baskerville&family=Dancing+Script&family=Italianno&family=Kaushan+Script&family=Pacifico&family=Mrs+Saint+Delafield&family=Bebas+Neue&family=Cormorant+Garamond&family=Abril+Fatface&family=Space+Mono&family=Sora&family=Poppins&family=Qwitcher+Grypen&family=Tangerine&family=Space+Grotesk&family=Oswald&family=Arizonia&family=Outfit&family=Cinzel&family=DM+Serif+Display&family=Bodoni+Moda&family=Cookie&family=Quicksand&family=Noto+Sans&display=swap'
+  document.head.appendChild(link)
+}
+
 const loadCustomFonts = async () => {
+  loadTurkishFallbackFonts()
+
   const styleId = 'twinsled-real-neon-fonts'
   let style = document.getElementById(styleId)
 
@@ -177,6 +190,9 @@ const loadCustomFonts = async () => {
   })
 
   await Promise.all(loads)
+
+  // Google fallback font stylesheet ve gerçek neon fontları birlikte hazırla.
+  await document.fonts.ready
 }
 
 const environments = [
@@ -369,8 +385,7 @@ function createLine(text, color, font) {
 
 function createInitialDesign() {
   const lines = [
-    createLine('Kendin', neonColors[4], fonts[2]),
-    createLine('Tasarla!', neonColors[6], fonts[33]),
+    createLine('', neonColors[4], fonts[2]),
   ]
 
   return {
@@ -437,6 +452,7 @@ function getBaseWordSize(text, lineCount) {
 function Designer() {
   const { addToCart } = useCart()
   const fileInputRef = useRef(null)
+  const textInputRef = useRef(null)
   const historyRef = useRef([])
   const futureRef = useRef([])
   const noticeTimerRef = useRef(null)
@@ -665,30 +681,15 @@ function Designer() {
   const updateWordColor = (color) => updateActiveWord('color', color)
   const updateWordFont = (font) => updateActiveWord('font', font)
 
-  const addLine = () => {
+  const createNextLine = () => {
     commit((current) => {
-      const line = createLine('', neonColors[4], fonts[2])
-      const nextLines = [...current.lines, line]
-      return {
-        ...current,
-        lines: nextLines,
-        activeLine: nextLines.length - 1,
-        activeWord: 0,
-      }
-    })
-  }
-
-  const duplicateLine = () => {
-    if (!activeLine) return
-    commit((current) => {
-      const duplicated = clone(activeLine)
-      duplicated.id = `line-${Math.random().toString(36).slice(2, 10)}`
-      duplicated.words = duplicated.words.map((word) => ({
-        ...word,
-        id: `word-${Math.random().toString(36).slice(2, 10)}`,
-      }))
+      const currentLine = current.lines[current.activeLine]
+      const baseColor = currentLine?.color || neonColors[4]
+      const baseFont = currentLine?.font || fonts[2]
+      const line = createLine('', baseColor, baseFont)
       const nextLines = [...current.lines]
-      nextLines.splice(current.activeLine + 1, 0, duplicated)
+      nextLines.splice(current.activeLine + 1, 0, line)
+
       return {
         ...current,
         lines: nextLines,
@@ -698,23 +699,14 @@ function Designer() {
     })
   }
 
-  const removeLine = () => {
-    if (lines.length <= 1) {
-      setLineText('')
-      return
-    }
+  const handleTextKeyDown = (event) => {
+    if (event.key !== 'Enter') return
 
-    commit((current) => {
-      const nextLines = current.lines.filter(
-        (_, index) => index !== current.activeLine,
-      )
-      return {
-        ...current,
-        lines: nextLines,
-        activeLine: Math.min(current.activeLine, nextLines.length - 1),
-        activeWord: 0,
-      }
-    })
+    event.preventDefault()
+
+    if (!currentLineText.trim()) return
+
+    createNextLine()
   }
 
   const resetDesign = () => {
@@ -943,6 +935,18 @@ function Designer() {
   }
 
   const currentLineText = activeLine?.text || ''
+
+  useEffect(() => {
+    const input = textInputRef.current
+    if (!input) return
+
+    input.focus()
+    requestAnimationFrame(() => {
+      const end = input.value.length
+      input.setSelectionRange(end, end)
+    })
+  }, [design.activeLine])
+
   const visibleFonts = fonts.filter((font) =>
     font.name.toLowerCase().includes(fontSearch.toLowerCase()),
   )
@@ -965,6 +969,52 @@ function Designer() {
       logoY: Math.max(5, Math.min(95, y)),
     }))
   }
+
+  const turkishGlyphs = {
+    İ: { base: 'I', mark: 'dot' },
+    Ş: { base: 'S', mark: 'cedilla' },
+    Ğ: { base: 'G', mark: 'breve' },
+    Ç: { base: 'C', mark: 'cedilla' },
+    Ö: { base: 'O', mark: 'umlaut' },
+    Ü: { base: 'U', mark: 'umlaut' },
+    ş: { base: 's', mark: 'cedilla' },
+    ğ: { base: 'g', mark: 'breve' },
+    ç: { base: 'c', mark: 'cedilla' },
+    ö: { base: 'o', mark: 'umlaut' },
+    ü: { base: 'u', mark: 'umlaut' },
+    ı: { base: 'ı', mark: null, fallback: true },
+  }
+
+  const renderTurkishText = (value = '') =>
+    Array.from(value).map((char, index) => {
+      const glyph = turkishGlyphs[char]
+
+      if (!glyph) {
+        return <span key={`${char}-${index}`}>{char}</span>
+      }
+
+      if (glyph.fallback) {
+        return (
+          <span
+            key={`${char}-${index}`}
+            className="designer-neon__turkish-fallback-glyph"
+          >
+            {char}
+          </span>
+        )
+      }
+
+      return (
+        <span
+          key={`${char}-${index}`}
+          className={`designer-neon__turkish-glyph designer-neon__turkish-glyph--${glyph.mark}`}
+          aria-hidden="true"
+        >
+          <span className="designer-neon__turkish-glyph-base">{glyph.base}</span>
+          <span className="designer-neon__turkish-glyph-mark">{glyph.mark === 'dot' ? '•' : glyph.mark === 'cedilla' ? '¸' : glyph.mark === 'breve' ? '˘' : '¨'}</span>
+        </span>
+      )
+    })
 
   const handleLogoPointerDown = (event) => {
     if (!design.logo) return
@@ -1077,7 +1127,7 @@ function Designer() {
                       '--word-rgb': word.color.glow,
                     }}
                   >
-                    {part}
+                    {renderTurkishText(part)}
                   </button>
                 )
               })
@@ -1310,42 +1360,23 @@ function Designer() {
             <div className="control-section">
               <div className="control-section__title">
                 <div className="control-icon"><Type size={17} /></div>
-                <div><span>METİN</span><strong>{previewLines.length} satır / {totalWords} kelime</strong></div>
+                <div><span>METİN</span><strong>Enter ile yeni satır · Önizlemeden kelime seç</strong></div>
               </div>
 
               <div className="text-input-wrapper">
                 <textarea
+                  ref={textInputRef}
                   value={currentLineText}
                   maxLength={250}
-                  onChange={(event) => setLineText(event.target.value)}
-                  placeholder="Metnini yaz..."
-                  rows={4}
+                  onChange={(event) => setLineText(event.target.value.replace(/[\r\n]+/g, ' '))}
+                  onKeyDown={handleTextKeyDown}
+                  placeholder="Metnini yaz... Enter ile yeni satır"
+                  rows={3}
+                  inputMode="text"
+                  enterKeyHint="next"
                 />
               </div>
               <div className="text-stats">Aktif satır {design.activeLine + 1} • {currentLineText.trim().length}/250 karakter</div>
-            </div>
-
-            <div className="control-section">
-              <div className="control-section__title">
-                <div className="control-icon"><LayersIconFallback /></div>
-                <div><span>SATIRLAR</span><strong>Yapını düzenle</strong></div>
-              </div>
-
-              <div className="line-list">
-                {lines.map((line, index) => (
-                  <button key={line.id} type="button" className={`line-list__item ${index === design.activeLine ? 'is-active' : ''}`} onClick={() => commit((current) => ({ ...current, activeLine: index, activeWord: 0 }))}>
-                    <span className="line-list__index">{index + 1}</span>
-                    <span className="line-list__text">{line.text.trim() || 'Boş satır'}</span>
-                    <span className="line-list__color" style={{ background: line.words[0]?.color?.value || line.color.value, boxShadow: `0 0 12px ${line.words[0]?.color?.value || line.color.value}` }} />
-                  </button>
-                ))}
-              </div>
-
-              <div className="line-actions">
-                <button type="button" onClick={addLine}><Plus size={14} /> Satır ekle</button>
-                <button type="button" onClick={duplicateLine}><CopyIconFallback /> Kopyala</button>
-                <button type="button" onClick={removeLine}><Trash2 size={14} /> Sil</button>
-              </div>
             </div>
 
             <div className="control-section">
@@ -1387,7 +1418,10 @@ function Designer() {
             <div className="control-section">
               <div className="control-section__title">
                 <div className="control-icon"><Type size={17} /></div>
-                <div><span>FONT</span><strong>{activeWord?.font?.name || 'Kelime seç'}</strong></div>
+                <div>
+                  <span>FONT</span>
+                  <strong>{activeWord?.font?.name || 'Kelime seç'}</strong>
+                </div>
               </div>
 
               <input className="font-search" value={fontSearch} onChange={(event) => setFontSearch(event.target.value)} placeholder="Font ara..." />
