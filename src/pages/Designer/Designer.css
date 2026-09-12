@@ -550,176 +550,438 @@
 }
 
 /* =========================================================
-   TWINSLED MOBILE LIVE EDITOR — FINAL
-   Mobilde yalnızca canlı önizleme sabit kalır.
-   "Duvarını seç" bölümü normal akışta kalır ve görünür olur.
+   TWINSLED MOBILE WORKSPACE — PRO
+   Amaç:
+   - Canlı önizleme yazı yazarken görünür kalır.
+   - Kontroller normal akışta kalır.
+   - "Duvarını seç" preview'ın altında kapanmaz.
+   - Küçük telefonlarda klavye açıldığında alan mümkün olduğunca
+     verimli kullanılır.
    ========================================================= */
+
 @media (max-width: 760px) {
-  .designer-workspace {
-    display: block;
+  :root {
+    --tw-mobile-navbar: 64px;
+    --tw-preview-bar: 42px;
+    --tw-preview-height: 210px;
+    --tw-mobile-gap: 10px;
   }
 
-  /* Preview kartını bütünüyle sticky yapmıyoruz.
-     Böylece ortam seçici aşağıda normal şekilde scroll edilir. */
+  .designer-page {
+    padding: 72px 10px 40px;
+    overflow-x: clip;
+  }
+
+  .designer-header {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .designer-header h1 {
+    font-size: clamp(28px, 8.5vw, 38px);
+    line-height: .98;
+    letter-spacing: -.03em;
+  }
+
+  .designer-header p {
+    max-width: 620px;
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .designer-header__actions {
+    gap: 6px;
+  }
+
+  .designer-tabs {
+    position: sticky;
+    top: var(--tw-mobile-navbar);
+    z-index: 90;
+    margin-bottom: 10px;
+    padding: 3px;
+    background: rgba(7,10,14,.90);
+    border: 1px solid rgba(255,255,255,.06);
+    box-shadow: 0 8px 24px rgba(0,0,0,.22);
+    backdrop-filter: blur(16px);
+  }
+
+  .designer-workspace {
+    display: block;
+    width: 100%;
+  }
+
+  /* =========================
+     LIVE PREVIEW
+     ========================= */
+
   .designer-preview-card {
     position: relative;
     width: 100%;
-    margin-bottom: 14px;
-    border-radius: 16px;
+    margin: 0 0 12px;
     overflow: visible;
     background: transparent;
+    border: 0;
     box-shadow: none;
     backdrop-filter: none;
   }
 
-  /* Üst bar sabit. */
   .designer-preview-card__top {
     position: sticky;
-    top: 54px;
-    z-index: 80;
-    min-height: 42px;
-    padding: 7px 9px;
+    top: calc(var(--tw-mobile-navbar) + 46px);
+    z-index: 85;
+    min-height: var(--tw-preview-bar);
+    height: var(--tw-preview-bar);
+    padding: 5px 8px;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 6px;
-    border: 1px solid rgba(255,255,255,.06);
+    justify-content: space-between;
+    gap: 8px;
+
+    border: 1px solid rgba(255,255,255,.08);
     border-bottom: 0;
-    border-radius: 16px 16px 0 0;
-    background: rgba(7,10,14,.97);
-    box-shadow: 0 8px 22px rgba(0,0,0,.30);
-    backdrop-filter: blur(14px);
+    border-radius: 14px 14px 0 0;
+
+    background: rgba(7,10,14,.94);
+    box-shadow: 0 8px 18px rgba(0,0,0,.28);
+    backdrop-filter: blur(18px);
   }
 
   .designer-preview-card__status {
-    font-size: 7px;
+    min-width: 0;
     gap: 6px;
+    font-size: 6px;
+    letter-spacing: .14em;
+    white-space: nowrap;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 auto;
   }
 
   .designer-preview-card__top-controls {
     width: auto;
     gap: 4px;
-    flex-shrink: 0;
-  }
-
-  .designer-preview-card__top-controls > button {
-    width: 30px;
-    height: 30px;
-  }
-
-  .preview-mode-switch button {
-    padding: 6px 7px;
-    font-size: 6px;
-  }
-
-  /* Canlı preview sabit kalır. */
-  .designer-scene,
-  .designer-scene--mobile {
-    position: sticky;
-    top: 96px;
-    z-index: 70;
-    width: 100%;
-    min-height: 0;
-    height: clamp(205px, 43vw, 275px);
-    aspect-ratio: auto;
-    border-radius: 0 0 16px 16px;
-    border: 1px solid rgba(255,255,255,.06);
-    border-top: 0;
-    box-shadow: 0 14px 35px rgba(0,0,0,.42);
-    background: #11151b;
-  }
-
-  .designer-scene--mobile {
-    max-width: none;
-  }
-
-  .designer-mount {
-    padding: 7% 8%;
-  }
-
-  .designer-neon {
-    max-width: 94%;
-    max-height: 78%;
-  }
-
-  .designer-scene__environment,
-  .designer-scene__scale {
-    transform: scale(.9);
-    transform-origin: bottom left;
-  }
-
-  .designer-scene__scale {
-    transform-origin: bottom right;
-  }
-
-  /* KRİTİK:
-     "Duvarını seç" sticky preview'ın parçası değildir. */
-  .environment-selector {
-    position: relative;
-    z-index: 10;
-    margin-top: 0;
-    background: rgba(7,10,14,.97);
-    border: 1px solid rgba(255,255,255,.06);
-    border-top: 0;
-    border-radius: 0 0 16px 16px;
-  }
-
-  .designer-controls {
-    position: static;
-    width: 100%;
-    max-width: none;
-    overflow: visible;
-    border-radius: 16px;
-  }
-
-  .control-section:first-of-type {
-    scroll-margin-top: 108px;
-  }
-
-  .text-input-wrapper textarea {
-    min-height: 96px;
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 520px) {
-  .designer-preview-card__top {
-    top: 50px;
-    min-height: 40px;
-    padding: 6px 8px;
-  }
-
-  .designer-preview-card__status {
-    max-width: 110px;
+    flex: 0 0 auto;
   }
 
   .designer-preview-card__top-controls > button {
     width: 28px;
     height: 28px;
+    min-width: 28px;
+  }
+
+  .preview-mode-switch {
+    gap: 1px;
+    padding: 2px;
   }
 
   .preview-mode-switch button {
+    min-height: 24px;
     padding: 5px 6px;
+    font-size: 5px;
   }
 
+  /* The only sticky visual area.
+     Environment selector stays in normal document flow. */
   .designer-scene,
   .designer-scene--mobile {
-    top: 90px;
-    height: 215px;
+    position: sticky;
+    top: calc(var(--tw-mobile-navbar) + var(--tw-preview-bar) + 46px);
+    z-index: 80;
+
+    width: 100%;
+    max-width: none;
+    height: var(--tw-preview-height);
+    min-height: 0;
+    aspect-ratio: auto;
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+
+    overflow: hidden;
+    background: #11151b;
+    box-shadow:
+      0 12px 30px rgba(0,0,0,.34),
+      0 1px 0 rgba(255,255,255,.03) inset;
+  }
+
+  .designer-mount {
+    padding: 5% 7%;
   }
 
   .designer-neon {
+    width: 100%;
     max-width: 92%;
+    max-height: 74%;
   }
 
   .designer-neon__line {
-    line-height: .95;
+    line-height: .96;
+  }
+
+  .designer-scene__environment {
+    left: 8px;
+    bottom: 8px;
+    transform: scale(.82);
+    transform-origin: bottom left;
+  }
+
+  .designer-scene__scale {
+    right: 8px;
+    bottom: 8px;
+    transform: scale(.82);
+    transform-origin: bottom right;
+  }
+
+  /* =========================
+     ENVIRONMENT SELECTOR
+     ========================= */
+
+  .environment-selector {
+    position: relative;
+    z-index: 1;
+
+    margin-top: 0;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,.07);
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+
+    background: rgba(8,11,15,.96);
+    box-shadow: 0 12px 24px rgba(0,0,0,.18);
+  }
+
+  .environment-selector__heading {
+    margin-bottom: 9px;
+  }
+
+  .environment-selector__heading strong {
+    font-size: 13px;
+  }
+
+  .environment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .environment-item {
+    width: 100%;
+    height: 62px;
+    min-width: 0;
+  }
+
+  .environment-item span {
+    font-size: 6px;
+    line-height: 1.1;
+  }
+
+  /* =========================
+     CONTROLS
+     ========================= */
+
+  .designer-controls {
+    position: relative;
+    width: 100%;
+    max-width: none;
+    margin-top: 12px;
+    overflow: visible;
+    border-radius: 16px;
+  }
+
+  .controls-heading {
+    padding: 16px 14px;
+  }
+
+  .control-section {
+    scroll-margin-top: calc(
+      var(--tw-mobile-navbar) +
+      var(--tw-preview-bar) +
+      var(--tw-preview-height) +
+      22px
+    );
+    padding: 14px;
+  }
+
+  .control-section:first-of-type {
+    scroll-margin-top: calc(
+      var(--tw-mobile-navbar) +
+      var(--tw-preview-bar) +
+      var(--tw-preview-height) +
+      22px
+    );
+  }
+
+  /* Avoid iOS/Android zoom when focusing text fields. */
+  .text-input-wrapper textarea,
+  .font-search,
+  .control-section input,
+  .control-section select {
+    font-size: 16px;
   }
 
   .text-input-wrapper textarea {
     min-height: 92px;
+    line-height: 1.45;
+    padding: 12px;
+  }
+
+  .font-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .color-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .designer-summary {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .designer-cart-button,
+  .designer-whatsapp {
+    width: calc(100% - 28px);
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+
+  .designer-note {
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  :root {
+    --tw-mobile-navbar: 58px;
+    --tw-preview-bar: 40px;
+    --tw-preview-height: 186px;
+  }
+
+  .designer-page {
+    padding: 66px 8px 34px;
+  }
+
+  .designer-header h1 {
+    font-size: clamp(27px, 9vw, 34px);
+  }
+
+  .designer-header p {
+    font-size: 9px;
+  }
+
+  .designer-tabs {
+    top: var(--tw-mobile-navbar);
+  }
+
+  .designer-preview-card__top {
+    top: calc(var(--tw-mobile-navbar) + 44px);
+    min-height: var(--tw-preview-bar);
+    height: var(--tw-preview-bar);
+    padding: 4px 7px;
+  }
+
+  .designer-preview-card__status span:last-child {
+    max-width: 92px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .designer-preview-card__top-controls > button {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+  }
+
+  .preview-mode-switch button {
+    min-height: 22px;
+    padding: 4px 5px;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    top: calc(var(--tw-mobile-navbar) + var(--tw-preview-bar) + 44px);
+    height: var(--tw-preview-height);
+  }
+
+  .designer-mount {
+    padding: 5% 6%;
+  }
+
+  .designer-neon {
+    max-width: 94%;
+    max-height: 72%;
+  }
+
+  .designer-scene__environment,
+  .designer-scene__scale {
+    transform: scale(.74);
   }
 
   .environment-selector {
-    border-radius: 0 0 14px 14px;
+    padding: 10px;
+  }
+
+  .environment-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .environment-item {
+    height: 74px;
+  }
+
+  .font-grid,
+  .color-grid,
+  .background-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .icon-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .style-row--split {
+    grid-template-columns: 1fr;
+  }
+
+  .size-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .text-input-wrapper textarea {
+    min-height: 88px;
+  }
+
+  .designer-toast {
+    top: 64px;
+    left: 8px;
+    right: 8px;
+    justify-content: center;
+  }
+}
+
+/* Very small phones: keep the preview compact enough to leave
+   actual editing space above the keyboard. */
+@media (max-width: 380px) {
+  :root {
+    --tw-preview-height: 168px;
+  }
+
+  .designer-preview-card__status {
+    display: none;
+  }
+
+  .designer-preview-card__top {
+    justify-content: flex-end;
+  }
+
+  .environment-item {
+    height: 68px;
   }
 }
