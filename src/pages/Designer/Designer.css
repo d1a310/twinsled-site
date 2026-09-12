@@ -549,35 +549,45 @@
   .designer-toast { top:72px; right:10px; left:10px; justify-content:center; }
 }
 
-
 /* =========================================================
-   TWINSLED MOBILE LIVE EDITOR
-   Mobilde canlı önizleme ekranın üstünde kalır;
-   metin ve diğer kontroller alttan düzenlenirken preview görünür.
+   TWINSLED MOBILE LIVE EDITOR — FINAL
+   Mobilde yalnızca canlı önizleme sabit kalır.
+   "Duvarını seç" bölümü normal akışta kalır ve görünür olur.
    ========================================================= */
 @media (max-width: 760px) {
   .designer-workspace {
     display: block;
   }
 
+  /* Preview kartını bütünüyle sticky yapmıyoruz.
+     Böylece ortam seçici aşağıda normal şekilde scroll edilir. */
   .designer-preview-card {
-    position: sticky;
-    top: 58px;
-    z-index: 40;
+    position: relative;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     border-radius: 16px;
-    box-shadow: 0 14px 35px rgba(0,0,0,.42);
-    background: rgba(7,10,14,.94);
-    backdrop-filter: blur(14px);
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
   }
 
+  /* Üst bar sabit. */
   .designer-preview-card__top {
+    position: sticky;
+    top: 54px;
+    z-index: 80;
     min-height: 42px;
     padding: 7px 9px;
     flex-direction: row;
     align-items: center;
     gap: 6px;
+    border: 1px solid rgba(255,255,255,.06);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+    background: rgba(7,10,14,.97);
+    box-shadow: 0 8px 22px rgba(0,0,0,.30);
+    backdrop-filter: blur(14px);
   }
 
   .designer-preview-card__status {
@@ -601,12 +611,21 @@
     font-size: 6px;
   }
 
+  /* Canlı preview sabit kalır. */
   .designer-scene,
   .designer-scene--mobile {
+    position: sticky;
+    top: 96px;
+    z-index: 70;
     width: 100%;
     min-height: 0;
     height: clamp(205px, 43vw, 275px);
     aspect-ratio: auto;
+    border-radius: 0 0 16px 16px;
+    border: 1px solid rgba(255,255,255,.06);
+    border-top: 0;
+    box-shadow: 0 14px 35px rgba(0,0,0,.42);
+    background: #11151b;
   }
 
   .designer-scene--mobile {
@@ -632,6 +651,18 @@
     transform-origin: bottom right;
   }
 
+  /* KRİTİK:
+     "Duvarını seç" sticky preview'ın parçası değildir. */
+  .environment-selector {
+    position: relative;
+    z-index: 10;
+    margin-top: 0;
+    background: rgba(7,10,14,.97);
+    border: 1px solid rgba(255,255,255,.06);
+    border-top: 0;
+    border-radius: 0 0 16px 16px;
+  }
+
   .designer-controls {
     position: static;
     width: 100%;
@@ -641,7 +672,7 @@
   }
 
   .control-section:first-of-type {
-    scroll-margin-top: 118px;
+    scroll-margin-top: 108px;
   }
 
   .text-input-wrapper textarea {
@@ -651,11 +682,8 @@
 }
 
 @media (max-width: 520px) {
-  .designer-preview-card {
-    top: 54px;
-  }
-
   .designer-preview-card__top {
+    top: 50px;
     min-height: 40px;
     padding: 6px 8px;
   }
@@ -675,6 +703,7 @@
 
   .designer-scene,
   .designer-scene--mobile {
+    top: 90px;
     height: 215px;
   }
 
@@ -688,5 +717,9 @@
 
   .text-input-wrapper textarea {
     min-height: 92px;
+  }
+
+  .environment-selector {
+    border-radius: 0 0 14px 14px;
   }
 }
