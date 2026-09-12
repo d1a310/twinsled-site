@@ -49,52 +49,135 @@ const neonColors = [
   { name: 'Yeşil', value: '#4cff8f', glow: '76,255,143' },
 ]
 
-// Kullanıcının istediği 40 isim korunmuştur.
-// İsimler vitrin adıdır; family alanı CSS/Google Fonts tarafında en yakın görsel karşılıktır.
+// TWINSLED Designer için kullanılan gerçek 40 font ailesi.
+// Font aile adları customneon kaynağındaki isimlerle birebir eşleştirilir.
 const fonts = [
-  { name: 'Alexa', family: 'Allura' },
-  { name: 'Amanda', family: 'Alex Brush' },
-  { name: 'Amsterdam', family: 'Parisienne' },
-  { name: 'Austin', family: 'Great Vibes' },
-  { name: 'Avante', family: 'Josefin Sans' },
-  { name: 'Barcelona', family: 'Lobster' },
-  { name: 'Bayview', family: 'Montserrat' },
-  { name: 'Beachfront', family: 'Sacramento' },
-  { name: 'Bellview', family: 'Playfair Display' },
-  { name: 'Buttercup', family: 'Yellowtail' },
-  { name: 'Chelsea', family: 'Ballet' },
-  { name: 'ClassicType', family: 'Libre Baskerville' },
-  { name: 'Freehand', family: 'Dancing Script' },
-  { name: 'Freespirit', family: 'Italianno' },
-  { name: 'Greenworld', family: 'Kaushan Script' },
-  { name: 'LoveNeon', family: 'Pacifico' },
-  { name: 'LoveNote', family: 'Mrs Saint Delafield' },
-  { name: 'Marquee', family: 'Bebas Neue' },
-  { name: 'Mayfair', family: 'Cormorant Garamond' },
-  { name: 'Melbourne', family: 'Abril Fatface' },
-  { name: 'Monaco', family: 'Space Mono' },
-  { name: 'NeonGlow', family: 'Sora' },
-  { name: 'NeonLite', family: 'Poppins' },
-  { name: 'Neonscript', family: 'Qwitcher Grypen' },
-  { name: 'Neontrace', family: 'Tangerine' },
-  { name: 'NeoTokyo', family: 'Space Grotesk' },
-  { name: 'Nevada', family: 'Oswald' },
-  { name: 'NewCursive', family: 'Allura' },
-  { name: 'Northshore', family: 'Parisienne' },
-  { name: 'Photogenic', family: 'Arizonia' },
-  { name: 'Rocket', family: 'Outfit' },
-  { name: 'Royalty', family: 'Cinzel' },
-  { name: 'SciFi', family: 'Space Grotesk' },
-  { name: 'Signature', family: 'Alex Brush' },
-  { name: 'Sorrento', family: 'DM Serif Display' },
-  { name: 'Typewriter', family: 'Space Mono' },
-  { name: 'Venetian', family: 'Bodoni Moda' },
-  { name: 'Vintage', family: 'Cookie' },
-  { name: 'Waikiki', family: 'Quicksand' },
-  { name: 'WildScript', family: 'Yellowtail' },
+  { name: 'Alexa', family: 'Alexa' },
+  { name: 'Amanda', family: 'Amanda' },
+  { name: 'Amsterdam', family: 'Amsterdam' },
+  { name: 'Austin', family: 'Austin' },
+  { name: 'Avante', family: 'Avante' },
+  { name: 'Barcelona', family: 'Barcelona' },
+  { name: 'Bayview', family: 'Bayview' },
+  { name: 'Beachfront', family: 'Beachfront' },
+  { name: 'Bellview', family: 'Bellview' },
+  { name: 'Buttercup', family: 'Buttercup' },
+  { name: 'Chelsea', family: 'Chelsea' },
+  { name: 'ClassicType', family: 'ClassicType' },
+  { name: 'Freehand', family: 'Freehand' },
+  { name: 'Freespirit', family: 'Freespirit' },
+  { name: 'Greenworld', family: 'Greenworld' },
+  { name: 'LoveNeon', family: 'LoveNeon' },
+  { name: 'LoveNote', family: 'LoveNote' },
+  { name: 'Marquee', family: 'Marquee' },
+  { name: 'Mayfair', family: 'Mayfair' },
+  { name: 'Melbourne', family: 'Melbourne' },
+  { name: 'Monaco', family: 'Monaco' },
+  { name: 'NeonGlow', family: 'NeonGlow' },
+  { name: 'NeonLite', family: 'NeonLite' },
+  { name: 'Neonscript', family: 'Neonscript' },
+  { name: 'Neontrace', family: 'Neontrace' },
+  { name: 'NeoTokyo', family: 'NeoTokyo' },
+  { name: 'Nevada', family: 'Nevada' },
+  { name: 'NewCursive', family: 'NewCursive' },
+  { name: 'Northshore', family: 'Northshore' },
+  { name: 'Photogenic', family: 'Photogenic' },
+  { name: 'Rocket', family: 'Rocket' },
+  { name: 'Royalty', family: 'Royalty' },
+  { name: 'SciFi', family: 'SciFi' },
+  { name: 'Signature', family: 'Signature' },
+  { name: 'Sorrento', family: 'Sorrento' },
+  { name: 'Typewriter', family: 'Typewriter' },
+  { name: 'Venetian', family: 'Venetian' },
+  { name: 'Vintage', family: 'Vintage' },
+  { name: 'Waikiki', family: 'Waikiki' },
+  { name: 'WildScript', family: 'WildScript' },
 ]
 
-const fontImports = `https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Alex+Brush&family=Allura&family=Arizonia&family=Ballet&family=Bebas+Neue&family=Bodoni+Moda:opsz@6..96&family=Cookie&family=Cinzel:wght@400..800&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Dancing+Script:wght@400..700&family=DM+Serif+Display&family=Great+Vibes&family=Italianno&family=Josefin+Sans:wght@300;400;500;600;700&family=Kaushan+Script&family=Libre+Baskerville:wght@400;700&family=Lobster&family=Mrs+Saint+Delafield&family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Pacifico&family=Parisienne&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Poppins:wght@300;400;500;600;700&family=Qwitcher+Grypen:wght@400;700&family=Quicksand:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&family=Sacramento&family=Sora:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Tangerine:wght@400;700&family=Yellowtail&display=swap`
+const customFontFiles = [
+  ['Alexa', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Alexa.ttf`],
+  ['Amanda', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Amanda.ttf`],
+  ['Amsterdam', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Amsterdam.ttf`],
+  ['Austin', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Austin.ttf`],
+  ['Avante', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Avante.ttf`],
+  ['Barcelona', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Barcelona.ttf`],
+  ['Bayview', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Bayview.ttf`],
+  ['Beachfront', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Beachfront.ttf`],
+  ['Bellview', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Bellview.ttf`],
+  ['Buttercup', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Buttercup.ttf`],
+  ['Chelsea', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Chelsea.ttf`],
+  ['ClassicType', `https://customneon.com.au/create-neon-sign/css/fonts/custom/ClassicType.ttf`],
+  ['Freehand', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Freehand.ttf`],
+  ['Freespirit', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Freespirit.ttf`],
+  ['Greenworld', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Greenworld.ttf`],
+  ['LoveNeon', `https://customneon.com.au/create-neon-sign/css/fonts/custom/LoveNeon.ttf`],
+  ['LoveNote', `https://customneon.com.au/create-neon-sign/css/fonts/custom/LoveNote.ttf`],
+  ['Marquee', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Marquee.ttf`],
+  ['Mayfair', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Mayfair.ttf`],
+  ['Melbourne', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Melbourne.ttf`],
+  ['Monaco', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Monaco.ttf`],
+  ['NeonGlow', `https://customneon.com.au/create-neon-sign/css/fonts/custom/NeonGlow.ttf`],
+  ['NeonLite', `https://customneon.com.au/create-neon-sign/css/fonts/custom/NeonLite.ttf`],
+  ['Neonscript', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Neonscript.ttf`],
+  ['Neontrace', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Neontrace.ttf`],
+  ['NeoTokyo', `https://customneon.com.au/create-neon-sign/css/fonts/custom/NeoTokyo.ttf`],
+  ['Nevada', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Nevada.ttf`],
+  ['NewCursive', `https://customneon.com.au/create-neon-sign/css/fonts/custom/NewCursive.ttf`],
+  ['Northshore', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Northshore.ttf`],
+  ['Photogenic', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Photogenic.ttf`],
+  ['Rocket', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Rocket.ttf`],
+  ['Royalty', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Royalty.ttf`],
+  ['SciFi', `https://customneon.com.au/create-neon-sign/css/fonts/custom/SciFi.ttf`],
+  ['Signature', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Signature.ttf`],
+  ['Sorrento', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Sorrento.ttf`],
+  ['Typewriter', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Typewriter.ttf`],
+  ['Venetian', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Venetian.ttf`],
+  ['Vintage', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Vintage.ttf`],
+  ['Waikiki', `https://customneon.com.au/create-neon-sign/css/fonts/custom/Waikiki.ttf`],
+  ['WildScript', `https://customneon.com.au/create-neon-sign/css/fonts/custom/WildScript.ttf`],
+]
+
+const loadCustomFonts = async () => {
+  const styleId = 'twinsled-real-neon-fonts'
+  let style = document.getElementById(styleId)
+
+  if (!style) {
+    style = document.createElement('style')
+    style.id = styleId
+    style.textContent = customFontFiles
+      .map(
+        ([name, url]) => `
+          @font-face {
+            font-family: '${name}';
+            src: url('${url}') format('truetype');
+            font-display: block;
+            font-style: normal;
+            font-weight: 400;
+          }
+        `,
+      )
+      .join('\n')
+
+    document.head.appendChild(style)
+  }
+
+  const loads = customFontFiles.map(async ([name, url]) => {
+    try {
+      const face = new FontFace(name, `url(${url}) format("truetype")`, {
+        style: 'normal',
+        weight: '400',
+      })
+
+      await face.load()
+      document.fonts.add(face)
+      return true
+    } catch {
+      return false
+    }
+  })
+
+  await Promise.all(loads)
+}
 
 const environments = [
   {
@@ -375,6 +458,21 @@ function Designer() {
       setSavedDesigns(Array.isArray(stored) ? stored : [])
     } catch {
       setSavedDesigns([])
+    }
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+
+    loadCustomFonts().then(() => {
+      if (cancelled) return
+      document.fonts.ready.then(() => {
+        window.dispatchEvent(new Event('resize'))
+      })
+    })
+
+    return () => {
+      cancelled = true
     }
   }, [])
 
