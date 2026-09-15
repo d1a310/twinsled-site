@@ -7,6 +7,7 @@ import {
   ArrowRight,
   Bold,
   Check,
+  ChevronDown,
   Image as ImageIcon,
   Italic,
   LayoutTemplate,
@@ -466,6 +467,7 @@ function Designer() {
   const [notice, setNotice] = useState('')
   const [fullscreen, setFullscreen] = useState(false)
   const [activePanel, setActivePanel] = useState('design')
+  const [showEnvironmentPanel, setShowEnvironmentPanel] = useState(false)
 
   useEffect(() => {
     document.title = 'Neon Tabela Tasarımı | NeonLab'
@@ -1360,21 +1362,37 @@ function Designer() {
 
             {renderTextEditor('designer-mobile-text-editor')}
 
-            <div className="environment-selector">
-              <div className="environment-selector__heading">
-                <div>
-                  <span>ORTAM</span>
+            <div className={`environment-selector ${showEnvironmentPanel ? 'is-open' : ''}`}>
+              <button
+                type="button"
+                className="environment-selector__toggle"
+                onClick={() => setShowEnvironmentPanel((current) => !current)}
+                aria-expanded={showEnvironmentPanel}
+              >
+                <span>
+                  <small>ORTAM</small>
                   <strong>Duvarını seç</strong>
+                  <em>{design.selectedEnvironment.name}</em>
+                </span>
+                <ChevronDown size={18} className="environment-selector__chevron" />
+              </button>
+
+              {showEnvironmentPanel && (
+                <div className="environment-selector__panel">
+                  <div className="environment-selector__heading">
+                    <span>ORTAM SEÇENEKLERİ</span>
+                    <strong>Bir duvar seç</strong>
+                  </div>
+                  <div className="environment-grid">
+                    {environments.map((environment) => (
+                      <button key={environment.id} type="button" className={`environment-item ${design.selectedEnvironment.id === environment.id ? 'is-active' : ''}`} onClick={() => chooseEnvironment(environment)}>
+                        <img src={environment.image} alt={environment.name} />
+                        <span>{environment.name}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <div className="environment-grid">
-                {environments.map((environment) => (
-                  <button key={environment.id} type="button" className={`environment-item ${design.selectedEnvironment.id === environment.id ? 'is-active' : ''}`} onClick={() => chooseEnvironment(environment)}>
-                    <img src={environment.image} alt={environment.name} />
-                    <span>{environment.name}</span>
-                  </button>
-                ))}
-              </div>
+              )}
             </div>
           </div>
 
