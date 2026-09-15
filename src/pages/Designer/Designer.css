@@ -1474,3 +1474,43 @@
   }
 }
 
+/* =========================================================
+   TWINSLED MOBILE — REMOVE GAP BELOW FIXED PREVIEW
+   Canlı önizleme sabit kalır.
+   METİN kutusu doğrudan önizlemenin altından başlar.
+   Diğer mobil tasarım düzeni korunur.
+   ========================================================= */
+@media (max-width: 760px) {
+  .designer-preview-card::before,
+  .designer-preview-card:has(.designer-scene--mobile)::before {
+    height: 0 !important;
+    min-height: 0 !important;
+  }
+
+  /* Fixed preview'ın kapladığı alanı sadece gerektiği kadar ayır. */
+  .designer-mobile-text-editor {
+    margin-top: 256px !important;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 680px) {
+  .designer-preview-card::before,
+  .designer-preview-card:has(.designer-scene--mobile)::before {
+    height: 0 !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top: 180px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .designer-preview-card::before,
+  .designer-preview-card:has(.designer-scene--mobile)::before {
+    height: 0 !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top: 215px !important;
+  }
+}
