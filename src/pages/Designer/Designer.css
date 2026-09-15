@@ -1489,7 +1489,8 @@
 
   /* Fixed preview'ın kapladığı alanı sadece gerektiği kadar ayır. */
   .designer-mobile-text-editor {
-    margin-top: 256px !important;
+    margin-top: 0 !important;
+    transform: translateY(0);
   }
 }
 
@@ -1500,7 +1501,7 @@
   }
 
   .designer-mobile-text-editor {
-    margin-top: 180px !important;
+    margin-top: 0 !important;
   }
 }
 
@@ -1511,6 +1512,38 @@
   }
 
   .designer-mobile-text-editor {
-    margin-top: 215px !important;
+    margin-top: 0 !important;
+  }
+}
+
+
+/* =========================================================
+   TWINSLED MOBILE — TIGHT PREVIEW → TEXT LAYOUT
+   Fixed preview stays exactly as-is. Remove the artificial
+   spacer and keep the mobile editor directly under the
+   visible preview area. Other controls remain unchanged.
+   ========================================================= */
+@media (max-width:760px) {
+  .designer-preview-card::before,
+  .designer-preview-card:has(.designer-scene--mobile)::before {
+    display:none !important;
+    height:0 !important;
+    min-height:0 !important;
+    content:none !important;
+  }
+
+  /* The preview card starts after the tabs in the DOM.
+     Pull only the mobile editor upward so it visually meets
+     the fixed preview without changing the rest of the page flow. */
+  .designer-mobile-text-editor {
+    position:relative !important;
+    margin-top:0 !important;
+    transform:translateY(-1px);
+  }
+}
+
+@media (max-width:520px) {
+  .designer-mobile-text-editor {
+    margin-top:0 !important;
   }
 }
