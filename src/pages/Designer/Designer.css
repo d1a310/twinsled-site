@@ -1666,3 +1666,18 @@
     padding:9px;
   }
 }
+/* =========================================================
+   TWINSLED — MOBILE WORD SPACING FIX
+   Kelimeler arasındaki boşluğu koru.
+   ========================================================= */
+
+@media (max-width: 760px) {
+  .designer-neon__space {
+    display: inline-block !important;
+    flex: 0 0 0.45em !important;
+    width: 0.45em !important;
+    min-width: 0.45em !important;
+    white-space: pre !important;
+    overflow: visible !important;
+  }
+}
