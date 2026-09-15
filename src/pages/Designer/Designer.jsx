@@ -408,7 +408,7 @@ function createInitialDesign() {
     logoSize: 100,
     logoX: 80,
     logoY: 18,
-    previewMode: 'desktop',
+    previewMode: 'mobile',
     offsetX: 0,
     offsetY: 0,
   }
@@ -1150,6 +1150,34 @@ function Designer() {
     </div>
   )
 
+  const renderTextEditor = (className = '') => (
+    <div className={`control-section designer-text-editor ${className}`}>
+      <div className="control-section__title">
+        <div className="control-icon"><Type size={17} /></div>
+        <div>
+          <span>METİN</span>
+          <strong>Enter ile yeni satır · Önizlemeden kelime seç</strong>
+        </div>
+      </div>
+      <div className="text-input-wrapper">
+        <textarea
+          ref={textInputRef}
+          value={currentLineText}
+          maxLength={250}
+          onChange={(event) => setLineText(event.target.value.replace(/[\r\n]+/g, ' '))}
+          onKeyDown={handleTextKeyDown}
+          placeholder="Metnini yaz... Enter ile yeni satır"
+          rows={3}
+          inputMode="text"
+          enterKeyHint="next"
+        />
+      </div>
+      <div className="text-stats">
+        Aktif satır {design.activeLine + 1} • {currentLineText.trim().length}/250 karakter
+      </div>
+    </div>
+  )
+
   const backgroundStyle = {
     '--background-class': design.background.className,
   }
@@ -1169,7 +1197,7 @@ function Designer() {
               Neon Tabela <span>Tasarım Stüdyosu</span>
             </h1>
             <p>
-              Yazını, kelimelerini, renklerini, ölçünü, zemini, ikonu ve logonu tek ekranda tasarla. Önizlemeyi anında gör ve hazır olduğunda sepete gönder.
+              Yazını, kelimelerini, renklerini, ölçünü ve ikonunu tek ekranda tasarla. Önizlemeyi anında gör ve hazır olduğunda sepete gönder.
             </p>
           </div>
 
@@ -1330,6 +1358,8 @@ function Designer() {
               </div>
             </div>
 
+            {renderTextEditor('designer-mobile-text-editor')}
+
             <div className="environment-selector">
               <div className="environment-selector__heading">
                 <div>
@@ -1357,27 +1387,7 @@ function Designer() {
               <div className="controls-heading__icon"><Sparkles size={18} /></div>
             </div>
 
-            <div className="control-section">
-              <div className="control-section__title">
-                <div className="control-icon"><Type size={17} /></div>
-                <div><span>METİN</span><strong>Enter ile yeni satır · Önizlemeden kelime seç</strong></div>
-              </div>
-
-              <div className="text-input-wrapper">
-                <textarea
-                  ref={textInputRef}
-                  value={currentLineText}
-                  maxLength={250}
-                  onChange={(event) => setLineText(event.target.value.replace(/[\r\n]+/g, ' '))}
-                  onKeyDown={handleTextKeyDown}
-                  placeholder="Metnini yaz... Enter ile yeni satır"
-                  rows={3}
-                  inputMode="text"
-                  enterKeyHint="next"
-                />
-              </div>
-              <div className="text-stats">Aktif satır {design.activeLine + 1} • {currentLineText.trim().length}/250 karakter</div>
-            </div>
+            {renderTextEditor('designer-desktop-text-editor')}
 
             <div className="control-section">
               <div className="control-section__title">
@@ -1480,14 +1490,6 @@ function Designer() {
 
             <div className="control-section">
               <div className="control-section__title">
-                <div className="control-icon"><SunIconFallback /></div>
-                <div><span>IŞIK</span><strong>%{design.brightness} parlaklık</strong></div>
-              </div>
-              <input className="range-control" type="range" min="50" max="140" value={design.brightness} onChange={(event) => updateSettings('brightness', Number(event.target.value))} />
-            </div>
-
-            <div className="control-section">
-              <div className="control-section__title">
                 <div className="control-icon"><Move size={17} /></div>
                 <div><span>KONUM</span><strong>Önizlemeyi yerleştir</strong></div>
               </div>
@@ -1543,26 +1545,6 @@ function Designer() {
 
             <div className="control-section">
               <div className="control-section__title">
-                <div className="control-icon"><ImageIcon size={17} /></div>
-                <div><span>ZEMİN</span><strong>Arka plaka</strong></div>
-              </div>
-              <div className="background-grid">
-                {backgrounds.map((background) => (
-                  <button key={background.id} type="button" className={`background-option ${design.background.id === background.id ? 'is-active' : ''}`} onClick={() => chooseBackground(background)}>
-                    <span className={`background-swatch background-swatch--${background.className}`}>
-                      {background.id !== 'none' && <i />}
-                    </span>
-                    <span>
-                      <strong>{background.name}</strong>
-                      <small>{background.short}</small>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="control-section">
-              <div className="control-section__title">
                 <div className="control-icon"><Sparkles size={17} /></div>
                 <div><span>İKON</span><strong>Hazır sembol ekle</strong></div>
               </div>
@@ -1586,75 +1568,6 @@ function Designer() {
                     ))}
                   </div>
                   <label className="style-range">İkon boyutu <strong>%{design.iconSize}</strong><input type="range" min="60" max="140" value={design.iconSize} onChange={(event) => updateSettings('iconSize', Number(event.target.value))} /></label>
-                </>
-              )}
-            </div>
-
-            <div className="control-section">
-              <div className="control-section__title">
-                <div className="control-icon"><Upload size={17} /></div>
-                <div><span>LOGO / GÖRSEL</span><strong>Logonu sahneye yerleştir</strong></div>
-              </div>
-
-              <input ref={fileInputRef} hidden type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onChange={handleLogoUpload} />
-
-              {!design.logo ? (
-                <button type="button" className="upload-dropzone" onClick={() => fileInputRef.current?.click()}>
-                  <span className="upload-dropzone__icon"><Upload size={20} /></span>
-                  <strong>Logo / görsel yükle</strong>
-                  <small>PNG, JPG, WEBP veya SVG • Maks. 5 MB</small>
-                </button>
-              ) : (
-                <>
-                  <div className="uploaded-file uploaded-file--pro">
-                    <div>
-                      <img src={design.logo} alt="Logo önizleme" />
-                      <span>{design.logoName || 'Logo'}</span>
-                    </div>
-                    <div className="uploaded-file__actions">
-                      <button type="button" onClick={() => fileInputRef.current?.click()}><Upload size={13} /></button>
-                      <button type="button" onClick={() => updateSettings('logo', '')}><X size={14} /></button>
-                    </div>
-                  </div>
-
-                  <div className="logo-stage-help">
-                    <Move size={13} /> Logoyu önizlemede doğrudan sürükleyebilir veya aşağıdaki konumlardan seçebilirsin.
-                  </div>
-
-                  <div className="logo-position-grid">
-                    {[
-                      ['sol-üst', 15, 15],
-                      ['üst', 50, 15],
-                      ['sağ-üst', 85, 15],
-                      ['sol', 15, 50],
-                      ['orta', 50, 50],
-                      ['sağ', 85, 50],
-                      ['sol-alt', 15, 85],
-                      ['alt', 50, 85],
-                      ['sağ-alt', 85, 85],
-                    ].map(([label, x, y]) => (
-                      <button
-                        key={label}
-                        type="button"
-                        className={Math.abs(design.logoX - x) < 1 && Math.abs(design.logoY - y) < 1 ? 'is-active' : ''}
-                        onClick={() => {
-                          updateSettings('logoX', x)
-                          updateSettings('logoY', y)
-                        }}
-                        title={label}
-                      >
-                        <span style={{ left: `${x}%`, top: `${y}%` }} />
-                      </button>
-                    ))}
-                  </div>
-
-                  <label className="style-range">Logo boyutu <strong>%{design.logoSize}</strong><input type="range" min="35" max="220" value={design.logoSize} onChange={(event) => updateSettings('logoSize', Number(event.target.value))} /></label>
-
-                  <div className="logo-position-readout">
-                    <span>X %{Math.round(design.logoX)}</span>
-                    <span>Y %{Math.round(design.logoY)}</span>
-                    <span>%{design.logoSize} boyut</span>
-                  </div>
                 </>
               )}
             </div>
