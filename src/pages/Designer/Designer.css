@@ -1967,3 +1967,103 @@
     height:240px !important;
   }
 }
+
+/* =========================================================
+   TWINSLED — MOBILE LIVE PREVIEW FINAL BEHAVIOR
+   Preview stays visible while the user scrolls through all
+   mobile controls. The preview wrapper becomes a direct child
+   of the workspace so sticky can track the full workspace.
+   ========================================================= */
+@media (max-width:760px) {
+  .designer-workspace {
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    overflow:visible !important;
+  }
+
+  .designer-preview-card {
+    display:contents !important;
+    position:static !important;
+    width:auto !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:visible !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+
+  .designer-preview-sticky {
+    position:sticky !important;
+    top:max(8px, env(safe-area-inset-top)) !important;
+    z-index:5000 !important;
+    display:block !important;
+    width:100% !important;
+    margin:0 0 12px !important;
+    padding:0 !important;
+  }
+
+  .designer-preview-card__top {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    min-height:40px !important;
+    margin:0 !important;
+    border-radius:14px 14px 0 0 !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+    min-height:0 !important;
+    border-radius:0 0 16px 16px !important;
+  }
+
+  .designer-scene--mobile {
+    height:270px !important;
+  }
+
+  .designer-mobile-text-editor {
+    position:relative !important;
+    z-index:1 !important;
+    margin:0 0 12px !important;
+  }
+
+  .designer-preview-card .environment-selector {
+    position:relative !important;
+    z-index:1 !important;
+    margin:0 0 14px !important;
+  }
+
+  .designer-controls {
+    position:relative !important;
+    z-index:1 !important;
+    width:100% !important;
+    max-width:none !important;
+    margin:0 !important;
+  }
+}
+
+@media (max-width:520px) {
+  .designer-page {
+    padding-left:9px !important;
+    padding-right:9px !important;
+  }
+
+  .designer-preview-sticky {
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+
+  .designer-scene--mobile {
+    height:270px !important;
+  }
+}
