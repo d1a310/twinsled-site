@@ -994,51 +994,14 @@ function Designer() {
     }))
   }
 
-  const turkishGlyphs = {
-    İ: { base: 'I', mark: 'dot' },
-    Ş: { base: 'S', mark: 'cedilla' },
-    Ğ: { base: 'G', mark: 'breve' },
-    Ç: { base: 'C', mark: 'cedilla' },
-    Ö: { base: 'O', mark: 'umlaut' },
-    Ü: { base: 'U', mark: 'umlaut' },
-    ş: { base: 's', mark: 'cedilla' },
-    ğ: { base: 'g', mark: 'breve' },
-    ç: { base: 'c', mark: 'cedilla' },
-    ö: { base: 'o', mark: 'umlaut' },
-    ü: { base: 'u', mark: 'umlaut' },
-    ı: { base: 'ı', mark: null, fallback: true },
-  }
-
+  // Türkçe karakterleri doğrudan render et.
+  // Tarayıcı seçili neon fontta karakter yoksa uygun fallback fontuna geçer.
+  // Manuel accent/cedilla katmanları kaldırıldı; böylece Ş/ş, Ü/ü gibi
+  // karakterlerde hizalama ve işaret kayması oluşmaz.
   const renderTurkishText = (value = '') =>
-    Array.from(value).map((char, index) => {
-      const glyph = turkishGlyphs[char]
-
-      if (!glyph) {
-        return <span key={`${char}-${index}`}>{char}</span>
-      }
-
-      if (glyph.fallback) {
-        return (
-          <span
-            key={`${char}-${index}`}
-            className="designer-neon__turkish-fallback-glyph"
-          >
-            {char}
-          </span>
-        )
-      }
-
-      return (
-        <span
-          key={`${char}-${index}`}
-          className={`designer-neon__turkish-glyph designer-neon__turkish-glyph--${glyph.mark}`}
-          aria-hidden="true"
-        >
-          <span className="designer-neon__turkish-glyph-base">{glyph.base}</span>
-          <span className="designer-neon__turkish-glyph-mark">{glyph.mark === 'dot' ? '•' : glyph.mark === 'cedilla' ? '¸' : glyph.mark === 'breve' ? '˘' : '¨'}</span>
-        </span>
-      )
-    })
+    Array.from(value).map((char, index) => (
+      <span key={`${char}-${index}`}>{char}</span>
+    ))
 
   const handleLogoPointerDown = (event) => {
     if (!design.logo) return
