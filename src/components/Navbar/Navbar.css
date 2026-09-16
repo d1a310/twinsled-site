@@ -1583,3 +1583,241 @@
     transition: none !important;
   }
 }
+/* =========================================================
+   TWINSLED — CSS DRAWN NEON LOGO
+   Gerçek görsel yok — tamamen CSS
+   ========================================================= */
+
+.navbar-logo-orb {
+  overflow: hidden !important;
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(40, 220, 255, .08),
+      transparent 58%
+    ),
+    rgba(5, 8, 13, .92) !important;
+
+  box-shadow:
+    inset 0 0 18px rgba(60, 225, 255, .08),
+    0 0 12px rgba(60, 225, 255, .25),
+    0 0 26px rgba(255, 0, 190, .12) !important;
+}
+
+
+/* Eski T harfini kaldır */
+.navbar-logo-core {
+  position: absolute !important;
+
+  width: 17px !important;
+  height: 19px !important;
+
+  left: 12px !important;
+  top: 13px !important;
+
+  margin: 0 !important;
+
+  font-size: 0 !important;
+  line-height: 0 !important;
+
+  z-index: 5 !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #43e7ff 0%,
+      #23cfff 45%,
+      #8e56ff 72%,
+      #ff39c8 100%
+    );
+
+  clip-path: polygon(
+    0 100%,
+    25% 100%,
+    50% 42%,
+    75% 100%,
+    100% 100%,
+    50% 0
+  );
+
+  filter:
+    drop-shadow(0 0 3px rgba(75,235,255,.95))
+    drop-shadow(0 0 7px rgba(75,235,255,.55))
+    drop-shadow(0 0 12px rgba(255,45,205,.3));
+}
+
+
+/* Sol cyan üçgen */
+.navbar-logo-orb::before {
+  content: "" !important;
+
+  position: absolute !important;
+
+  width: 19px !important;
+  height: 18px !important;
+
+  left: 6px !important;
+  bottom: 8px !important;
+
+  inset: auto !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  opacity: 1 !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #35eaff 0%,
+      #12d5ff 45%,
+      #575dff 100%
+    );
+
+  clip-path: polygon(
+    0 100%,
+    47% 0,
+    100% 100%,
+    76% 100%,
+    47% 38%,
+    23% 100%
+  );
+
+  filter:
+    drop-shadow(0 0 3px #29e5ff)
+    drop-shadow(0 0 8px rgba(41,229,255,.7));
+
+  z-index: 3 !important;
+}
+
+
+/* Sağ pembe üçgen */
+.navbar-logo-orb::after {
+  content: "" !important;
+
+  position: absolute !important;
+
+  width: 19px !important;
+  height: 18px !important;
+
+  right: 5px !important;
+  bottom: 8px !important;
+
+  top: auto !important;
+
+  border-radius: 0 !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ff46d4 0%,
+      #ff209e 58%,
+      #ff3d5f 100%
+    );
+
+  clip-path: polygon(
+    0 0,
+    27% 0,
+    100% 100%,
+    74% 100%,
+    27% 38%,
+    0 38%
+  );
+
+  box-shadow: none !important;
+
+  filter:
+    drop-shadow(0 0 3px #ff39c7)
+    drop-shadow(0 0 8px rgba(255,45,198,.68));
+
+  z-index: 3 !important;
+}
+
+
+/* Üst sarı üçgeni orb içine ayrıca çiziyoruz */
+.navbar-logo-orb {
+  isolation: isolate;
+}
+
+.navbar-logo-orb {
+  background-image:
+    linear-gradient(
+      145deg,
+      transparent 0 30%,
+      rgba(255,218,55,.95) 31%,
+      rgba(255,238,65,.95) 39%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(40, 220, 255, .08),
+      transparent 58%
+    ) !important;
+}
+
+
+/* Merkezi üst sarı parça için küçük ışık izi */
+.navbar-logo-copy strong {
+  text-shadow:
+    0 0 8px rgba(75,225,255,.12),
+    0 0 18px rgba(255,45,205,.08);
+}
+
+
+/* Logo hover */
+.navbar-logo:hover .navbar-logo-orb {
+  transform: translateY(-1px) scale(1.035) !important;
+
+  border-color: #67efff !important;
+
+  box-shadow:
+    inset 0 0 20px rgba(50,225,255,.12),
+    0 0 12px rgba(50,225,255,.5),
+    0 0 25px rgba(50,225,255,.32),
+    0 0 40px rgba(255,35,200,.18) !important;
+}
+
+.navbar-logo:hover .navbar-logo-core {
+  filter:
+    drop-shadow(0 0 4px rgba(75,240,255,1))
+    drop-shadow(0 0 10px rgba(75,240,255,.75))
+    drop-shadow(0 0 18px rgba(255,45,205,.55));
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 460px) {
+
+  .navbar-logo-orb {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  .navbar-logo-core {
+    width: 15px !important;
+    height: 17px !important;
+
+    left: 10px !important;
+    top: 11px !important;
+  }
+
+  .navbar-logo-orb::before {
+    width: 17px !important;
+    height: 16px !important;
+
+    left: 5px !important;
+    bottom: 7px !important;
+  }
+
+  .navbar-logo-orb::after {
+    width: 17px !important;
+    height: 16px !important;
+
+    right: 4px !important;
+    bottom: 7px !important;
+  }
+}
