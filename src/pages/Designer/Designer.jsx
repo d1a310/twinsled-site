@@ -457,6 +457,7 @@ function Designer() {
   const historyRef = useRef([])
   const futureRef = useRef([])
   const noticeTimerRef = useRef(null)
+  const mobilePreviewRef = useRef(null)
 
   const [design, setDesign] = useState(createInitialDesign)
   const [, forceHistory] = useState(0)
@@ -468,6 +469,27 @@ function Designer() {
   const [fullscreen, setFullscreen] = useState(false)
   const [activePanel, setActivePanel] = useState('design')
   const [showEnvironmentPanel, setShowEnvironmentPanel] = useState(false)
+  const [mobilePreviewHeight, setMobilePreviewHeight] = useState(0)
+
+  useEffect(() => {
+    const element = mobilePreviewRef.current
+    if (!element) return undefined
+
+    const measure = () => {
+      const nextHeight = Math.ceil(element.getBoundingClientRect().height)
+      setMobilePreviewHeight((current) => (Math.abs(current - nextHeight) > 1 ? nextHeight : current))
+    }
+
+    measure()
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
+    observer?.observe(element)
+    window.addEventListener('resize', measure)
+
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [design.previewMode, design.selectedEnvironment.id])
 
   useEffect(() => {
     document.title = 'Neon Tabela Tasarımı | NeonLab'
@@ -1233,8 +1255,11 @@ function Designer() {
           </button>
         </div>
 
-        <section className="designer-workspace">
-          <div className="designer-preview-card">
+        <section
+          className="designer-workspace"
+          style={{ "--mobile-preview-height": `${mobilePreviewHeight}px` }}
+        >
+          <div className="designer-preview-card" ref={mobilePreviewRef}>
             <div className="designer-preview-sticky">
             <div className="designer-preview-card__top">
               <div className="designer-preview-card__status">
@@ -1286,6 +1311,7 @@ function Designer() {
             </div>
             </div>
           </div>
+          <div className="designer-mobile-preview-spacer" aria-hidden="true" />
 
           {renderTextEditor('designer-mobile-text-editor')}
 

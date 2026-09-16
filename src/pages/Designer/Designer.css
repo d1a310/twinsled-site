@@ -918,11 +918,20 @@
     padding:0 !important;
   }
 
-  /* The complete preview is sticky as one block: no fake spacer,
-     no fixed header, and no detached scene that can create gaps. */
+  /* Mobile live preview is genuinely fixed to the viewport.
+     Its measured height is reserved exactly once by the spacer below,
+     so there is no mystery gap and the controls can start immediately. */
+  .designer-workspace {
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+  }
+
   .designer-preview-card {
-    position:sticky !important;
+    position:fixed !important;
     top:0 !important;
+    left:0 !important;
+    right:0 !important;
     z-index:1000 !important;
     width:100% !important;
     max-width:100% !important;
@@ -932,6 +941,16 @@
     border-radius:0 0 16px 16px !important;
     background:#080b10 !important;
     box-shadow:0 14px 36px rgba(0,0,0,.34) !important;
+  }
+
+  .designer-mobile-preview-spacer {
+    display:block !important;
+    width:100% !important;
+    height:var(--mobile-preview-height, calc(40vh + 42px)) !important;
+    min-height:var(--mobile-preview-height, calc(40vh + 42px)) !important;
+    margin:0 !important;
+    padding:0 !important;
+    pointer-events:none !important;
   }
 
   .designer-preview-sticky {
