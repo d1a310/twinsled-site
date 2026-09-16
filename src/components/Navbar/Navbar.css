@@ -178,6 +178,7 @@
 
 /* =========================================================
    LOGO
+   Sadece logo alanı — navbarın geri kalanına dokunulmadı.
    ========================================================= */
 
 .navbar-logo {
@@ -203,95 +204,59 @@
 .navbar-logo-orb {
   position: relative;
 
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 13px;
+  border-radius: 12px;
 
-  border: 1px solid
-    color-mix(
-      in srgb,
-      var(--navbar-neon) 54%,
-      rgba(255, 255, 255, 0.1)
-    );
+  /*
+   * Kutunun kendisi artık logodan rol çalmıyor.
+   * Çok hafif, premium bir çerçeve.
+   */
+  border: 1px solid rgba(84, 232, 255, 0.34);
 
   background:
     radial-gradient(
-      circle at 45% 35%,
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 18%,
-        transparent
-      ),
-      transparent 63%
+      circle at 50% 42%,
+      rgba(84, 232, 255, 0.045),
+      transparent 68%
     ),
-    rgba(255, 255, 255, 0.02);
+    rgba(255, 255, 255, 0.008);
 
   box-shadow:
-    inset 0 0 18px
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 7%,
-        transparent
-      ),
-    0 0 22px
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 18%,
-        transparent
-      );
+    inset 0 0 14px rgba(84, 232, 255, 0.035),
+    0 0 14px rgba(84, 232, 255, 0.075);
+
+  overflow: visible;
 
   transition:
-    border-color 500ms ease,
-    box-shadow 500ms ease,
-    transform 300ms ease;
-}
-
-.navbar-logo:hover .navbar-logo-orb {
-  transform: translateY(-1px) rotate(-2deg);
-
-  border-color:
-    color-mix(
-      in srgb,
-      var(--navbar-neon) 90%,
-      white
-    );
-
-  box-shadow:
-    inset 0 0 22px
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 10%,
-        transparent
-      ),
-    0 0 30px
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 36%,
-        transparent
-      );
+    border-color 350ms ease,
+    box-shadow 350ms ease,
+    transform 280ms ease;
 }
 
 .navbar-logo-orb::before {
   content: "";
 
   position: absolute;
-  inset: 4px;
-
-  border: 1px solid
-    color-mix(
-      in srgb,
-      var(--navbar-neon) 25%,
-      transparent
-    );
+  inset: 2px;
 
   border-radius: 10px;
 
-  opacity: 0.7;
+  border: 1px solid rgba(126, 232, 255, 0.055);
+
+  box-shadow:
+    inset 0 0 10px rgba(84, 232, 255, 0.02);
+
+  pointer-events: none;
+
+  z-index: 0;
 }
 
 .navbar-logo-orb::after {
@@ -299,48 +264,89 @@
 
   position: absolute;
 
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
+
+  top: 4px;
+  right: 4px;
 
   border-radius: 50%;
 
-  top: 6px;
-  right: 7px;
-
-  background: var(--navbar-neon);
+  background: #65eaff;
 
   box-shadow:
-    0 0 8px var(--navbar-neon),
-    0 0 15px var(--navbar-neon);
+    0 0 6px #65eaff,
+    0 0 12px rgba(101, 234, 255, 0.5);
+
+  opacity: 0.82;
 
   animation:
     navbarLogoDot 1.8s ease-in-out infinite;
+
+  pointer-events: none;
+
+  z-index: 4;
 }
 
-.navbar-logo-core {
+/*
+ * SVG doğrudan kutunun içine oturuyor.
+ * Önceki sürümdeki fazla büyütme kaldırıldı.
+ */
+.navbar-logo-svg {
   position: relative;
+
   z-index: 2;
 
-  font-size: 17px;
-  font-weight: 950;
+  display: block;
 
-  line-height: 1;
+  width: 38px;
+  height: 38px;
 
-  color: #fff;
+  max-width: none;
 
-  text-shadow:
-    0 0 5px
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 55%,
-        transparent
-      ),
-    0 0 16px
-      color-mix(
-        in srgb,
-        var(--navbar-neon) 40%,
-        transparent
-      );
+  overflow: visible;
+
+  transform:
+    translateY(0)
+    scale(1);
+
+  transform-origin: center;
+
+  filter:
+    drop-shadow(0 0 1.5px rgba(15, 220, 255, 0.42))
+    drop-shadow(0 0 4px rgba(226, 45, 255, 0.12));
+
+  transition:
+    transform 280ms cubic-bezier(.2,.8,.2,1),
+    filter 280ms ease;
+}
+
+/*
+ * Logo şeklinin kendisi kutuyu hafifçe dolduruyor.
+ * Border küçük kalıyor, marka işareti ana odak oluyor.
+ */
+.navbar-logo-orb .navbar-logo-svg {
+  margin: 0;
+}
+
+.navbar-logo:hover .navbar-logo-orb {
+  transform: translateY(-1px);
+
+  border-color: rgba(84, 232, 255, 0.56);
+
+  box-shadow:
+    inset 0 0 16px rgba(84, 232, 255, 0.05),
+    0 0 20px rgba(84, 232, 255, 0.12);
+}
+
+.navbar-logo:hover .navbar-logo-svg {
+  transform:
+    translateY(-0.5px)
+    scale(1.045);
+
+  filter:
+    drop-shadow(0 0 2px rgba(15, 220, 255, 0.58))
+    drop-shadow(0 0 6px rgba(226, 45, 255, 0.17));
 }
 
 .navbar-logo-copy {
@@ -1581,97 +1587,5 @@
   .navbar-mobile-menu,
   .navbar-mobile-submenu {
     transition: none !important;
-  }
-}
-/* =========================================================
-   TWINSLED — ORIGINAL NAVBAR LOGO UPGRADE
-   Markup korunur; mevcut navbar-logo-core CSS ile logo çizilir.
-   ========================================================= */
-
-.navbar-logo-orb {
-  overflow: visible;
-}
-
-.navbar-logo-core {
-  position: relative;
-  z-index: 3;
-  width: 27px;
-  height: 27px;
-  display: block;
-  flex: 0 0 27px;
-  font-size: 0;
-  line-height: 0;
-  color: transparent;
-  text-shadow: none;
-  isolation: isolate;
-  transform: scale(1.02);
-  transition: transform 260ms ease, filter 260ms ease;
-}
-
-/* blue lower-left piece */
-.navbar-logo-core::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 1px;
-  width: 15px;
-  height: 17px;
-  z-index: 1;
-  background: linear-gradient(145deg, #3eeeff 0%, #27dfff 42%, #775cff 100%);
-  clip-path: polygon(0 100%, 43% 0, 67% 34%, 50% 62%, 75% 62%, 100% 100%);
-  filter:
-    drop-shadow(0 0 2px rgba(54, 231, 255, 0.72))
-    drop-shadow(0 0 5px rgba(76, 120, 255, 0.35));
-}
-
-/* yellow/pink central + right pieces */
-.navbar-logo-core::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 23px;
-  height: 25px;
-  z-index: 2;
-  background:
-    linear-gradient(145deg, transparent 0 18%, #fff03d 19% 31%, #ffc42f 32% 41%, #ff7b55 42% 49%, transparent 50%),
-    linear-gradient(145deg, transparent 0 43%, #ff237d 44% 72%, #ff39a0 73% 100%);
-  clip-path: polygon(
-    35% 0,
-    67% 45%,
-    54% 53%,
-    79% 96%,
-    51% 96%,
-    35% 67%,
-    21% 88%,
-    0 88%,
-    25% 48%,
-    16% 31%
-  );
-  filter:
-    drop-shadow(0 0 2px rgba(255, 244, 71, 0.58))
-    drop-shadow(0 0 5px rgba(255, 48, 150, 0.42));
-}
-
-.navbar-logo-orb::before {
-  pointer-events: none;
-}
-
-.navbar-logo-orb::after {
-  z-index: 5;
-}
-
-.navbar-logo:hover .navbar-logo-core {
-  transform: scale(1.10) translateY(-0.5px);
-  filter:
-    drop-shadow(0 0 3px rgba(43, 225, 255, 0.5))
-    drop-shadow(0 0 7px rgba(255, 48, 157, 0.28));
-}
-
-@media (max-width: 460px) {
-  .navbar-logo-core {
-    width: 24px;
-    height: 24px;
-    flex-basis: 24px;
   }
 }
