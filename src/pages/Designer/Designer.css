@@ -2445,3 +2445,141 @@
     margin-top:280px !important;
   }
 }
+
+/* =========================================================
+   TWINSLED — MOBILE STICKY PREVIEW / REAL ZERO GAP
+   The preview itself is sticky and remains part of normal flow.
+   This removes the artificial spacer/margin while keeping the
+   live preview visible during scrolling.
+   ========================================================= */
+@media (max-width: 760px) {
+  .designer-workspace {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .designer-preview-card,
+  .designer-preview-card:has(.designer-scene--mobile) {
+    display: block !important;
+    position: sticky !important;
+    top: max(68px, env(safe-area-inset-top)) !important;
+    z-index: 5000 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    max-height: 310px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .designer-preview-sticky {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    max-height: 310px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 5000 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+
+  .designer-preview-card__top {
+    width: 100% !important;
+    height: 40px !important;
+    min-height: 40px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    width: 100% !important;
+    height: 270px !important;
+    min-height: 270px !important;
+    max-height: 270px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .designer-mobile-text-editor,
+  .designer-preview-card .environment-selector {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 12px !important;
+    padding-top: 0 !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .designer-page {
+    overflow-x: hidden !important;
+  }
+
+  .designer-preview-card,
+  .designer-preview-card:has(.designer-scene--mobile) {
+    top: max(64px, env(safe-area-inset-top)) !important;
+    width: 100% !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    max-height: 310px !important;
+  }
+
+  .designer-preview-sticky {
+    width: 100% !important;
+    height: 310px !important;
+    min-height: 310px !important;
+    max-height: 310px !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    width: 100% !important;
+    height: 270px !important;
+    min-height: 270px !important;
+    max-height: 270px !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top: 0 !important;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 680px) {
+  .designer-preview-card,
+  .designer-preview-card:has(.designer-scene--mobile) {
+    height: 280px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+  }
+
+  .designer-preview-sticky {
+    height: 280px !important;
+    min-height: 280px !important;
+    max-height: 280px !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height: 240px !important;
+    min-height: 240px !important;
+    max-height: 240px !important;
+  }
+}
