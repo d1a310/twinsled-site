@@ -1104,7 +1104,7 @@ function Designer() {
           availableWidth / Math.max(estimatedWidth + 28, 1),
         )
         const safeScale = Math.max(
-          isFullscreen ? 0.35 : 0.24,
+          isFullscreen ? 0.35 : 0.36,
           fitScale,
         )
 
