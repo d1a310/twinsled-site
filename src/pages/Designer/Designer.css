@@ -2216,142 +2216,139 @@
 }
 
 /* =========================================================
-   TWINSLED — MOBILE FINAL POLISH
-   - Remove the empty gap before ORTAM.
-   - Keep KENDİN TASARLA perfectly inside the phone width.
-   - Do not change desktop behaviour.
+   TWINSLED — MOBILE PREVIEW / ZERO GAP FINAL
+   Preview is fixed while scrolling. Its card reserves exactly
+   the same height, so METİN starts immediately underneath it.
    ========================================================= */
 @media (max-width:760px) {
-  .designer-page,
-  .designer,
-  .designer-workspace,
-  .designer-controls {
-    box-sizing:border-box !important;
-    max-width:100% !important;
-  }
-
   .designer-workspace {
+    display:block !important;
     width:100% !important;
-    min-width:0 !important;
-    margin:0 !important;
+    max-width:100% !important;
     overflow:visible !important;
   }
 
-  /* No artificial gap below the fixed/sticky live preview. */
-  .designer-preview-sticky {
-    margin-bottom:0 !important;
-  }
-
-  /* Text editor sits directly in the scrolling flow. */
-  .designer-mobile-text-editor {
+  .designer-preview-card {
+    display:block !important;
+    position:relative !important;
     width:100% !important;
+    height:310px !important;
+    min-height:310px !important;
     max-width:100% !important;
-    margin-top:0 !important;
-    margin-bottom:0 !important;
-    box-sizing:border-box !important;
-  }
-
-  /* ORTAM begins immediately after the text editor. */
-  .designer-preview-card .environment-selector {
-    width:100% !important;
-    max-width:100% !important;
-    margin-top:0 !important;
-    margin-bottom:12px !important;
-    box-sizing:border-box !important;
-  }
-
-  /* Keep the selector's own internal breathing room, but remove
-     the external blank space that made ORTAM look detached. */
-  .designer-preview-card .environment-selector__toggle {
-    width:100% !important;
-    max-width:100% !important;
-    box-sizing:border-box !important;
-  }
-
-  /* KENDİN TASARLA must stay fully inside the phone viewport. */
-  .designer-controls {
-    width:100% !important;
-    min-width:0 !important;
     margin:0 !important;
     padding:0 !important;
     overflow:visible !important;
+    background:transparent !important;
+    border:0 !important;
+    box-shadow:none !important;
   }
 
-  .designer-controls > * {
-    max-width:100% !important;
-    min-width:0 !important;
+  .designer-preview-sticky {
+    position:fixed !important;
+    top:68px !important;
+    left:9px !important;
+    right:9px !important;
+    width:auto !important;
+    height:310px !important;
+    margin:0 !important;
+    padding:0 !important;
+    z-index:5000 !important;
+    display:block !important;
+    box-sizing:border-box !important;
+    overflow:visible !important;
+  }
+
+  .designer-preview-card__top {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    height:40px !important;
+    min-height:40px !important;
+    margin:0 !important;
     box-sizing:border-box !important;
   }
 
-  .controls-heading {
+  .designer-scene,
+  .designer-scene--mobile {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
     width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:270px !important;
+    min-height:270px !important;
+    margin:0 !important;
     box-sizing:border-box !important;
-    padding-left:16px !important;
-    padding-right:16px !important;
+    overflow:hidden !important;
+    border-radius:0 0 16px 16px !important;
   }
 
-  .control-section,
-  .designer-desktop-text-editor {
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
+  .designer-mobile-text-editor {
+    display:block !important;
+    position:relative !important;
+    z-index:1 !important;
+    width:calc(100% - 18px) !important;
+    margin:0 9px 14px !important;
+    box-sizing:border-box !important;
+  }
+
+  .designer-preview-card .environment-selector {
+    position:relative !important;
+    z-index:1 !important;
+    width:calc(100% - 18px) !important;
+    margin:0 9px 14px !important;
     box-sizing:border-box !important;
   }
 }
 
 @media (max-width:520px) {
   .designer-page {
-    width:100% !important;
-    max-width:100vw !important;
     padding-left:9px !important;
     padding-right:9px !important;
-    overflow-x:hidden !important;
   }
 
-  .designer-controls {
+  .designer-preview-card {
     width:100% !important;
-    max-width:100% !important;
-    margin-left:0 !important;
-    margin-right:0 !important;
-  }
-}
-
-
-/* =========================================================
-   TWINSLED — FINAL MOBILE TEXT FIT + ZERO PREVIEW GAP
-   - Long text scales down progressively so it stays inside the preview.
-   - Remove the last reserved 12px below the fixed preview.
-   - Do not alter desktop behaviour.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-neon {
-    max-width:100% !important;
-    transform-origin:center center !important;
+    height:310px !important;
+    min-height:310px !important;
   }
 
-  .designer-preview-card {
-    padding-top:332px !important;
+  .designer-preview-sticky {
+    top:68px !important;
+    left:9px !important;
+    right:9px !important;
+    height:310px !important;
   }
 
-  .designer-mobile-text-editor {
-    margin-top:0 !important;
-    margin-bottom:0 !important;
+  .designer-preview-card__top {
+    height:40px !important;
+    min-height:40px !important;
   }
 
-  .designer-preview-card .environment-selector {
-    margin-top:0 !important;
-    margin-bottom:12px !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-preview-card {
-    padding-top:310px !important;
+  .designer-scene,
+  .designer-scene--mobile {
+    height:270px !important;
+    min-height:270px !important;
   }
 }
 
 @media (max-width:760px) and (max-height:680px) {
   .designer-preview-card {
-    padding-top:280px !important;
+    height:280px !important;
+    min-height:280px !important;
+  }
+
+  .designer-preview-sticky {
+    height:280px !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height:240px !important;
+    min-height:240px !important;
   }
 }
