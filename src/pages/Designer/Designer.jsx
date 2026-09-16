@@ -1041,11 +1041,28 @@ function Designer() {
     window.addEventListener('pointerup', handleUp, { once: true })
   }
 
+  const mobileAutoScale = useMemo(() => {
+    const longestLine = Math.max(
+      1,
+      ...previewLines.map((line) => line.text.replace(/\s+/g, ' ').trim().length),
+    )
+
+    if (longestLine <= 12) return 1
+    if (longestLine <= 18) return 0.94
+    if (longestLine <= 24) return 0.88
+    if (longestLine <= 30) return 0.80
+    if (longestLine <= 38) return 0.72
+    if (longestLine <= 48) return 0.63
+    if (longestLine <= 60) return 0.54
+    return 0.46
+  }, [previewLines])
+
   const renderNeonLines = (isFullscreen = false) => (
     <div
       className={`designer-neon ${isFullscreen ? 'designer-neon--fullscreen' : ''}`}
       style={{
-        transform: `translate(${design.offsetX}px, ${design.offsetY}px) scale(${design.previewScale / 100})`,
+        '--mobile-auto-scale': mobileAutoScale,
+        transform: `translate(${design.offsetX}px, ${design.offsetY}px) scale(calc(${design.previewScale / 100} * var(--mobile-auto-scale, 1)))`,
         filter: `brightness(${design.brightness / 100})`,
       }}
     >
