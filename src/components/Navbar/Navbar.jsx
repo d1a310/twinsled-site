@@ -32,116 +32,73 @@ function TwinsledLogo() {
   return (
     <span className="navbar-logo-orb" aria-hidden="true">
       <svg
-        viewBox="0 0 447 428"
+        viewBox="0 0 100 100"
         className="navbar-logo-svg"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <linearGradient
-            id="twNavbarBlue"
-            x1="24"
-            y1="381"
-            x2="208"
-            y2="180"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0" stopColor="#05D9FF" />
-            <stop offset="0.45" stopColor="#1AD3EE" />
-            <stop offset="0.76" stopColor="#8160F5" />
-            <stop offset="1" stopColor="#D431FF" />
+          <linearGradient id="tw-logo-cyan" x1="10" y1="88" x2="54" y2="30" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#00D9FF" />
+            <stop offset=".52" stopColor="#22D6E8" />
+            <stop offset="1" stopColor="#6FF4C8" />
           </linearGradient>
 
-          <linearGradient
-            id="twNavbarYellow"
-            x1="175"
-            y1="20"
-            x2="320"
-            y2="355"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0" stopColor="#FFF500" />
-            <stop offset="0.36" stopColor="#FFE700" />
-            <stop offset="0.65" stopColor="#FFB12D" />
-            <stop offset="1" stopColor="#FF087F" />
+          <linearGradient id="tw-logo-yellow" x1="48" y1="5" x2="58" y2="66" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#FFF51A" />
+            <stop offset=".42" stopColor="#E7F34A" />
+            <stop offset=".72" stopColor="#A7E56B" />
+            <stop offset="1" stopColor="#9A8AF2" />
           </linearGradient>
 
-          <linearGradient
-            id="twNavbarPink"
-            x1="281"
-            y1="205"
-            x2="424"
-            y2="378"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop offset="0" stopColor="#F50773" />
-            <stop offset="0.55" stopColor="#FF1488" />
-            <stop offset="1" stopColor="#FF3C9B" />
+          <linearGradient id="tw-logo-pink" x1="58" y1="53" x2="91" y2="89" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#FF7EA1" />
+            <stop offset=".42" stopColor="#FF5FA7" />
+            <stop offset="1" stopColor="#FF2A9A" />
           </linearGradient>
 
-          <filter
-            id="twNavbarGlow"
-            x="-40%"
-            y="-40%"
-            width="180%"
-            height="180%"
-          >
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="2"
-              result="blur1"
-            />
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="4.5"
-              result="blur2"
-            />
+          <filter id="tw-logo-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.4" result="b1" />
+            <feGaussianBlur stdDeviation="3.4" result="b2" />
             <feMerge>
-              <feMergeNode in="blur2" />
-              <feMergeNode in="blur1" />
+              <feMergeNode in="b2" />
+              <feMergeNode in="b1" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
         </defs>
 
         <path
-          d="M24 381L141 182L191 263L154 325L137 297L92 377H183L207 418H24V381Z"
-          fill="url(#twNavbarBlue)"
-          filter="url(#twNavbarGlow)"
-        />
-
-        <path
-          d="M211 21L293 150L257 177L226 129L205 164L319 358L273 386L174 214L153 177L211 21Z"
-          fill="url(#twNavbarYellow)"
-          filter="url(#twNavbarGlow)"
-        />
-
-        <path
-          d="M226 129L250 88L284 142L256 177L226 129Z"
-          fill="#FFF100"
-          filter="url(#twNavbarGlow)"
-        />
-
-        <path
-          d="M286 218L329 187L422 378H300L252 298L288 270L317 322H362L326 252L296 273L286 218Z"
-          fill="url(#twNavbarPink)"
-          filter="url(#twNavbarGlow)"
-        />
-
-        <path
-          d="M55 390L139 250"
-          stroke="#8DF8FF"
-          strokeWidth="3"
+          d="M5 89L31 43L43 23L56 45L42 68L36 58L24 78L41 78L46 89Z"
+          fill="none"
+          stroke="url(#tw-logo-cyan)"
+          strokeWidth="3.7"
           strokeLinecap="round"
-          opacity=".48"
+          strokeLinejoin="round"
+          filter="url(#tw-logo-glow)"
         />
 
         <path
-          d="M212 43L278 150"
-          stroke="#FFFFFF"
-          strokeWidth="2.5"
+          d="M30 43L50 7L69 38L57 38L50 26L45 37L67 73"
+          fill="none"
+          stroke="url(#tw-logo-yellow)"
+          strokeWidth="3.7"
           strokeLinecap="round"
-          opacity=".5"
+          strokeLinejoin="round"
+          filter="url(#tw-logo-glow)"
         />
+
+        <path
+          d="M62 56L73 52L94 89L71 89L60 70L70 64L76 75L85 75L77 60"
+          fill="none"
+          stroke="url(#tw-logo-pink)"
+          strokeWidth="3.7"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          filter="url(#tw-logo-glow)"
+        />
+
+        <circle cx="7.2" cy="67.5" r="1.65" fill="#11D8FF" filter="url(#tw-logo-glow)" />
+        <circle cx="10.8" cy="80" r="1.65" fill="#11D8FF" filter="url(#tw-logo-glow)" />
       </svg>
 
       <span className="navbar-logo-scan" />
