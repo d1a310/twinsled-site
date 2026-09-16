@@ -10,6 +10,7 @@ import {
   ChevronDown,
   Image as ImageIcon,
   Italic,
+  LayoutTemplate,
   Maximize2,
   MessageCircle,
   Minus,
@@ -1224,6 +1225,13 @@ function Designer() {
         )}
 
         <div className="designer-workflow-hint">Ctrl/Cmd + Z: geri al · Ctrl/Cmd + Shift + Z: ileri al · Esc: paneli kapat</div>
+
+        <div className="designer-tabs designer-tabs--single">
+          <button type="button" className="is-active" aria-current="page">
+            <SlidersHorizontal size={15} />
+            Tasarım
+          </button>
+        </div>
 
         <section className="designer-workspace">
           <div className="designer-preview-card">

@@ -883,765 +883,146 @@
   .logo-position-grid button { height:32px; }
 }
 
-/* =========================================================
-   TWINSLED — FINAL MOBILE FIX
-   PRO STUDIO styles above remain intact.
-   ========================================================= */
 
+/* =========================================================
+   TWINSLED — FINAL MOBILE PREVIEW / ZERO-GAP LAYOUT
+   Mobile only. Desktop layout above remains untouched.
+   ========================================================= */
 @media (max-width:760px) {
-  .designer-page {
-    overflow-x:hidden;
+  html,
+  body,
+  #root,
+  .designer-page,
+  .designer {
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden !important;
+  }
+
+  .designer-workflow-hint,
+  .designer-tabs--single {
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+  }
+
+  .designer-tabs--single {
+    margin-bottom:10px;
   }
 
   .designer-workspace {
-    display:block;
-    position:relative;
-    width:100%;
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
   }
 
-  /* Preview card stays in normal flow; only its header + scene are fixed. */
+  /* The complete preview is sticky as one block: no fake spacer,
+     no fixed header, and no detached scene that can create gaps. */
   .designer-preview-card {
+    position:sticky !important;
+    top:0 !important;
+    z-index:1000 !important;
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+    margin:0 !important;
+    overflow:hidden !important;
+    border-radius:0 0 16px 16px !important;
+    background:#080b10 !important;
+    box-shadow:0 14px 36px rgba(0,0,0,.34) !important;
+  }
+
+  .designer-preview-sticky {
     position:static !important;
-    width:100%;
-    margin:0 0 18px;
-    overflow:visible !important;
-    background:transparent;
-    box-shadow:none;
-    backdrop-filter:none;
+    width:100% !important;
+    max-width:100% !important;
   }
 
   .designer-preview-card__top {
-    position:fixed !important;
-    top:54px;
-    left:10px;
-    right:10px;
-    z-index:1200;
-    min-height:42px;
-    padding:6px 9px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:8px;
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:14px 14px 0 0;
-    background:rgba(6,9,13,.97);
-    box-shadow:0 8px 24px rgba(0,0,0,.38);
-    backdrop-filter:blur(16px);
-  }
-
-  .designer-preview-card__status {
-    min-width:0;
-    font-size:7px;
-    gap:6px;
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    z-index:10 !important;
+    width:100% !important;
+    min-height:42px !important;
+    height:42px !important;
+    box-sizing:border-box !important;
+    padding:6px 9px !important;
+    margin:0 !important;
+    border:0 !important;
+    border-bottom:1px solid rgba(255,255,255,.06) !important;
+    border-radius:0 !important;
+    background:#080b10 !important;
+    box-shadow:none !important;
+    backdrop-filter:none !important;
   }
 
   .designer-preview-card__top-controls {
     width:auto !important;
-    flex:0 0 auto;
-    gap:4px;
+    flex:0 0 auto !important;
+    gap:4px !important;
   }
 
   .designer-preview-card__top-controls > button {
-    width:29px;
-    height:29px;
-    min-width:29px;
-    flex:0 0 29px;
-  }
-
-  .preview-mode-switch {
-    flex:0 0 auto;
+    width:29px !important;
+    height:29px !important;
+    min-width:29px !important;
+    flex:0 0 29px !important;
   }
 
   .preview-mode-switch button {
-    min-height:28px;
-    padding:5px 7px;
-    font-size:6px;
+    min-height:28px !important;
+    padding:5px 7px !important;
   }
 
   .designer-scene,
   .designer-scene--mobile {
-    position:sticky !important;
-    top:96px;
-    left:auto;
-    right:auto;
-    z-index:80;
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    z-index:1 !important;
     width:100% !important;
-    max-width:none !important;
+    max-width:100% !important;
     min-height:0 !important;
-    margin:0 !important;
-    height:min(35vh,250px);
+    height:min(40vh,285px) !important;
     aspect-ratio:auto !important;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,.08);
-    border-top:0;
-    border-radius:0 0 16px 16px;
-    background:#11151b;
-    box-shadow:0 18px 42px rgba(0,0,0,.44);
-  }
-
-  .designer-scene--mobile {
-    height:min(40vh,285px);
+    margin:0 !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    border:0 !important;
+    border-radius:0 0 16px 16px !important;
   }
 
   .designer-preview-card::before,
   .designer-preview-card:has(.designer-scene--mobile)::before {
     display:none !important;
-    height:0 !important;
     content:none !important;
+    height:0 !important;
+    min-height:0 !important;
+    padding:0 !important;
+    margin:0 !important;
   }
 
   .designer-mount {
-    padding:6% 7%;
+    padding:6% 7% !important;
   }
 
   .designer-neon {
-    width:94%;
-    max-width:94%;
-    max-height:88%;
+    width:94% !important;
+    max-width:94% !important;
+    max-height:88% !important;
     overflow:visible !important;
   }
 
   .designer-neon__line {
-    line-height:.90;
-    padding:0;
-  }
-
-  .designer-scene__environment,
-  .designer-scene__scale {
-    z-index:30;
-    transform:scale(.86);
-  }
-
-  .designer-scene__environment {
-    left:8px;
-    bottom:8px;
-    transform-origin:bottom left;
-  }
-
-  .designer-scene__scale {
-    right:8px;
-    bottom:8px;
-    transform-origin:bottom right;
-    white-space:nowrap;
-  }
-
-  /* Keep logo inside the scene on mobile. */
-  .designer-uploaded-logo {
-    z-index:40;
-    left:auto !important;
-    right:8% !important;
-    top:10% !important;
-    width:min(110px,24vw) !important;
-    max-width:24% !important;
-    max-height:58px !important;
-    transform:translate(0,-50%);
-  }
-
-  .environment-selector {
-    position:relative;
-    z-index:40;
-    width:100%;
-    overflow:visible;
-  }
-
-  .designer-controls {
-    position:static !important;
-    width:100%;
-    max-width:none !important;
-    margin-top:14px;
-    overflow:visible !important;
-  }
-
-  .control-section {
-    width:100%;
-    min-width:0;
-    box-sizing:border-box;
-  }
-
-  /* -------- FIX MEASUREMENT -------- */
-
-  .custom-size-pro {
-    display:grid !important;
-    grid-template-columns:minmax(0,1fr) 16px minmax(0,1fr) !important;
-    align-items:end;
-    gap:6px !important;
-    padding:10px !important;
-    width:100%;
-    box-sizing:border-box;
-  }
-
-  .custom-size-pro__field {
-    min-width:0;
-  }
-
-  .custom-size-pro__field > div {
-    width:100%;
-    min-width:0;
-    min-height:42px;
-    box-sizing:border-box;
-    padding:0 9px;
-  }
-
-  .custom-size-pro__field input {
     width:100% !important;
-    min-width:0 !important;
-    height:40px;
-    box-sizing:border-box;
-    font-size:14px;
-    appearance:textfield;
-  }
-
-  .custom-size-pro__field input::-webkit-outer-spin-button,
-  .custom-size-pro__field input::-webkit-inner-spin-button {
-    -webkit-appearance:none;
-    margin:0;
-  }
-
-  .custom-size-pro__field b {
-    flex:0 0 auto;
-    white-space:nowrap;
-  }
-
-  .custom-size-pro__x {
-    width:16px;
-  }
-
-  .size-live-info {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:6px;
-    width:100%;
-    box-sizing:border-box;
-  }
-
-  .size-live-info span,
-  .size-live-info strong {
-    min-width:0;
-  }
-
-  .control-helper {
-    font-size:7px;
-    line-height:1.55;
-  }
-
-  /* -------- FIX IMAGE UPLOAD -------- */
-
-  .upload-dropzone {
-    width:100% !important;
-    min-height:104px !important;
-    box-sizing:border-box;
-    padding:14px !important;
-    display:flex !important;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
-    text-align:center;
-  }
-
-  .upload-dropzone strong {
-    display:block;
-    max-width:100%;
-    line-height:1.3;
-    white-space:normal;
-  }
-
-  .upload-dropzone small {
-    display:block;
-    max-width:100%;
-    line-height:1.45;
-  }
-
-  .upload-dropzone__icon {
-    flex:0 0 auto;
-  }
-
-  .uploaded-file--pro {
-    width:100%;
-    min-width:0;
-    box-sizing:border-box;
-  }
-
-  .uploaded-file--pro > div:first-child {
-    min-width:0;
-    flex:1 1 auto;
-  }
-
-  .uploaded-file--pro img {
-    flex:0 0 34px;
-  }
-
-  .uploaded-file--pro span {
-    min-width:0;
-    max-width:100%;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-  }
-
-  .uploaded-file__actions {
-    flex:0 0 auto;
-  }
-
-  .logo-stage-help {
-    width:100%;
-    box-sizing:border-box;
-    line-height:1.5;
-  }
-
-  .logo-position-grid {
-    width:100%;
-    box-sizing:border-box;
-    grid-template-columns:repeat(3,minmax(0,1fr));
-  }
-
-  .logo-position-grid button {
-    min-width:0;
-  }
-
-  .logo-position-readout {
-    width:100%;
-    flex-wrap:wrap;
-  }
-
-  /* Prevent mobile keyboard/browser zoom on form controls. */
-  .designer input,
-  .designer textarea,
-  .designer select {
-    font-size:16px !important;
-  }
-
-  .text-input-wrapper textarea {
-    width:100%;
-    min-height:88px;
-    box-sizing:border-box;
-  }
-}
-
-/* Short-height phones: keep the fixed preview compact while keyboard is open. */
-@media (max-width:760px) and (max-height:680px) {
-  .designer-preview-card__top {
-    top:50px;
-    min-height:38px;
-    padding:5px 8px;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    top:88px;
-    height:165px;
-  }
-
-  .designer-scene--mobile {
-    height:180px;
-  }
-
-  .designer-preview-card::before {
-    height:241px;
-  }
-
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    height:256px;
-  }
-
-  .designer-scene__environment,
-  .designer-scene__scale {
-    transform:scale(.72);
-  }
-
-  .designer-uploaded-logo {
-    max-height:44px !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-page {
-    padding-left:9px;
-    padding-right:9px;
-  }
-
-  .designer-preview-card__top {
-    top:50px;
-    left:9px;
-    right:9px;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    left:9px;
-    right:9px;
-    top:90px;
-  }
-
-  .designer-scene {
-    height:195px;
-  }
-
-  .designer-scene--mobile {
-    height:215px;
-  }
-
-  .designer-preview-card::before {
-    height:271px;
-  }
-
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    height:291px;
-  }
-
-  .custom-size-pro {
-    grid-template-columns:minmax(0,1fr) 12px minmax(0,1fr) !important;
-    gap:5px !important;
-    padding:8px !important;
-  }
-
-  .custom-size-pro__field > span {
-    font-size:6px;
-  }
-
-  .custom-size-pro__field > div {
-    padding:0 7px;
-  }
-
-  .custom-size-pro__field input {
-    font-size:13px;
-  }
-
-  .designer-scene__environment,
-  .designer-scene__scale {
-    transform:scale(.70);
-  }
-
-  .designer-uploaded-logo {
-    width:min(96px,24vw) !important;
-    max-height:42px !important;
-  }
-
-  .upload-dropzone {
-    min-height:96px !important;
-    padding:12px !important;
-  }
-}
-
-/* =========================================================
-   TURKISH GLYPH OVERLAY
-   JSX uses these spans for İ/Ş/Ğ/Ç/Ö/Ü rendering.
-   ========================================================= */
-
-.designer-neon__turkish-glyph {
-  position:relative;
-  display:inline-block;
-  line-height:1;
-  overflow:visible;
-  vertical-align:baseline;
-}
-
-.designer-neon__turkish-glyph-base {
-  display:inline-block;
-  line-height:1;
-  font-family:inherit;
-}
-
-.designer-neon__turkish-glyph-mark {
-  position:absolute;
-  left:50%;
-  z-index:2;
-  font-family:"Noto Sans",Arial,sans-serif;
-  font-style:normal;
-  font-weight:400;
-  line-height:1;
-  color:inherit;
-  text-shadow:inherit;
-  pointer-events:none;
-  user-select:none;
-  transform:translateX(-50%);
-}
-
-.designer-neon__turkish-glyph--dot .designer-neon__turkish-glyph-mark {
-  top:-.34em;
-  font-size:.28em;
-}
-
-.designer-neon__turkish-glyph--umlaut .designer-neon__turkish-glyph-mark {
-  top:-.30em;
-  font-size:.34em;
-  letter-spacing:-.12em;
-  transform:translateX(-50%) scaleX(.9);
-}
-
-.designer-neon__turkish-glyph--breve .designer-neon__turkish-glyph-mark {
-  top:-.27em;
-  font-size:.36em;
-}
-
-.designer-neon__turkish-glyph--cedilla .designer-neon__turkish-glyph-mark {
-  bottom:-.26em;
-  font-size:.34em;
-}
-
-.designer-neon__turkish-fallback-glyph {
-  display:inline-block;
-  font-family:"Noto Sans",Arial,sans-serif !important;
-  line-height:1;
-  vertical-align:baseline;
-  color:inherit;
-  text-shadow:inherit;
-}
-
-@media (max-width:760px) {
-  .designer-neon__turkish-glyph--dot .designer-neon__turkish-glyph-mark { top:-.31em; }
-  .designer-neon__turkish-glyph--umlaut .designer-neon__turkish-glyph-mark { top:-.28em; }
-  .designer-neon__turkish-glyph--breve .designer-neon__turkish-glyph-mark { top:-.25em; }
-}
-
-/* =========================================================
-   TWINSLED FINAL — MOBILE TEXT EDITOR
-   Mevcut sabit canlı önizleme korunur.
-   Metin kutusu mobilde sahne ile "Duvarını seç" arasındaki
-   boşluğa taşınır; masaüstünde sağ kontrolde kalır.
-   ========================================================= */
-
-.designer-mobile-text-editor {
-  display: none;
-}
-
-.designer-desktop-text-editor {
-  display: block;
-}
-
-@media (max-width: 760px) {
-  .designer-desktop-text-editor {
-    display: none !important;
-  }
-
-  .designer-mobile-text-editor {
-    display: block !important;
-    position: relative;
-    z-index: 80;
-    width: calc(100% - 18px);
-    margin: 12px 9px 14px;
-    box-sizing: border-box;
-    border: 1px solid rgba(145,237,255,.10);
-    border-radius: 15px;
-    background: rgba(7,11,16,.96);
-    box-shadow: 0 12px 30px rgba(0,0,0,.28);
-  }
-
-  .designer-mobile-text-editor .control-section__title {
-    padding: 12px 12px 8px;
-  }
-
-  .designer-mobile-text-editor .text-input-wrapper {
-    width: 100%;
-    padding: 0 12px;
-    box-sizing: border-box;
-  }
-
-  .designer-mobile-text-editor textarea {
-    width: 100%;
-    min-height: 82px;
-    max-height: 130px;
-    box-sizing: border-box;
-    font-size: 16px !important;
-    line-height: 1.4;
-    resize: vertical;
-  }
-
-  .designer-mobile-text-editor .text-stats {
-    padding: 7px 12px 11px;
-  }
-
-  /* Preview'ın altında oluşan boşluk artık metin editörüne ait. */
-  .designer-preview-card .environment-selector {
-    position: relative;
-    z-index: 70;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-mobile-text-editor {
-    margin-top: 8px;
-    margin-bottom: 10px;
-  }
-
-  .designer-mobile-text-editor textarea {
-    min-height: 70px;
-  }
-}
-
-/* =========================================================
-   TWINSLED MOBILE — REMOVE GAP BELOW FIXED PREVIEW
-   Canlı önizleme sabit kalır.
-   METİN kutusu doğrudan önizlemenin altından başlar.
-   Diğer mobil tasarım düzeni korunur.
-   ========================================================= */
-@media (max-width: 760px) {
-  .designer-preview-card::before,
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    height: 0 !important;
-    min-height: 0 !important;
-  }
-
-  /* Fixed preview'ın kapladığı alanı sadece gerektiği kadar ayır. */
-  .designer-mobile-text-editor {
-    margin-top: 0 !important;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 760px) and (max-height: 680px) {
-  .designer-preview-card::before,
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    height: 0 !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top: 0 !important;
-  }
-}
-
-@media (max-width: 520px) {
-  .designer-preview-card::before,
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    height: 0 !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top: 0 !important;
-  }
-}
-
-
-/* =========================================================
-   TWINSLED MOBILE — TIGHT PREVIEW → TEXT LAYOUT
-   Fixed preview stays exactly as-is. Remove the artificial
-   spacer and keep the mobile editor directly under the
-   visible preview area. Other controls remain unchanged.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-preview-card::before,
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    display:none !important;
-    height:0 !important;
-    min-height:0 !important;
-    content:none !important;
-  }
-
-  /* The preview card starts after the tabs in the DOM.
-     Pull only the mobile editor upward so it visually meets
-     the fixed preview without changing the rest of the page flow. */
-  .designer-mobile-text-editor {
-    position:relative !important;
-    margin-top:0 !important;
-    transform:translateY(-1px);
-  }
-}
-
-@media (max-width:520px) {
-  .designer-mobile-text-editor {
-    margin-top:0 !important;
-  }
-}
-
-
-/* =========================================================
-   TWINSLED MOBILE — COMPACT ENVIRONMENT + SINGLE-LINE TEXT
-   Ortam bölümü mobilde açılır/kapanır hale gelir.
-   Neon satırları 3-4 kelimede otomatik alt satıra düşmez.
-   ========================================================= */
-.environment-selector__toggle {
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px 13px;
-  border:1px solid rgba(145,237,255,.08);
-  border-radius:11px;
-  background:rgba(255,255,255,.02);
-  color:#e6ebf0;
-  text-align:left;
-  cursor:pointer;
-  transition:.2s ease;
-}
-.environment-selector__toggle:hover {
-  border-color:rgba(145,237,255,.2);
-  background:rgba(145,237,255,.035);
-}
-.environment-selector__toggle > span {
-  min-width:0;
-  display:grid;
-  gap:3px;
-}
-.environment-selector__toggle small {
-  color:#65717f;
-  font:700 6px 'Poppins',sans-serif;
-  letter-spacing:.16em;
-}
-.environment-selector__toggle strong {
-  color:#e6ebf0;
-  font:600 10px 'Poppins',sans-serif;
-}
-.environment-selector__toggle em {
-  overflow:hidden;
-  color:#91edff;
-  font:500 7px 'Poppins',sans-serif;
-  font-style:normal;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-.environment-selector__chevron {
-  flex:0 0 auto;
-  color:#91edff;
-  transition:transform .2s ease;
-}
-.environment-selector.is-open .environment-selector__chevron {
-  transform:rotate(180deg);
-}
-.environment-selector__panel {
-  margin-top:7px;
-  padding:11px;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:11px;
-  background:rgba(5,8,12,.72);
-}
-.environment-selector__panel .environment-selector__heading {
-  margin-bottom:8px;
-}
-.environment-selector__panel .environment-selector__heading span {
-  display:block;
-  margin-bottom:3px;
-  color:#65717f;
-  font:700 6px 'Poppins',sans-serif;
-  letter-spacing:.15em;
-}
-.environment-selector__panel .environment-selector__heading strong {
-  color:#d8dee5;
-  font:600 9px 'Poppins',sans-serif;
-}
-
-@media (max-width:760px) {
-  .environment-selector {
-    padding:10px 9px 12px !important;
-    border-top:0 !important;
-  }
-
-  .environment-selector__panel .environment-grid {
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:6px;
-  }
-
-  /* Mobile preview: words stay on the same line instead of flex-wrapping. */
-  .designer-neon {
-    width:max-content !important;
-    max-width:none !important;
-  }
-
-  .designer-neon__line {
-    width:max-content !important;
-    max-width:none !important;
+    max-width:100% !important;
+    padding:0 !important;
+    line-height:.90 !important;
     flex-wrap:nowrap !important;
     white-space:nowrap !important;
   }
@@ -1652,541 +1033,70 @@
     flex:0 0 auto !important;
     white-space:nowrap !important;
   }
-}
-
-@media (max-width:520px) {
-  .environment-selector__toggle {
-    padding:11px 12px;
-  }
-
-  .environment-selector__panel {
-    padding:9px;
-  }
-}
-
-/* =========================================================
-   TWINSLED MOBILE — LARGER PREVIEW + TRUE CENTERED TEXT
-   Preview alanı mobilde biraz büyütülür.
-   Yazı satırı içerik genişliğine göre değil, ekranın ortasına
-   göre hizalanır; kelimeler aynı satırda kalır.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-scene,
-  .designer-scene--mobile {
-    height:min(38vh,270px) !important;
-  }
-
-  .designer-scene--mobile {
-    height:min(40vh,285px) !important;
-  }
-
-  .designer-neon {
-    width:96% !important;
-    max-width:96% !important;
-  }
-
-  .designer-neon__line {
-    width:100% !important;
-    max-width:100% !important;
-    justify-content:center !important;
-    text-align:center !important;
-    flex-wrap:nowrap !important;
-    white-space:nowrap !important;
-  }
-
-  .designer-neon__word,
-  .designer-neon__icon {
-    flex:0 0 auto !important;
-  }
 
   .designer-neon__space {
-    display:inline-block !important;
-    flex:0 0 .85em !important;
     width:.85em !important;
     min-width:.85em !important;
     white-space:pre !important;
-    overflow:visible !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-scene {
-    height:220px !important;
   }
 
-  .designer-scene--mobile {
-    height:235px !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-scene {
-    height:225px !important;
-  }
-
-  .designer-scene--mobile {
-    height:245px !important;
-  }
-
-  .designer-neon {
-    width:97% !important;
-    max-width:97% !important;
-  }
-}
-
-
-/* =========================================================
-   TWINSLED — MOBILE PREVIEW FLOW FIX
-   Sabit büyütülmüş canlı önizlemenin kapladığı alanı normal
-   akışta rezerve eder; böylece METİN / ORTAM / TASARIM ŞABLONLAR
-   ve TASARIMLAR bölümleri önizlemenin altında kalır.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-preview-card {
-    padding-bottom:0 !important;
+  /* Text starts immediately after the preview block. */
+  .designer-mobile-text-editor {
+    display:block !important;
+    position:relative !important;
+    z-index:2 !important;
+    width:100% !important;
+    max-width:100% !important;
     box-sizing:border-box !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top:10px !important;
-  }
-
-  .designer-preview-card .environment-selector {
-    margin-top:0 !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — FINAL MOBILE PREVIEW FRAME
-   - İlk açılış duvarı: Antrasit (JSX)
-   - Mobil canlı önizleme ekran genişliğine tam oturur.
-   - Sabit üst kontrol çubuğunun kapladığı alan akışta rezerve edilir.
-   - Böylece aşağıdaki METİN / ORTAM / TASARIM ŞABLONLARI bölümleri
-     canlı önizlemenin altına binmez.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-page {
-    padding-left:0 !important;
-    padding-right:0 !important;
-    padding-top:72px !important;
-  }
-
-  .designer {
-    width:100% !important;
-    max-width:none !important;
-  }
-
-  .designer-header,
-  .designer-tabs,
-  .designer-workspace,
-  .designer-mobile-text-editor,
-  .designer-controls,
-  .designer-summary,
-  .designer-cart-button,
-  .designer-whatsapp-grid,
-  .designer-note {
-    margin-left:9px;
-    margin-right:9px;
-  }
-
-  .designer-preview-card {
-    width:100% !important;
-    margin:0 0 18px !important;
-    padding-top:48px !important;
-    overflow:visible !important;
-  }
-
-  .designer-preview-card__top {
-    top:52px !important;
-    left:9px !important;
-    right:9px !important;
-    width:auto !important;
-    min-height:40px !important;
-    border-radius:13px 13px 0 0 !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
     margin:0 !important;
-    border-radius:0 0 16px 16px !important;
-    height:min(42vh,300px) !important;
-    min-height:0 !important;
+    padding:0 !important;
+    border-radius:0 !important;
   }
 
-  .designer-scene--mobile {
-    height:min(44vh,320px) !important;
+  .designer-mobile-text-editor .control-section__title {
+    padding:12px 12px 8px !important;
   }
 
-  .designer-preview-card::before,
-  .designer-preview-card:has(.designer-scene--mobile)::before {
-    display:none !important;
-    content:none !important;
-    height:0 !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top:12px !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-page {
-    padding-top:68px !important;
-  }
-
-  .designer-preview-card {
-    padding-top:44px !important;
-  }
-
-  .designer-preview-card__top {
-    top:48px !important;
-    left:9px !important;
-    right:9px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height:250px !important;
-  }
-
-  .designer-scene--mobile {
-    height:270px !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-preview-card {
-    padding-top:42px !important;
-  }
-
-  .designer-preview-card__top {
-    top:46px !important;
-    min-height:38px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height:225px !important;
-  }
-
-  .designer-scene--mobile {
-    height:240px !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — FINAL MOBILE LIVE PREVIEW STICKY
-   Canlı önizleme + üst kontrol çubuğu aşağı kaydırırken görünür
-   kalır; metin ve ortam bölümleri normal sayfa akışında kalır.
-   ========================================================= */
-.designer-preview-sticky {
-  display:block;
-}
-
-@media (max-width:760px) {
-  .designer-preview-card {
-    position:relative !important;
-    margin-bottom:18px !important;
-    padding-top:0 !important;
-    overflow:visible !important;
-  }
-
-  .designer-preview-sticky {
-    position:sticky !important;
-    top:0 !important;
-    z-index:1200 !important;
+  .designer-mobile-text-editor .text-input-wrapper {
     width:100% !important;
+    box-sizing:border-box !important;
+    padding:0 12px !important;
+  }
+
+  .designer-mobile-text-editor textarea {
+    width:100% !important;
+    min-height:82px !important;
+    max-height:130px !important;
+    box-sizing:border-box !important;
+    font-size:16px !important;
+  }
+
+  /* Environment follows the text editor with no artificial gap. */
+  .environment-selector {
+    position:relative !important;
+    z-index:2 !important;
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
     margin:0 !important;
     padding:0 !important;
   }
 
-  .designer-preview-card__top {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
+  .environment-selector__toggle {
     width:100% !important;
-    min-height:42px !important;
-    border-radius:14px 14px 0 0 !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    margin:0 !important;
-    height:270px !important;
-    min-height:0 !important;
-    border-radius:0 0 16px 16px !important;
-  }
-
-  .designer-scene--mobile {
-    height:290px !important;
-  }
-
-  .designer-mobile-text-editor {
-    position:relative !important;
-    z-index:1 !important;
-    margin-top:12px !important;
-  }
-
-  .designer-preview-card .environment-selector {
-    position:relative !important;
-    z-index:1 !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-preview-card__top {
-    min-height:40px !important;
-  }
-
-  .designer-scene {
-    height:250px !important;
-  }
-
-  .designer-scene--mobile {
-    height:270px !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-scene {
-    height:225px !important;
-  }
-
-  .designer-scene--mobile {
-    height:240px !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — MOBILE LIVE PREVIEW FINAL BEHAVIOR
-   Preview stays visible while the user scrolls through all
-   mobile controls. The preview wrapper becomes a direct child
-   of the workspace so sticky can track the full workspace.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-workspace {
-    display:block !important;
-    position:relative !important;
-    width:100% !important;
-    overflow:visible !important;
-  }
-
-  .designer-preview-card {
-    display:contents !important;
-    position:static !important;
-    width:auto !important;
-    margin:0 !important;
-    padding:0 !important;
-    overflow:visible !important;
-    background:transparent !important;
-    box-shadow:none !important;
-  }
-
-  .designer-preview-sticky {
-    position:sticky !important;
-    top:max(8px, env(safe-area-inset-top)) !important;
-    z-index:5000 !important;
-    display:block !important;
-    width:100% !important;
-    margin:0 0 12px !important;
-    padding:0 !important;
-  }
-
-  .designer-preview-card__top {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    min-height:40px !important;
-    margin:0 !important;
-    border-radius:14px 14px 0 0 !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    max-width:none !important;
-    margin:0 !important;
-    min-height:0 !important;
-    border-radius:0 0 16px 16px !important;
-  }
-
-  .designer-scene--mobile {
-    height:270px !important;
-  }
-
-  .designer-mobile-text-editor {
-    position:relative !important;
-    z-index:1 !important;
-    margin:0 0 12px !important;
-  }
-
-  .designer-preview-card .environment-selector {
-    position:relative !important;
-    z-index:1 !important;
-    margin:0 0 14px !important;
+    box-sizing:border-box !important;
+    border-radius:0 !important;
   }
 
   .designer-controls {
-    position:relative !important;
-    z-index:1 !important;
     width:100% !important;
-    max-width:none !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
     margin:0 !important;
   }
 }
 
 @media (max-width:520px) {
-  .designer-page {
-    padding-left:9px !important;
-    padding-right:9px !important;
-  }
-
-  .designer-preview-sticky {
-    margin-left:0 !important;
-    margin-right:0 !important;
-  }
-
-  .designer-scene--mobile {
-    height:270px !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — MOBILE LIVE PREVIEW / FINAL STABLE FIX
-   Goal:
-   - Live preview is ALWAYS visible while scrolling controls.
-   - The page itself stays centered and never shifts sideways.
-   - The normal controls keep their own document flow.
-   - The fixed preview has a reserved space in the preview card.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-page {
-    overflow-x:hidden !important;
-  }
-
-  .designer-workspace {
-    display:block !important;
-    position:relative !important;
-    width:100% !important;
-    max-width:100% !important;
-    overflow:visible !important;
-  }
-
-  /* IMPORTANT: keep this card in normal document flow.
-     Do not use display:contents; it was the source of the layout jump. */
-  .designer-preview-card {
-    display:block !important;
-    position:relative !important;
-    width:100% !important;
-    max-width:100% !important;
-    margin:0 0 16px !important;
-    padding:0 !important;
-    overflow:visible !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    border:0 !important;
-  }
-
-  /* Reserve the exact height occupied by the fixed preview so the
-     text editor and all controls remain below it instead of underneath it. */
-  .designer-preview-card {
-    padding-top:344px !important;
-  }
-
-  .designer-preview-sticky {
-    position:fixed !important;
-    top:max(68px, env(safe-area-inset-top)) !important;
-    left:9px !important;
-    right:auto !important;
-    width:calc(100vw - 18px) !important;
-    max-width:none !important;
-    height:332px !important;
-    margin:0 !important;
-    padding:0 !important;
-    z-index:5000 !important;
-    display:block !important;
-    transform:none !important;
-    overflow:visible !important;
-    box-sizing:border-box !important;
-  }
-
-  .designer-preview-card__top {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    min-height:42px !important;
-    height:42px !important;
-    margin:0 !important;
-    box-sizing:border-box !important;
-    border-radius:14px 14px 0 0 !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    margin:0 !important;
-    box-sizing:border-box !important;
-    overflow:hidden !important;
-    border-radius:0 0 16px 16px !important;
-  }
-
-  .designer-scene--mobile {
-    height:290px !important;
-    min-height:290px !important;
-  }
-
-  .designer-mobile-text-editor,
-  .designer-preview-card .environment-selector,
-  .designer-controls,
-  .designer-summary {
-    position:relative !important;
-    z-index:1 !important;
-    width:100% !important;
-    max-width:100% !important;
-    box-sizing:border-box !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin:0 0 12px !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-preview-card {
-    padding-top:322px !important;
-  }
-
-  .designer-preview-sticky {
-    top:max(64px, env(safe-area-inset-top)) !important;
-    width:calc(100vw - 18px) !important;
-    height:310px !important;
-  }
-
   .designer-preview-card__top {
     min-height:40px !important;
     height:40px !important;
@@ -2194,549 +1104,6 @@
 
   .designer-scene,
   .designer-scene--mobile {
-    height:270px !important;
-    min-height:270px !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-preview-card {
-    padding-top:292px !important;
-  }
-
-  .designer-preview-sticky {
-    height:280px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height:240px !important;
-    min-height:240px !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — MOBILE PREVIEW / ZERO GAP FINAL
-   Preview is fixed while scrolling. Its card reserves exactly
-   the same height, so METİN starts immediately underneath it.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-workspace {
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    overflow:visible !important;
-  }
-
-  .designer-preview-card {
-    display:block !important;
-    position:relative !important;
-    width:100% !important;
-    height:310px !important;
-    min-height:310px !important;
-    max-width:100% !important;
-    margin:0 !important;
-    padding:0 !important;
-    overflow:visible !important;
-    background:transparent !important;
-    border:0 !important;
-    box-shadow:none !important;
-  }
-
-  .designer-preview-sticky {
-    position:fixed !important;
-    top:68px !important;
-    left:9px !important;
-    right:9px !important;
-    width:auto !important;
-    height:310px !important;
-    margin:0 !important;
-    padding:0 !important;
-    z-index:5000 !important;
-    display:block !important;
-    box-sizing:border-box !important;
-    overflow:visible !important;
-  }
-
-  .designer-preview-card__top {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    height:40px !important;
-    min-height:40px !important;
-    margin:0 !important;
-    box-sizing:border-box !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    position:relative !important;
-    top:auto !important;
-    left:auto !important;
-    right:auto !important;
-    width:100% !important;
-    max-width:none !important;
-    min-width:0 !important;
-    height:270px !important;
-    min-height:270px !important;
-    margin:0 !important;
-    box-sizing:border-box !important;
-    overflow:hidden !important;
-    border-radius:0 0 16px 16px !important;
-  }
-
-  .designer-mobile-text-editor {
-    display:block !important;
-    position:relative !important;
-    z-index:1 !important;
-    width:calc(100% - 18px) !important;
-    margin:0 9px 14px !important;
-    box-sizing:border-box !important;
-  }
-
-  .designer-preview-card .environment-selector {
-    position:relative !important;
-    z-index:1 !important;
-    width:calc(100% - 18px) !important;
-    margin:0 9px 14px !important;
-    box-sizing:border-box !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-page {
-    padding-left:9px !important;
-    padding-right:9px !important;
-  }
-
-  .designer-preview-card {
-    width:100% !important;
-    height:310px !important;
-    min-height:310px !important;
-  }
-
-  .designer-preview-sticky {
-    top:68px !important;
-    left:9px !important;
-    right:9px !important;
-    height:310px !important;
-  }
-
-  .designer-preview-card__top {
-    height:40px !important;
-    min-height:40px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height:270px !important;
-    min-height:270px !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-preview-card {
-    height:280px !important;
-    min-height:280px !important;
-  }
-
-  .designer-preview-sticky {
-    height:280px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height:240px !important;
-    min-height:240px !important;
-  }
-}
-
-
-/* =========================================================
-   TWINSLED — REAL ZERO GAP MOBILE FINAL
-   The preview is fixed on screen. The preview card itself must
-   contribute ZERO height to the document flow. The mobile text
-   editor reserves exactly the preview's visual height instead.
-   This prevents any phantom/empty space before METİN / ORTAM.
-   ========================================================= */
-@media (max-width:760px) {
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    display:block !important;
-    position:relative !important;
-    width:100% !important;
-    height:0 !important;
-    min-height:0 !important;
-    max-height:0 !important;
-    margin:0 !important;
-    padding:0 !important;
-    border:0 !important;
-    overflow:visible !important;
-    background:transparent !important;
-    box-shadow:none !important;
-  }
-
-  .designer-preview-card::before,
-  .designer-preview-card::after,
-  .designer-preview-card:has(.designer-scene--mobile)::before,
-  .designer-preview-card:has(.designer-scene--mobile)::after {
-    display:none !important;
-    content:none !important;
-    width:0 !important;
-    height:0 !important;
-    min-height:0 !important;
-    max-height:0 !important;
-    margin:0 !important;
-    padding:0 !important;
-  }
-
-  .designer-preview-sticky {
-    position:fixed !important;
-    top:68px !important;
-    left:9px !important;
-    right:9px !important;
-    width:auto !important;
-    height:310px !important;
-    margin:0 !important;
-    padding:0 !important;
-    z-index:5000 !important;
-    box-sizing:border-box !important;
-  }
-
-  .designer-mobile-text-editor {
-    position:relative !important;
-    z-index:1 !important;
-    width:calc(100% - 18px) !important;
-    margin:310px 9px 14px !important;
-    box-sizing:border-box !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    height:0 !important;
-    min-height:0 !important;
-    max-height:0 !important;
-    margin:0 !important;
-    padding:0 !important;
-  }
-
-  .designer-preview-sticky {
-    top:68px !important;
-    left:9px !important;
-    right:9px !important;
-    height:310px !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top:310px !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-preview-sticky {
-    height:280px !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top:280px !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — MOBILE STICKY PREVIEW / REAL ZERO GAP
-   The preview itself is sticky and remains part of normal flow.
-   This removes the artificial spacer/margin while keeping the
-   live preview visible during scrolling.
-   ========================================================= */
-@media (max-width: 760px) {
-  .designer-workspace {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow: visible !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    display: block !important;
-    position: sticky !important;
-    top: max(68px, env(safe-area-inset-top)) !important;
-    z-index: 5000 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: 310px !important;
-    min-height: 310px !important;
-    max-height: 310px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
-    background: transparent !important;
-    border: 0 !important;
-    box-shadow: none !important;
-  }
-
-  .designer-preview-sticky {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    width: 100% !important;
-    height: 310px !important;
-    min-height: 310px !important;
-    max-height: 310px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    z-index: 5000 !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
-  }
-
-  .designer-preview-card__top {
-    width: 100% !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    width: 100% !important;
-    height: 270px !important;
-    min-height: 270px !important;
-    max-height: 270px !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-  }
-
-  .designer-mobile-text-editor,
-  .designer-preview-card .environment-selector {
-    position: relative !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 0 12px !important;
-    padding-top: 0 !important;
-    box-sizing: border-box !important;
-  }
-}
-
-@media (max-width: 520px) {
-  .designer-page {
-    overflow-x: hidden !important;
-  }
-
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    top: max(64px, env(safe-area-inset-top)) !important;
-    width: 100% !important;
-    height: 310px !important;
-    min-height: 310px !important;
-    max-height: 310px !important;
-  }
-
-  .designer-preview-sticky {
-    width: 100% !important;
-    height: 310px !important;
-    min-height: 310px !important;
-    max-height: 310px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    width: 100% !important;
-    height: 270px !important;
-    min-height: 270px !important;
-    max-height: 270px !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top: 0 !important;
-  }
-}
-
-@media (max-width: 760px) and (max-height: 680px) {
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    height: 280px !important;
-    min-height: 280px !important;
-    max-height: 280px !important;
-  }
-
-  .designer-preview-sticky {
-    height: 280px !important;
-    min-height: 280px !important;
-    max-height: 280px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height: 240px !important;
-    min-height: 240px !important;
-    max-height: 240px !important;
-  }
-}
-
-/* =========================================================
-   TWINSLED — MOBILE STABLE FINAL
-   Fixed live preview stays visible while scrolling.
-   The document reserves exactly the visible preview height,
-   so METİN starts immediately after it with no empty gap.
-   ========================================================= */
-@media (max-width:760px) {
-  html,
-  body,
-  #root {
-    width:100% !important;
-    max-width:100% !important;
-    overflow-x:hidden !important;
-  }
-
-  .designer-page,
-  .designer,
-  .designer-workspace {
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    overflow-x:clip !important;
-  }
-
-  /* Keep the actual preview fixed on screen. */
-  .designer-preview-card__top {
-    position:fixed !important;
-    top:54px !important;
-    left:9px !important;
-    right:9px !important;
-    width:auto !important;
-    max-width:none !important;
-    box-sizing:border-box !important;
-    z-index:5000 !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    position:fixed !important;
-    top:96px !important;
-    left:9px !important;
-    right:9px !important;
-    width:auto !important;
-    max-width:none !important;
-    margin:0 !important;
-    box-sizing:border-box !important;
-    z-index:4999 !important;
-    overflow:hidden !important;
-  }
-
-  .designer-scene--mobile {
-    height:min(35vh,250px) !important;
-    min-height:min(35vh,250px) !important;
-    max-height:min(35vh,250px) !important;
-  }
-
-  /* Reserve exactly the visible preview height in normal flow. */
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    position:static !important;
-    display:block !important;
-    width:100% !important;
-    max-width:100% !important;
-    min-width:0 !important;
-    height:292px !important;
-    min-height:292px !important;
-    max-height:292px !important;
-    margin:0 !important;
-    padding:0 !important;
-    border:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    overflow:visible !important;
-    box-sizing:border-box !important;
-  }
-
-  .designer-preview-card::before,
-  .designer-preview-card::after,
-  .designer-preview-card:has(.designer-scene--mobile)::before,
-  .designer-preview-card:has(.designer-scene--mobile)::after {
-    display:none !important;
-    content:none !important;
-    width:0 !important;
-    height:0 !important;
-    margin:0 !important;
-    padding:0 !important;
-  }
-
-  .designer-mobile-text-editor {
-    position:relative !important;
-    display:block !important;
-    width:calc(100% - 18px) !important;
-    max-width:calc(100% - 18px) !important;
-    min-width:0 !important;
-    margin:0 9px 12px !important;
-    box-sizing:border-box !important;
-    transform:none !important;
-  }
-
-  .designer-preview-card .environment-selector {
-    width:calc(100% - 18px) !important;
-    max-width:calc(100% - 18px) !important;
-    min-width:0 !important;
-    margin:0 9px 12px !important;
-    box-sizing:border-box !important;
-  }
-}
-
-@media (max-width:520px) {
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    height:282px !important;
-    min-height:282px !important;
-    max-height:282px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    left:9px !important;
-    right:9px !important;
-    top:90px !important;
-  }
-
-  .designer-scene--mobile {
-    height:240px !important;
-    min-height:240px !important;
-    max-height:240px !important;
-  }
-
-  .designer-preview-card__top {
-    top:50px !important;
-    left:9px !important;
-    right:9px !important;
-  }
-}
-
-@media (max-width:760px) and (max-height:680px) {
-  .designer-preview-card,
-  .designer-preview-card:has(.designer-scene--mobile) {
-    height:242px !important;
-    min-height:242px !important;
-    max-height:242px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    top:88px !important;
-    height:205px !important;
-    min-height:205px !important;
-    max-height:205px !important;
-  }
-
-  .designer-preview-card__top {
-    top:50px !important;
+    height:min(39vh,260px) !important;
   }
 }
