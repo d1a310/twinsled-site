@@ -2352,3 +2352,96 @@
     min-height:240px !important;
   }
 }
+
+
+/* =========================================================
+   TWINSLED — REAL ZERO GAP MOBILE FINAL
+   The preview is fixed on screen. The preview card itself must
+   contribute ZERO height to the document flow. The mobile text
+   editor reserves exactly the preview's visual height instead.
+   This prevents any phantom/empty space before METİN / ORTAM.
+   ========================================================= */
+@media (max-width:760px) {
+  .designer-preview-card,
+  .designer-preview-card:has(.designer-scene--mobile) {
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+    overflow:visible !important;
+    background:transparent !important;
+    box-shadow:none !important;
+  }
+
+  .designer-preview-card::before,
+  .designer-preview-card::after,
+  .designer-preview-card:has(.designer-scene--mobile)::before,
+  .designer-preview-card:has(.designer-scene--mobile)::after {
+    display:none !important;
+    content:none !important;
+    width:0 !important;
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .designer-preview-sticky {
+    position:fixed !important;
+    top:68px !important;
+    left:9px !important;
+    right:9px !important;
+    width:auto !important;
+    height:310px !important;
+    margin:0 !important;
+    padding:0 !important;
+    z-index:5000 !important;
+    box-sizing:border-box !important;
+  }
+
+  .designer-mobile-text-editor {
+    position:relative !important;
+    z-index:1 !important;
+    width:calc(100% - 18px) !important;
+    margin:310px 9px 14px !important;
+    box-sizing:border-box !important;
+  }
+}
+
+@media (max-width:520px) {
+  .designer-preview-card,
+  .designer-preview-card:has(.designer-scene--mobile) {
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+  .designer-preview-sticky {
+    top:68px !important;
+    left:9px !important;
+    right:9px !important;
+    height:310px !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top:310px !important;
+  }
+}
+
+@media (max-width:760px) and (max-height:680px) {
+  .designer-preview-sticky {
+    height:280px !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top:280px !important;
+  }
+}
