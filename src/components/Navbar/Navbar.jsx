@@ -31,76 +31,12 @@ function navigate(href, closeMenu) {
 function TwinsledLogo() {
   return (
     <span className="navbar-logo-orb" aria-hidden="true">
-      <svg
-        viewBox="0 0 100 100"
+      <img
+        src="/twinsled-logo.png"
         className="navbar-logo-svg"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <defs>
-          <linearGradient id="tw-logo-cyan" x1="10" y1="88" x2="54" y2="30" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#00D9FF" />
-            <stop offset=".52" stopColor="#22D6E8" />
-            <stop offset="1" stopColor="#6FF4C8" />
-          </linearGradient>
-
-          <linearGradient id="tw-logo-yellow" x1="48" y1="5" x2="58" y2="66" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#FFF51A" />
-            <stop offset=".42" stopColor="#E7F34A" />
-            <stop offset=".72" stopColor="#A7E56B" />
-            <stop offset="1" stopColor="#9A8AF2" />
-          </linearGradient>
-
-          <linearGradient id="tw-logo-pink" x1="58" y1="53" x2="91" y2="89" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#FF7EA1" />
-            <stop offset=".42" stopColor="#FF5FA7" />
-            <stop offset="1" stopColor="#FF2A9A" />
-          </linearGradient>
-
-          <filter id="tw-logo-glow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="1.4" result="b1" />
-            <feGaussianBlur stdDeviation="3.4" result="b2" />
-            <feMerge>
-              <feMergeNode in="b2" />
-              <feMergeNode in="b1" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-
-        <path
-          d="M5 89L31 43L43 23L56 45L42 68L36 58L24 78L41 78L46 89Z"
-          fill="none"
-          stroke="url(#tw-logo-cyan)"
-          strokeWidth="3.7"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          filter="url(#tw-logo-glow)"
-        />
-
-        <path
-          d="M30 43L50 7L69 38L57 38L50 26L45 37L67 73"
-          fill="none"
-          stroke="url(#tw-logo-yellow)"
-          strokeWidth="3.7"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          filter="url(#tw-logo-glow)"
-        />
-
-        <path
-          d="M62 56L73 52L94 89L71 89L60 70L70 64L76 75L85 75L77 60"
-          fill="none"
-          stroke="url(#tw-logo-pink)"
-          strokeWidth="3.7"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          filter="url(#tw-logo-glow)"
-        />
-
-        <circle cx="7.2" cy="67.5" r="1.65" fill="#11D8FF" filter="url(#tw-logo-glow)" />
-        <circle cx="10.8" cy="80" r="1.65" fill="#11D8FF" filter="url(#tw-logo-glow)" />
-      </svg>
-
+        alt=""
+        draggable="false"
+      />
       <span className="navbar-logo-scan" />
     </span>
   )
