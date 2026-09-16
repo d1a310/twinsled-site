@@ -1381,3 +1381,17 @@
     top:74px !important;
   }
 }
+
+
+/* FINAL: mobile preview text slightly larger */
+@media (max-width:760px) {
+  .designer-mobile-text-editor textarea {
+    font-size:17px !important;
+  }
+}
+
+@media (max-width:520px) {
+  .designer-mobile-text-editor textarea {
+    font-size:16px !important;
+  }
+}
