@@ -1076,6 +1076,38 @@ function Designer() {
         const baseSize = getBaseWordSize(line.text, previewLines.length)
         const icon = iconLibrary.find((item) => item.id === design.icon)
 
+        // Satırın gerçek içerik uzunluğuna göre neon yazıyı preview içine sığdır.
+        // Bu sayede uzun metinler sağdan/ soldan taşmaz.
+        const parts = line.text.split(/(\s+)/).filter(Boolean)
+        let estimatedWidth = 0
+
+        parts.forEach((part) => {
+          if (/^\s+$/.test(part)) {
+            estimatedWidth += baseSize * 0.32 * part.length
+            return
+          }
+
+          const wordIndex = line.words.findIndex((word) => word.text === part)
+          const word = line.words[wordIndex] || createWord(part)
+          const wordFontSize = (baseSize * word.size) / 100
+          const spacing = Math.abs(Number(word.letterSpacing) || 0)
+          estimatedWidth += (part.length * wordFontSize * 0.68) + (part.length * spacing)
+        })
+
+        if (design.icon !== 'none' && icon && previewLines.length > 0) {
+          estimatedWidth += (baseSize * design.iconSize) / 100 * 0.9
+        }
+
+        const availableWidth = isFullscreen ? 1120 : 340
+        const fitScale = Math.min(
+          1,
+          availableWidth / Math.max(estimatedWidth + 28, 1),
+        )
+        const safeScale = Math.max(
+          isFullscreen ? 0.35 : 0.24,
+          fitScale,
+        )
+
         return (
           <div
             key={line.id}
@@ -1087,14 +1119,16 @@ function Designer() {
                 activeWord: 0,
               }))
             }
-            style={{ lineHeight: line.lineSpacing }}
+            style={{
+              lineHeight: line.lineSpacing,
+            }}
           >
             {design.icon !== 'none' && design.iconPlacement === 'before' && originalIndex === 0 && icon && (
               <span
                 className="designer-neon__icon"
                 style={{
                   color: design.iconColor.value,
-                  fontSize: `${(baseSize * design.iconSize) / 100}px`,
+                  fontSize: `${((baseSize * design.iconSize) / 100) * safeScale}px`,
                 }}
               >
                 {icon.char}
@@ -1127,6 +1161,11 @@ function Designer() {
                   originalIndex === design.activeLine &&
                   currentWordIndex === design.activeWord
 
+                const fittedFontSize =
+                  ((baseSize * word.size) / 100) * safeScale
+                const fittedLetterSpacing =
+                  (Number(word.letterSpacing) || 0) * safeScale
+
                 return (
                   <button
                     key={word.id || `word-${line.id}-${partIndex}`}
@@ -1143,10 +1182,10 @@ function Designer() {
                     style={{
                       color: word.color.value,
                       fontFamily: `"${word.font.family}", sans-serif`,
-                      fontSize: `${(baseSize * word.size) / 100}px`,
+                      fontSize: `${fittedFontSize}px`,
                       fontWeight: word.weight,
                       fontStyle: word.italic ? 'italic' : 'normal',
-                      letterSpacing: `${word.letterSpacing}px`,
+                      letterSpacing: `${fittedLetterSpacing}px`,
                       transform: `rotate(${word.rotate}deg) skewX(${word.skew}deg)`,
                       '--word-rgb': word.color.glow,
                     }}
@@ -1162,7 +1201,7 @@ function Designer() {
                 className="designer-neon__icon"
                 style={{
                   color: design.iconColor.value,
-                  fontSize: `${(baseSize * design.iconSize) / 100}px`,
+                  fontSize: `${((baseSize * design.iconSize) / 100) * safeScale}px`,
                 }}
               >
                 {icon.char}

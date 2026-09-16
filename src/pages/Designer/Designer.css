@@ -1186,257 +1186,186 @@
     height:min(39vh,260px) !important;
   }
 }
+
 /* =========================================================
-   TWINSLED — MOBILE GAP FIX
-   Preview ile METİN arasındaki gereksiz boşluğu kaldırır.
+   TWINSLED — MOBILE LIVE PREVIEW / FINAL
+   Sticky preview + no artificial spacer + overflow safe text
    ========================================================= */
-
-@media (max-width: 760px) {
-
-  /* Preview sabit kalıyor ama artık devasa alan rezerve etmiyor */
-  .designer-mobile-preview-spacer {
-    height: 300px !important;
-    min-height: 300px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  /* Preview'ın kendisi kompakt */
-  .designer-preview-card {
-    margin: 0 !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height: 260px !important;
-    min-height: 260px !important;
-    max-height: 260px !important;
-    aspect-ratio: auto !important;
-  }
-
-  /* Preview altından editöre küçük, kontrollü geçiş */
-  .designer-mobile-text-editor {
-    margin-top: 10px !important;
-  }
-
-  /* METİN bölümünün üst boşluğunu azalt */
-  .designer-mobile-text-editor .control-section__title {
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
-  }
-
-  /* Text alanı */
-  .designer-mobile-text-editor textarea {
-    min-height: 90px !important;
-    max-height: 120px !important;
-  }
-}
-
-
-/* Daha küçük telefonlar */
-@media (max-width: 520px) {
-
-  .designer-mobile-preview-spacer {
-    height: 285px !important;
-    min-height: 285px !important;
-  }
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height: 245px !important;
-    min-height: 245px !important;
-    max-height: 245px !important;
-  }
-
-  .designer-mobile-text-editor {
-    margin-top: 8px !important;
-  }
-}
-/* =========================================================
-   TWINSLED — FINAL MOBILE FLOW FIX
-   Preview normal akışta.
-   Fixed/sticky boşluk tamamen kaldırıldı.
-   ========================================================= */
-
-@media (max-width: 760px) {
-
-  /* Sayfanın mobil akışı */
+@media (max-width:760px) {
   .designer-workspace {
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    position: relative !important;
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
   }
 
-  /* PREVIEW ARTIK FIXED DEĞİL */
   .designer-preview-card {
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    z-index: 2 !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    overflow: hidden !important;
-    border-radius: 0 0 16px 16px !important;
+    position:sticky !important;
+    top:78px !important;
+    left:auto !important;
+    right:auto !important;
+    z-index:1000 !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    border-radius:0 0 16px 16px !important;
+    background:#080b10 !important;
+    box-shadow:0 14px 36px rgba(0,0,0,.38),0 0 0 1px rgba(145,237,255,.03) !important;
   }
 
-  /* Preview sticky wrapper da normal */
   .designer-preview-sticky {
-    position: relative !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
   }
 
-  /* BOŞLUK ÜRETEN SPACER TAMAMEN KAPALI */
   .designer-mobile-preview-spacer {
-    display: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    display:none !important;
+    width:0 !important;
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
   }
 
-  /* Mobil preview başlığı */
   .designer-preview-card__top {
-    position: relative !important;
-    width: 100% !important;
-    height: 42px !important;
-    min-height: 42px !important;
-
-    margin: 0 !important;
-    padding: 6px 9px !important;
-
-    border-radius: 0 !important;
+    position:relative !important;
+    width:100% !important;
+    height:42px !important;
+    min-height:42px !important;
+    margin:0 !important;
+    padding:6px 9px !important;
+    border:0 !important;
+    border-bottom:1px solid rgba(255,255,255,.06) !important;
+    border-radius:0 !important;
+    background:#080b10 !important;
   }
 
-  /* Duvar alanı */
+  .designer-preview-card__top-controls {
+    width:auto !important;
+    flex:0 0 auto !important;
+  }
+
   .designer-scene,
   .designer-scene--mobile {
-    position: relative !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    height: 300px !important;
-    min-height: 300px !important;
-    max-height: 300px !important;
-
-    aspect-ratio: auto !important;
-
-    margin: 0 !important;
-    overflow: hidden !important;
-
-    border-radius: 0 0 16px 16px !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:290px !important;
+    min-height:290px !important;
+    max-height:290px !important;
+    aspect-ratio:auto !important;
+    margin:0 !important;
+    overflow:hidden !important;
+    border-radius:0 0 16px 16px !important;
   }
 
-  /* METİN hemen preview'ın altında */
+  .designer-neon {
+    width:100% !important;
+    max-width:100% !important;
+    padding:0 12px !important;
+    box-sizing:border-box !important;
+    overflow:visible !important;
+  }
+
+  .designer-neon__line {
+    width:100% !important;
+    max-width:100% !important;
+    display:flex !important;
+    align-items:center !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+    overflow:visible !important;
+    box-sizing:border-box !important;
+  }
+
+  .designer-neon__word,
+  .designer-neon__space,
+  .designer-neon__icon {
+    flex:0 0 auto !important;
+    white-space:nowrap !important;
+  }
+
+  .designer-neon__word {
+    max-width:none !important;
+  }
+
   .designer-mobile-text-editor {
-    position: relative !important;
-    display: block !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    z-index: 3 !important;
+    position:relative !important;
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    z-index:5 !important;
   }
 
-  /* METİN başlığı */
   .designer-mobile-text-editor .control-section__title {
-    margin: 0 !important;
-    padding: 14px 12px 8px !important;
+    margin:0 !important;
+    padding:13px 12px 8px !important;
   }
 
-  /* Text alanı */
   .designer-mobile-text-editor .text-input-wrapper {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 12px 12px !important;
+    width:100% !important;
+    margin:0 !important;
+    padding:0 12px 12px !important;
   }
 
   .designer-mobile-text-editor textarea {
-    width: 100% !important;
-    min-height: 90px !important;
-    max-height: 130px !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
+    width:100% !important;
+    min-height:90px !important;
+    max-height:130px !important;
+    margin:0 !important;
+    box-sizing:border-box !important;
   }
 
-  /* Aradaki gereksiz kısayol yazısını kaldır */
-  .designer-workflow-hint {
-    display: none !important;
-  }
-
-  /* Mobilde gereksiz Tasarım sekmesini kaldır */
+  .designer-workflow-hint,
   .designer-tabs--single {
-    display: none !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: 0 !important;
+    display:none !important;
   }
 
-  /* Ortam seçici doğrudan METİN'in altında */
   .environment-selector {
-    position: relative !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
-    padding: 0 !important;
-
-    z-index: 3 !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    z-index:5 !important;
   }
 
-  .environment-selector__toggle {
-    margin: 0 0 10px !important;
-  }
-
-  /* Desktop kontrolleri mobilde aşağıda devam etsin */
   .designer-controls {
-    position: relative !important;
-
-    width: 100% !important;
-    max-width: 100% !important;
-
-    margin: 0 !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
   }
 }
 
-
-/* Daha küçük ekranlar */
-@media (max-width: 520px) {
-
-  .designer-scene,
-  .designer-scene--mobile {
-    height: 270px !important;
-    min-height: 270px !important;
-    max-height: 270px !important;
+@media (max-width:520px) {
+  .designer-preview-card {
+    top:74px !important;
   }
 
   .designer-preview-card__top {
-    height: 40px !important;
-    min-height: 40px !important;
+    height:40px !important;
+    min-height:40px !important;
   }
 
-  .designer-mobile-text-editor .control-section__title {
-    padding-top: 12px !important;
+  .designer-scene,
+  .designer-scene--mobile {
+    height:270px !important;
+    min-height:270px !important;
+    max-height:270px !important;
   }
 
+  .designer-neon {
+    padding-left:9px !important;
+    padding-right:9px !important;
+  }
 }
+
