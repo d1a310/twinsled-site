@@ -393,7 +393,7 @@ function createInitialDesign() {
     lines,
     activeLine: 0,
     activeWord: 0,
-    selectedEnvironment: environments[0],
+    selectedEnvironment: environments.find((environment) => environment.id === 'dark-gray') || environments[0],
     brightness: 100,
     previewScale: 100,
     customWidth: 120,
