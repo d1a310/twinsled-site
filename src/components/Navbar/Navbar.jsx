@@ -1,24 +1,10 @@
 import { useEffect, useState } from 'react'
-import {
-  ChevronDown,
-  Menu,
-  X,
-  ArrowUpRight,
-  Sparkles,
-} from 'lucide-react'
+import { ChevronDown, Menu, X, ArrowUpRight, Sparkles } from 'lucide-react'
 import './Navbar.css'
 
 const productLinks = [
-  {
-    label: 'Tüm Ürünler',
-    path: '/urunler',
-    desc: 'Tüm neon ve LED çözümleri',
-  },
-  {
-    label: 'Kendin Tasarla',
-    path: '/kendin-tasarla',
-    desc: 'Neonunu kendin oluştur',
-  },
+  { label: 'Tüm Ürünler', path: '/urunler', desc: 'Neon ve LED koleksiyonunun tamamı' },
+  { label: 'Kendin Tasarla', path: '/kendin-tasarla', desc: 'Kendi neon tasarımını oluştur' },
 ]
 
 const mainLinks = [
@@ -28,61 +14,31 @@ const mainLinks = [
   { label: 'İletişim', path: '/iletisim' },
 ]
 
-function TwinsledMark() {
+function TwinsledLogo() {
   return (
-    <span className="navbar-logo-orb" aria-hidden="true">
-      <svg
-        className="navbar-logo-svg"
-        viewBox="0 0 100 100"
-        fill="none"
-      >
+    <span className="tw-logo" aria-hidden="true">
+      <svg className="tw-logo-svg" viewBox="0 0 447 428" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <linearGradient
-            id="twinsled-main-gradient"
-            x1="12"
-            y1="84"
-            x2="88"
-            y2="16"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#16D9FF" />
-            <stop offset=".38" stopColor="#39C8FF" />
-            <stop offset=".68" stopColor="#9B5CFF" />
-            <stop offset="1" stopColor="#FF35C8" />
+          <linearGradient id="twBlue" x1="24" y1="410" x2="205" y2="180" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#00D9FF" />
+            <stop offset=".42" stopColor="#22CFEF" />
+            <stop offset=".76" stopColor="#7B5CF4" />
+            <stop offset="1" stopColor="#D52DFF" />
           </linearGradient>
-
-          <linearGradient
-            id="twinsled-top-gradient"
-            x1="50"
-            y1="8"
-            x2="64"
-            y2="54"
-            gradientUnits="userSpaceOnUse"
-          >
-            <stop stopColor="#FFF52F" />
-            <stop offset=".62" stopColor="#FFC83B" />
-            <stop offset="1" stopColor="#FF6E79" />
+          <linearGradient id="twYellow" x1="206" y1="18" x2="319" y2="360" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#FFF500" />
+            <stop offset=".35" stopColor="#FFE500" />
+            <stop offset=".65" stopColor="#FFB22D" />
+            <stop offset="1" stopColor="#FF0A7E" />
           </linearGradient>
-
-          <filter
-            id="twinsled-glow"
-            x="-60%"
-            y="-60%"
-            width="220%"
-            height="220%"
-          >
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="2.6"
-              result="b1"
-            />
-
-            <feGaussianBlur
-              in="SourceGraphic"
-              stdDeviation="5.5"
-              result="b2"
-            />
-
+          <linearGradient id="twPink" x1="277" y1="188" x2="428" y2="380" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#F60074" />
+            <stop offset=".55" stopColor="#FF1287" />
+            <stop offset="1" stopColor="#FF3C9D" />
+          </linearGradient>
+          <filter id="twGlow" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3.2" result="b1" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b2" />
             <feMerge>
               <feMergeNode in="b2" />
               <feMergeNode in="b1" />
@@ -91,37 +47,22 @@ function TwinsledMark() {
           </filter>
         </defs>
 
-        <path
-          d="M13 77 37 34 51 58 41 76h21L52 58l16-27 19 46H69l-8-13-5 10H28l-8 13H10l3-10Z"
-          fill="url(#twinsled-main-gradient)"
-          filter="url(#twinsled-glow)"
-        />
+        {/* Mavi sol parça */}
+        <path d="M24 381L141 182L191 263L154 325L137 297L92 377H183L207 418H24V381Z" fill="url(#twBlue)" filter="url(#twGlow)" />
 
-        <path
-          d="M42 35 54 9l20 37-14 8-6-12-6 12-6-19Z"
-          fill="url(#twinsled-top-gradient)"
-          filter="url(#twinsled-glow)"
-        />
+        {/* Sarı / pembe merkez parça */}
+        <path d="M211 21L293 150L257 177L226 129L205 164L319 358L273 386L174 214L153 177L211 21Z" fill="url(#twYellow)" filter="url(#twGlow)" />
+        <path d="M226 129L250 88L284 142L256 177L226 129Z" fill="#FFF000" filter="url(#twGlow)" />
 
-        <path
-          d="M52 59 67 48l22 30H72L61 64l-5 9-4-14Z"
-          fill="url(#twinsled-main-gradient)"
-          opacity=".96"
-        />
+        {/* Pembe sağ parça */}
+        <path d="M286 218L329 187L422 378H300L252 298L288 270L317 322H362L326 252L296 273L286 218Z" fill="url(#twPink)" filter="url(#twGlow)" />
 
-        <path
-          d="M51 17 58 31"
-          stroke="#fff"
-          strokeWidth="2"
-          strokeLinecap="round"
-          opacity=".88"
-        />
+        {/* İnce parlama çizgileri */}
+        <path d="M55 390L139 250" stroke="#8DF8FF" strokeWidth="4" strokeLinecap="round" opacity=".62" />
+        <path d="M212 43L278 150" stroke="white" strokeWidth="3" strokeLinecap="round" opacity=".58" />
+        <path d="M302 230L386 365" stroke="#FF9ED7" strokeWidth="3" strokeLinecap="round" opacity=".4" />
       </svg>
-
-      <span className="navbar-logo-scanline" />
-      <span className="navbar-logo-corner navbar-logo-corner--tl" />
-      <span className="navbar-logo-corner navbar-logo-corner--br" />
-      <span className="navbar-logo-status" />
+      <span className="tw-logo-scan" />
     </span>
   )
 }
@@ -134,179 +75,82 @@ export default function Navbar() {
   const currentPath = window.location.pathname
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 12)
-    }
-
+    const onScroll = () => setScrolled(window.scrollY > 12)
     onScroll()
-
-    window.addEventListener('scroll', onScroll, {
-      passive: true,
-    })
-
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
-    const handlePopState = () => {
-      setMobileOpen(false)
-      setProductsOpen(false)
-    }
-
-    window.addEventListener('popstate', handlePopState)
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState)
-    }
-  }, [])
+    document.body.classList.toggle('tw-navbar-menu-open', mobileOpen)
+    return () => document.body.classList.remove('tw-navbar-menu-open')
+  }, [mobileOpen])
 
   const isActive = (path) => {
-    if (path === '/') {
-      return currentPath === '/'
-    }
-
+    if (path === '/') return currentPath === '/'
     return currentPath.startsWith(path)
   }
 
   const go = (path) => {
-    window.location.href = path
-  }
-
-  const handleMobileNavigation = (path) => {
     setMobileOpen(false)
     setProductsOpen(false)
-    go(path)
+    window.location.assign(path)
   }
 
   return (
-    <header
-      className={`site-navbar ${
-        scrolled ? 'site-navbar--scrolled' : ''
-      }`}
-    >
-      <div className="navbar-grid-noise" />
-      <div className="navbar-top-glow" />
-      <div className="navbar-light-line" />
+    <header className={`tw-navbar ${scrolled ? 'tw-navbar--scrolled' : ''}`}>
+      <div className="tw-navbar-noise" />
+      <div className="tw-navbar-glow tw-navbar-glow--left" />
+      <div className="tw-navbar-glow tw-navbar-glow--right" />
+      <div className="tw-navbar-line" />
 
-      <div className="navbar-container">
-        <div className="navbar-main">
-
-          {/* LOGO */}
-          <button
-            className="navbar-logo"
-            type="button"
-            onClick={() => go('/')}
-            aria-label="TWINSLED ana sayfa"
-          >
-            <TwinsledMark />
-
-            <span className="navbar-logo-copy">
+      <div className="tw-navbar-shell">
+        <div className="tw-navbar-main">
+          <button className="tw-brand" type="button" onClick={() => go('/')} aria-label="TWINSLED ana sayfa">
+            <TwinsledLogo />
+            <span className="tw-brand-copy">
               <strong>TWINSLED</strong>
               <small>NEON / LED / DESIGN</small>
             </span>
           </button>
 
-          {/* DESKTOP NAV */}
-          <nav
-            className="navbar-links"
-            aria-label="Ana navigasyon"
-          >
+          <nav className="tw-nav" aria-label="Ana navigasyon">
             {mainLinks.map((item) => (
-              <button
-                key={item.path}
-                type="button"
-                className={`navbar-link ${
-                  isActive(item.path)
-                    ? 'navbar-link--active'
-                    : ''
-                }`}
-                onClick={() => go(item.path)}
-              >
+              <button key={item.path} type="button" className={`tw-nav-link ${isActive(item.path) ? 'active' : ''}`} onClick={() => go(item.path)}>
                 <span>{item.label}</span>
-
-                {isActive(item.path) && (
-                  <i className="navbar-active-dot" />
-                )}
+                {isActive(item.path) && <i />}
               </button>
             ))}
 
-            {/* ÜRÜNLER */}
-            <div
-              className={`navbar-dropdown ${
-                productsOpen
-                  ? 'navbar-dropdown--open'
-                  : ''
-              }`}
-            >
+            <div className="tw-products">
               <button
                 type="button"
-                className={`navbar-link ${
-                  isActive('/urunler') ||
-                  isActive('/kendin-tasarla')
-                    ? 'navbar-link--active'
-                    : ''
-                }`}
-                onClick={() =>
-                  setProductsOpen((value) => !value)
-                }
+                className={`tw-nav-link ${isActive('/urunler') || isActive('/kendin-tasarla') ? 'active' : ''}`}
+                onClick={() => setProductsOpen((value) => !value)}
+                aria-expanded={productsOpen}
               >
                 <span>Ürünler</span>
-
-                <ChevronDown
-                  className="navbar-chevron"
-                  size={14}
-                />
-
-                {(isActive('/urunler') ||
-                  isActive('/kendin-tasarla')) && (
-                  <i className="navbar-active-dot" />
-                )}
+                <ChevronDown size={14} className={productsOpen ? 'open' : ''} />
               </button>
 
-              <div className="navbar-dropdown-panel">
-                <div className="navbar-dropdown-glow" />
-
-                <div className="navbar-dropdown-header">
-                  <span className="navbar-dropdown-kicker">
-                    TWINSLED / COLLECTION
-                  </span>
-
-                  <span className="navbar-dropdown-live">
-                    <i />
-                    LIVE
-                  </span>
+              <div className={`tw-product-panel ${productsOpen ? 'open' : ''}`}>
+                <div className="tw-product-head">
+                  <span>TWINSLED / COLLECTION</span>
+                  <em><b /> LIVE</em>
                 </div>
 
                 {productLinks.map((item) => (
-                  <button
-                    key={item.path}
-                    type="button"
-                    className="navbar-dropdown-item"
-                    onClick={() => go(item.path)}
-                  >
-                    <span className="navbar-dropdown-icon">
-                      <Sparkles size={15} />
-                    </span>
-
-                    <span className="navbar-dropdown-content">
+                  <button key={item.path} type="button" className="tw-product-item" onClick={() => go(item.path)}>
+                    <span className="tw-product-icon"><Sparkles size={15} /></span>
+                    <span className="tw-product-text">
                       <strong>{item.label}</strong>
                       <small>{item.desc}</small>
                     </span>
-
-                    <ArrowUpRight
-                      className="navbar-dropdown-arrow"
-                      size={15}
-                    />
+                    <ArrowUpRight size={15} />
                   </button>
                 ))}
 
-                <button
-                  type="button"
-                  className="navbar-dropdown-all"
-                  onClick={() => go('/urunler')}
-                >
+                <button type="button" className="tw-product-footer" onClick={() => go('/urunler')}>
                   <span>Koleksiyonu keşfet</span>
                   <ArrowUpRight size={14} />
                 </button>
@@ -314,125 +158,53 @@ export default function Navbar() {
             </div>
           </nav>
 
-          {/* ACTIONS */}
-          <div className="navbar-actions">
-            <span className="navbar-status">
-              <i className="navbar-status-dot" />
-              ONLINE STUDIO
-            </span>
+          <div className="tw-actions">
+            <span className="tw-online"><i /> ONLINE STUDIO</span>
 
-            <button
-              type="button"
-              className="navbar-offer-button"
-              onClick={() =>
-                go('/kendin-tasarla')
-              }
-            >
+            <button type="button" className="tw-cta" onClick={() => go('/kendin-tasarla')}>
               <span>Tasarımını Başlat</span>
               <ArrowUpRight size={15} />
-              <i className="navbar-offer-line" />
             </button>
 
             <button
               type="button"
-              className="navbar-mobile-button"
-              onClick={() =>
-                setMobileOpen((value) => !value)
-              }
-              aria-label="Menüyü aç/kapat"
+              className="tw-mobile-toggle"
+              onClick={() => setMobileOpen((value) => !value)}
+              aria-label={mobileOpen ? 'Menüyü kapat' : 'Menüyü aç'}
               aria-expanded={mobileOpen}
             >
-              {mobileOpen ? (
-                <X size={19} />
-              ) : (
-                <Menu size={19} />
-              )}
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* MOBILE MENU */}
-        <div
-          className={`navbar-mobile-menu ${
-            mobileOpen
-              ? 'navbar-mobile-menu--open'
-              : ''
-          }`}
-        >
-          <div className="navbar-mobile-menu-inner">
-            <div className="navbar-mobile-kicker">
-              NAVIGATION / TWINSLED STUDIO
-            </div>
+        <div className={`tw-mobile ${mobileOpen ? 'open' : ''}`}>
+          <div className="tw-mobile-inner">
+            <div className="tw-mobile-kicker">NAVIGATION / TWINSLED STUDIO</div>
 
-            <div className="navbar-mobile-links">
+            <div className="tw-mobile-links">
               {mainLinks.map((item) => (
-                <button
-                  key={item.path}
-                  type="button"
-                  className={`navbar-mobile-link ${
-                    isActive(item.path)
-                      ? 'navbar-mobile-link--active'
-                      : ''
-                  }`}
-                  onClick={() =>
-                    handleMobileNavigation(item.path)
-                  }
-                >
+                <button key={item.path} type="button" className={`tw-mobile-link ${isActive(item.path) ? 'active' : ''}`} onClick={() => go(item.path)}>
                   <span>{item.label}</span>
-                  <ArrowUpRight size={15} />
+                  <ArrowUpRight size={16} />
                 </button>
               ))}
 
-              <button
-                type="button"
-                className="navbar-mobile-link"
-                onClick={() =>
-                  setProductsOpen((value) => !value)
-                }
-              >
+              <button type="button" className="tw-mobile-link" onClick={() => setProductsOpen((value) => !value)}>
                 <span>Ürünler</span>
-
-                <ChevronDown
-                  size={16}
-                  className={
-                    productsOpen
-                      ? 'navbar-mobile-chevron--open'
-                      : ''
-                  }
-                />
+                <ChevronDown size={17} className={productsOpen ? 'open' : ''} />
               </button>
 
-              <div
-                className={`navbar-mobile-submenu ${
-                  productsOpen
-                    ? 'navbar-mobile-submenu--open'
-                    : ''
-                }`}
-              >
+              <div className={`tw-mobile-submenu ${productsOpen ? 'open' : ''}`}>
                 {productLinks.map((item) => (
-                  <button
-                    key={item.path}
-                    type="button"
-                    className="navbar-mobile-subitem"
-                    onClick={() =>
-                      handleMobileNavigation(item.path)
-                    }
-                  >
+                  <button key={item.path} type="button" className="tw-mobile-subitem" onClick={() => go(item.path)}>
                     <span>{item.label}</span>
                     <ArrowUpRight size={14} />
                   </button>
                 ))}
               </div>
 
-              <button
-                type="button"
-                className="navbar-mobile-cta"
-                onClick={() =>
-                  handleMobileNavigation(
-                    '/kendin-tasarla'
-                  )
-                }
-              >
+              <button type="button" className="tw-mobile-cta" onClick={() => go('/kendin-tasarla')}>
                 <span>Tasarımını Başlat</span>
                 <ArrowUpRight size={16} />
               </button>
