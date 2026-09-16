@@ -10,15 +10,6 @@ import {
 
 import './Navbar.css'
 
-const neonColors = [
-  '#ff3bbd',
-  '#6d5cff',
-  '#3fdcff',
-  '#7cffc4',
-  '#ffd166',
-  '#ff5d5d',
-]
-
 const productLinks = [
   {
     href: '/products',
@@ -33,23 +24,13 @@ const productLinks = [
 ]
 
 function navigate(href, closeMenu) {
-  window.location.href = href
   closeMenu?.()
+  window.location.assign(href)
 }
 
 function Navbar() {
   const [productsOpen, setProductsOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [activeNeon, setActiveNeon] = useState(0)
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveNeon((current) => (current + 1) % neonColors.length)
-    }, 1700)
-
-    return () => window.clearInterval(interval)
-  }, [])
-
   useEffect(() => {
     document.body.classList.toggle('navbar-menu-open', mobileOpen)
 
@@ -85,73 +66,36 @@ function Navbar() {
           onClick={() => navigate('/', closeMenu)}
           aria-label="TWINSLED ana sayfa"
         >
-          <span
-            className="navbar__brand-mark navbar__brand-mark--logo"
-            style={{
-              '--brand-neon': neonColors[activeNeon],
-            }}
-          >
+          <span className="navbar__brand-mark navbar__brand-mark--logo" aria-hidden="true">
             <svg
-              className="navbar__brand-logo-svg"
               viewBox="0 0 447 428"
-              fill="none"
+              className="navbar__brand-logo"
               xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
             >
               <defs>
-                <linearGradient
-                  id="twBrandBlue"
-                  x1="25"
-                  y1="398"
-                  x2="210"
-                  y2="180"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop offset="0" stopColor="#00D9FF" />
-                  <stop offset="0.42" stopColor="#16D0EF" />
-                  <stop offset="0.72" stopColor="#775FEF" />
-                  <stop offset="1" stopColor="#D32FFF" />
+                <linearGradient id="twBrandBlue" x1="24" y1="381" x2="208" y2="180" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#05D9FF" />
+                  <stop offset="0.45" stopColor="#1AD3EE" />
+                  <stop offset="0.76" stopColor="#8160F5" />
+                  <stop offset="1" stopColor="#D431FF" />
                 </linearGradient>
-
-                <linearGradient
-                  id="twBrandYellow"
-                  x1="185"
-                  y1="18"
-                  x2="320"
-                  y2="350"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop offset="0" stopColor="#FFF600" />
-                  <stop offset="0.33" stopColor="#FFE400" />
-                  <stop offset="0.63" stopColor="#FFB22E" />
-                  <stop offset="1" stopColor="#FF0D7C" />
+                <linearGradient id="twBrandYellow" x1="175" y1="20" x2="320" y2="355" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#FFF500" />
+                  <stop offset="0.36" stopColor="#FFE700" />
+                  <stop offset="0.65" stopColor="#FFB12D" />
+                  <stop offset="1" stopColor="#FF087F" />
                 </linearGradient>
-
-                <linearGradient
-                  id="twBrandPink"
-                  x1="275"
-                  y1="190"
-                  x2="430"
-                  y2="390"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop offset="0" stopColor="#F50073" />
-                  <stop offset="0.58" stopColor="#FF1286" />
-                  <stop offset="1" stopColor="#FF3A9A" />
+                <linearGradient id="twBrandPink" x1="281" y1="205" x2="424" y2="378" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stopColor="#F50773" />
+                  <stop offset="0.55" stopColor="#FF1488" />
+                  <stop offset="1" stopColor="#FF3C9B" />
                 </linearGradient>
-
-                <filter
-                  id="twBrandGlow"
-                  x="-45%"
-                  y="-45%"
-                  width="190%"
-                  height="190%"
-                >
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="2.6" result="b1" />
-                  <feGaussianBlur in="SourceGraphic" stdDeviation="6.5" result="b2" />
+                <filter id="twBrandGlow" x="-40%" y="-40%" width="180%" height="180%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="blur1" />
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="5.2" result="blur2" />
                   <feMerge>
-                    <feMergeNode in="b2" />
-                    <feMergeNode in="b1" />
+                    <feMergeNode in="blur2" />
+                    <feMergeNode in="blur1" />
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
@@ -171,7 +115,7 @@ function Navbar() {
 
               <path
                 d="M226 129L250 88L284 142L256 177L226 129Z"
-                fill="#FFF000"
+                fill="#FFF100"
                 filter="url(#twBrandGlow)"
               />
 
@@ -180,34 +124,7 @@ function Navbar() {
                 fill="url(#twBrandPink)"
                 filter="url(#twBrandGlow)"
               />
-
-              <path
-                d="M55 390L139 250"
-                stroke="#8DF8FF"
-                strokeWidth="4"
-                strokeLinecap="round"
-                opacity=".68"
-              />
-
-              <path
-                d="M212 43L278 150"
-                stroke="#FFFFFF"
-                strokeWidth="3"
-                strokeLinecap="round"
-                opacity=".62"
-              />
-
-              <path
-                d="M302 230L386 365"
-                stroke="#FF9ED7"
-                strokeWidth="3"
-                strokeLinecap="round"
-                opacity=".44"
-              />
             </svg>
-
-            <span className="navbar__brand-logo-scan" />
-            <span className="navbar__brand-logo-dot" />
           </span>
 
           <span className="navbar__brand-text">
