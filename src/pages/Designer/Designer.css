@@ -1060,6 +1060,16 @@
   }
 
   /* Text starts immediately after the preview block. */
+  /* Mobile: remove the redundant standalone Tasarım tab so text controls start directly after preview. */
+  .designer-tabs--single {
+    display:none !important;
+    height:0 !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    border:0 !important;
+  }
+
   .designer-mobile-text-editor {
     display:block !important;
     position:relative !important;
@@ -1103,8 +1113,58 @@
 
   .environment-selector__toggle {
     width:100% !important;
+    min-height:56px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:12px !important;
     box-sizing:border-box !important;
-    border-radius:0 !important;
+    margin:0 !important;
+    padding:10px 14px !important;
+    border:1px solid rgba(145,237,255,.10) !important;
+    border-radius:12px !important;
+    background:linear-gradient(180deg, rgba(12,22,31,.98), rgba(7,13,19,.98)) !important;
+    color:#e8edf2 !important;
+    text-align:left !important;
+    cursor:pointer !important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
+
+  .environment-selector__toggle > span {
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    gap:2px !important;
+  }
+
+  .environment-selector__toggle small {
+    color:#667483 !important;
+    font:700 7px/1.1 'Poppins',sans-serif !important;
+    letter-spacing:.16em !important;
+  }
+
+  .environment-selector__toggle strong {
+    color:#e9eef3 !important;
+    font:600 11px/1.2 'Poppins',sans-serif !important;
+  }
+
+  .environment-selector__toggle em {
+    overflow:hidden !important;
+    color:#8d99a6 !important;
+    font:500 8px/1.2 'Poppins',sans-serif !important;
+    font-style:normal !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+  }
+
+  .environment-selector__chevron {
+    flex:0 0 auto !important;
+    color:#9beeff !important;
+    transition:transform .2s ease !important;
+  }
+
+  .environment-selector.is-open .environment-selector__chevron {
+    transform:rotate(180deg) !important;
   }
 
   .designer-controls {
