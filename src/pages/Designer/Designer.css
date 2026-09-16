@@ -1252,3 +1252,191 @@
     margin-top: 8px !important;
   }
 }
+/* =========================================================
+   TWINSLED — FINAL MOBILE FLOW FIX
+   Preview normal akışta.
+   Fixed/sticky boşluk tamamen kaldırıldı.
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+  /* Sayfanın mobil akışı */
+  .designer-workspace {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+  }
+
+  /* PREVIEW ARTIK FIXED DEĞİL */
+  .designer-preview-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    z-index: 2 !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+    border-radius: 0 0 16px 16px !important;
+  }
+
+  /* Preview sticky wrapper da normal */
+  .designer-preview-sticky {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* BOŞLUK ÜRETEN SPACER TAMAMEN KAPALI */
+  .designer-mobile-preview-spacer {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Mobil preview başlığı */
+  .designer-preview-card__top {
+    position: relative !important;
+    width: 100% !important;
+    height: 42px !important;
+    min-height: 42px !important;
+
+    margin: 0 !important;
+    padding: 6px 9px !important;
+
+    border-radius: 0 !important;
+  }
+
+  /* Duvar alanı */
+  .designer-scene,
+  .designer-scene--mobile {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
+
+    aspect-ratio: auto !important;
+
+    margin: 0 !important;
+    overflow: hidden !important;
+
+    border-radius: 0 0 16px 16px !important;
+  }
+
+  /* METİN hemen preview'ın altında */
+  .designer-mobile-text-editor {
+    position: relative !important;
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    z-index: 3 !important;
+  }
+
+  /* METİN başlığı */
+  .designer-mobile-text-editor .control-section__title {
+    margin: 0 !important;
+    padding: 14px 12px 8px !important;
+  }
+
+  /* Text alanı */
+  .designer-mobile-text-editor .text-input-wrapper {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 12px 12px !important;
+  }
+
+  .designer-mobile-text-editor textarea {
+    width: 100% !important;
+    min-height: 90px !important;
+    max-height: 130px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Aradaki gereksiz kısayol yazısını kaldır */
+  .designer-workflow-hint {
+    display: none !important;
+  }
+
+  /* Mobilde gereksiz Tasarım sekmesini kaldır */
+  .designer-tabs--single {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  /* Ortam seçici doğrudan METİN'in altında */
+  .environment-selector {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    z-index: 3 !important;
+  }
+
+  .environment-selector__toggle {
+    margin: 0 0 10px !important;
+  }
+
+  /* Desktop kontrolleri mobilde aşağıda devam etsin */
+  .designer-controls {
+    position: relative !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+  }
+}
+
+
+/* Daha küçük ekranlar */
+@media (max-width: 520px) {
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height: 270px !important;
+    min-height: 270px !important;
+    max-height: 270px !important;
+  }
+
+  .designer-preview-card__top {
+    height: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .designer-mobile-text-editor .control-section__title {
+    padding-top: 12px !important;
+  }
+
+}
