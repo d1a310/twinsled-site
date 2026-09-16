@@ -1666,18 +1666,75 @@
     padding:9px;
   }
 }
-/* =========================================================
-   TWINSLED — MOBILE WORD SPACING FIX
-   Kelimeler arasındaki boşluğu koru.
-   ========================================================= */
 
-@media (max-width: 760px) {
+/* =========================================================
+   TWINSLED MOBILE — LARGER PREVIEW + TRUE CENTERED TEXT
+   Preview alanı mobilde biraz büyütülür.
+   Yazı satırı içerik genişliğine göre değil, ekranın ortasına
+   göre hizalanır; kelimeler aynı satırda kalır.
+   ========================================================= */
+@media (max-width:760px) {
+  .designer-scene,
+  .designer-scene--mobile {
+    height:min(38vh,270px) !important;
+  }
+
+  .designer-scene--mobile {
+    height:min(40vh,285px) !important;
+  }
+
+  .designer-neon {
+    width:96% !important;
+    max-width:96% !important;
+  }
+
+  .designer-neon__line {
+    width:100% !important;
+    max-width:100% !important;
+    justify-content:center !important;
+    text-align:center !important;
+    flex-wrap:nowrap !important;
+    white-space:nowrap !important;
+  }
+
+  .designer-neon__word,
+  .designer-neon__icon {
+    flex:0 0 auto !important;
+  }
+
   .designer-neon__space {
-    display: inline-block !important;
-    flex: 0 0 0.85em !important;
-    width: 0.85em !important;
-    min-width: 0.85em !important;
-    white-space: pre !important;
-    overflow: visible !important;
+    display:inline-block !important;
+    flex:0 0 .85em !important;
+    width:.85em !important;
+    min-width:.85em !important;
+    white-space:pre !important;
+    overflow:visible !important;
   }
 }
+
+@media (max-width:760px) and (max-height:680px) {
+  .designer-scene,
+  .designer-scene--mobile {
+    height:190px !important;
+  }
+
+  .designer-scene--mobile {
+    height:205px !important;
+  }
+}
+
+@media (max-width:520px) {
+  .designer-scene {
+    height:220px !important;
+  }
+
+  .designer-scene--mobile {
+    height:240px !important;
+  }
+
+  .designer-neon {
+    width:97% !important;
+    max-width:97% !important;
+  }
+}
+
