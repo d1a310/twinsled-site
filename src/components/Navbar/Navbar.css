@@ -1583,45 +1583,95 @@
     transition: none !important;
   }
 }
-
 /* =========================================================
-   TWINSLED BRAND LOGO — original navbar layout preserved
+   TWINSLED — ORIGINAL NAVBAR LOGO UPGRADE
+   Markup korunur; mevcut navbar-logo-core CSS ile logo çizilir.
    ========================================================= */
-.navbar__brand-mark--logo {
-  width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
-  position: relative;
-  display: grid;
-  place-items: center;
-}
 
-.navbar__brand-logo {
-  width: 100%;
-  height: 100%;
-  display: block;
+.navbar-logo-orb {
   overflow: visible;
-  transform: scale(1.05);
-  transform-origin: center;
-  filter:
-    drop-shadow(0 0 4px rgba(0, 220, 255, .16))
-    drop-shadow(0 0 7px rgba(255, 28, 146, .10));
-  transition:
-    transform .28s ease,
-    filter .28s ease;
 }
 
-.navbar__brand:hover .navbar__brand-logo {
-  transform: scale(1.12);
-  filter:
-    drop-shadow(0 0 6px rgba(0, 220, 255, .24))
-    drop-shadow(0 0 11px rgba(255, 28, 146, .16));
+.navbar-logo-core {
+  position: relative;
+  z-index: 3;
+  width: 27px;
+  height: 27px;
+  display: block;
+  flex: 0 0 27px;
+  font-size: 0;
+  line-height: 0;
+  color: transparent;
+  text-shadow: none;
+  isolation: isolate;
+  transform: scale(1.02);
+  transition: transform 260ms ease, filter 260ms ease;
 }
 
-@media (max-width: 520px) {
-  .navbar__brand-mark--logo {
-    width: 25px;
-    height: 25px;
-    flex-basis: 25px;
+/* blue lower-left piece */
+.navbar-logo-core::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 1px;
+  width: 15px;
+  height: 17px;
+  z-index: 1;
+  background: linear-gradient(145deg, #3eeeff 0%, #27dfff 42%, #775cff 100%);
+  clip-path: polygon(0 100%, 43% 0, 67% 34%, 50% 62%, 75% 62%, 100% 100%);
+  filter:
+    drop-shadow(0 0 2px rgba(54, 231, 255, 0.72))
+    drop-shadow(0 0 5px rgba(76, 120, 255, 0.35));
+}
+
+/* yellow/pink central + right pieces */
+.navbar-logo-core::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 23px;
+  height: 25px;
+  z-index: 2;
+  background:
+    linear-gradient(145deg, transparent 0 18%, #fff03d 19% 31%, #ffc42f 32% 41%, #ff7b55 42% 49%, transparent 50%),
+    linear-gradient(145deg, transparent 0 43%, #ff237d 44% 72%, #ff39a0 73% 100%);
+  clip-path: polygon(
+    35% 0,
+    67% 45%,
+    54% 53%,
+    79% 96%,
+    51% 96%,
+    35% 67%,
+    21% 88%,
+    0 88%,
+    25% 48%,
+    16% 31%
+  );
+  filter:
+    drop-shadow(0 0 2px rgba(255, 244, 71, 0.58))
+    drop-shadow(0 0 5px rgba(255, 48, 150, 0.42));
+}
+
+.navbar-logo-orb::before {
+  pointer-events: none;
+}
+
+.navbar-logo-orb::after {
+  z-index: 5;
+}
+
+.navbar-logo:hover .navbar-logo-core {
+  transform: scale(1.10) translateY(-0.5px);
+  filter:
+    drop-shadow(0 0 3px rgba(43, 225, 255, 0.5))
+    drop-shadow(0 0 7px rgba(255, 48, 157, 0.28));
+}
+
+@media (max-width: 460px) {
+  .navbar-logo-core {
+    width: 24px;
+    height: 24px;
+    flex-basis: 24px;
   }
 }
