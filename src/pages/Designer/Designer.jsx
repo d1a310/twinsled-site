@@ -277,6 +277,178 @@ const iconLibrary = [
   { id: 'sun', label: 'Güneş', char: '☼' },
 ]
 
+const templates = [
+  {
+    id: 'love',
+    name: 'LOVE',
+    subtitle: 'Romantik',
+    lines: ['LOVE', 'IS HERE'],
+    colors: [4, 3],
+    fonts: [15, 32],
+    icon: 'heart',
+    placement: 'after',
+  },
+  {
+    id: 'coffee',
+    name: 'COFFEE',
+    subtitle: 'Kafe',
+    lines: ['COFFEE', 'FIRST'],
+    colors: [2, 0],
+    fonts: [17, 20],
+    icon: 'diamond',
+    placement: 'before',
+  },
+  {
+    id: 'barber',
+    name: 'BARBER',
+    subtitle: 'Berber',
+    lines: ['BARBER', 'SHOP'],
+    colors: [3, 0],
+    fonts: [17, 24],
+    icon: 'star',
+    placement: 'after',
+  },
+  {
+    id: 'welcome',
+    name: 'WELCOME',
+    subtitle: 'Giriş',
+    lines: ['WELCOME', 'HOME'],
+    colors: [7, 0],
+    fonts: [2, 25],
+    icon: 'spark',
+    placement: 'before',
+  },
+  {
+    id: 'game',
+    name: 'GAME ON',
+    subtitle: 'Gaming',
+    lines: ['GAME', 'ON'],
+    colors: [8, 6],
+    fonts: [25, 32],
+    icon: 'bolt',
+    placement: 'after',
+  },
+  {
+    id: 'marry',
+    name: 'MARRY ME',
+    subtitle: 'Etkinlik',
+    lines: ['MARRY', 'ME'],
+    colors: [4, 0],
+    fonts: [31, 2],
+    icon: 'heart',
+    placement: 'after',
+  },
+]
+
+function createWord(text = '', color = neonColors[4], font = fonts[2]) {
+  return {
+    id: `word-${Math.random().toString(36).slice(2, 10)}`,
+    text,
+    color,
+    font,
+    size: 100,
+    weight: 400,
+    italic: false,
+    letterSpacing: 0,
+    rotate: 0,
+    skew: 0,
+  }
+}
+
+function wordsFromText(text, previousWords = [], color, font) {
+  const tokens = text.match(/\S+/g) || []
+
+  return tokens.map((token, index) => {
+    const previous = previousWords[index]
+    return {
+      ...createWord(token, color, font),
+      ...(previous || {}),
+      id: previous?.id || `word-${Math.random().toString(36).slice(2, 10)}`,
+      text: token,
+      color: previous?.color || color,
+      font: previous?.font || font,
+    }
+  })
+}
+
+function createLine(text, color, font) {
+  return {
+    id: `line-${Math.random().toString(36).slice(2, 10)}`,
+    text,
+    color,
+    font,
+    words: wordsFromText(text, [], color, font),
+    align: 'center',
+    lineSpacing: 1,
+  }
+}
+
+function createInitialDesign() {
+  const lines = [
+    createLine('', neonColors[4], fonts[2]),
+  ]
+
+  return {
+    lines,
+    activeLine: 0,
+    activeWord: 0,
+    selectedEnvironment: environments.find((environment) => environment.id === 'dark-gray') || environments[0],
+    brightness: 100,
+    previewScale: 100,
+    customWidth: 120,
+    customHeight: 45,
+    quantity: 1,
+    background: backgrounds[0],
+    icon: 'none',
+    iconPlacement: 'after',
+    iconSize: 100,
+    iconColor: neonColors[4],
+    logo: '',
+    logoName: '',
+    logoSize: 100,
+    logoX: 80,
+    logoY: 18,
+    previewMode: 'mobile',
+    offsetX: 0,
+    offsetY: 0,
+  }
+}
+
+function clone(value) {
+  return JSON.parse(JSON.stringify(value))
+}
+
+function formatPrice(value) {
+  return new Intl.NumberFormat('tr-TR', {
+    style: 'currency',
+    currency: 'TRY',
+    maximumFractionDigits: 0,
+  }).format(Number(value) || 0)
+}
+
+function getActiveWord(design) {
+  return design.lines[design.activeLine]?.words?.[design.activeWord] || null
+}
+
+function getBaseWordSize(text, lineCount) {
+  const length = text.trim().length
+  let size = 62
+
+  if (length <= 4) size = 72
+  else if (length <= 7) size = 66
+  else if (length <= 10) size = 60
+  else if (length <= 14) size = 54
+  else if (length <= 20) size = 47
+  else if (length <= 28) size = 40
+  else if (length <= 38) size = 34
+  else size = 29
+
+  if (lineCount >= 3) size *= 0.86
+  if (lineCount >= 5) size *= 0.9
+
+  return Math.max(18, Math.round(size))
+}
+
 function Designer() {
   const { addToCart } = useCart()
   const fileInputRef = useRef(null)
@@ -293,6 +465,7 @@ function Designer() {
   const [savedDesigns, setSavedDesigns] = useState([])
   const [notice, setNotice] = useState('')
   const [fullscreen, setFullscreen] = useState(false)
+  const [activePanel, setActivePanel] = useState('design')
   const [showEnvironmentPanel, setShowEnvironmentPanel] = useState(false)
 
   useEffect(() => {
@@ -383,6 +556,7 @@ function Designer() {
 
       if (event.key === 'Escape') {
         setFullscreen(false)
+        setActivePanel('design')
       }
     }
 
@@ -560,6 +734,7 @@ function Designer() {
         iconColor: neonColors[template.colors[0] ?? 0],
       }
     })
+    setActivePanel('design')
     showNotice(`${template.name} şablonu uygulandı.`)
   }
 
@@ -626,6 +801,7 @@ function Designer() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next))
       setSavedDesigns(next)
       setSaveName('')
+      setActivePanel('saved')
       showNotice('Tasarım kaydedildi.')
     } catch {
       showNotice('Tasarım kaydedilemedi. Tarayıcı depolama alanı dolu olabilir.')
@@ -666,6 +842,7 @@ function Designer() {
     }
 
     commit(normalized)
+    setActivePanel('design')
     showNotice(`${entry.name} açıldı.`)
   }
 
