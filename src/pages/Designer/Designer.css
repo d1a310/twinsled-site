@@ -1186,3 +1186,69 @@
     height:min(39vh,260px) !important;
   }
 }
+/* =========================================================
+   TWINSLED — MOBILE GAP FIX
+   Preview ile METİN arasındaki gereksiz boşluğu kaldırır.
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+  /* Preview sabit kalıyor ama artık devasa alan rezerve etmiyor */
+  .designer-mobile-preview-spacer {
+    height: 300px !important;
+    min-height: 300px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Preview'ın kendisi kompakt */
+  .designer-preview-card {
+    margin: 0 !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height: 260px !important;
+    min-height: 260px !important;
+    max-height: 260px !important;
+    aspect-ratio: auto !important;
+  }
+
+  /* Preview altından editöre küçük, kontrollü geçiş */
+  .designer-mobile-text-editor {
+    margin-top: 10px !important;
+  }
+
+  /* METİN bölümünün üst boşluğunu azalt */
+  .designer-mobile-text-editor .control-section__title {
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+  }
+
+  /* Text alanı */
+  .designer-mobile-text-editor textarea {
+    min-height: 90px !important;
+    max-height: 120px !important;
+  }
+}
+
+
+/* Daha küçük telefonlar */
+@media (max-width: 520px) {
+
+  .designer-mobile-preview-spacer {
+    height: 285px !important;
+    min-height: 285px !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height: 245px !important;
+    min-height: 245px !important;
+    max-height: 245px !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top: 8px !important;
+  }
+}
