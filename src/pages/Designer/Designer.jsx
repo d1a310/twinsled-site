@@ -1311,6 +1311,7 @@ function Designer() {
 
         <section className="designer-workspace">
           <div className="designer-preview-card">
+            <div className="designer-preview-sticky">
             <div className="designer-preview-card__top">
               <div className="designer-preview-card__status">
                 <span className="status-dot" />
@@ -1358,6 +1359,7 @@ function Designer() {
                 <Ruler size={12} />
                 <span>{sizeLabel}</span>
               </div>
+            </div>
             </div>
 
             {renderTextEditor('designer-mobile-text-editor')}
