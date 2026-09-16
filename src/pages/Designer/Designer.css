@@ -2067,3 +2067,150 @@
     height:270px !important;
   }
 }
+
+/* =========================================================
+   TWINSLED — MOBILE LIVE PREVIEW / FINAL STABLE FIX
+   Goal:
+   - Live preview is ALWAYS visible while scrolling controls.
+   - The page itself stays centered and never shifts sideways.
+   - The normal controls keep their own document flow.
+   - The fixed preview has a reserved space in the preview card.
+   ========================================================= */
+@media (max-width:760px) {
+  .designer-page {
+    overflow-x:hidden !important;
+  }
+
+  .designer-workspace {
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    overflow:visible !important;
+  }
+
+  /* IMPORTANT: keep this card in normal document flow.
+     Do not use display:contents; it was the source of the layout jump. */
+  .designer-preview-card {
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 0 16px !important;
+    padding:0 !important;
+    overflow:visible !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    border:0 !important;
+  }
+
+  /* Reserve the exact height occupied by the fixed preview so the
+     text editor and all controls remain below it instead of underneath it. */
+  .designer-preview-card {
+    padding-top:344px !important;
+  }
+
+  .designer-preview-sticky {
+    position:fixed !important;
+    top:max(68px, env(safe-area-inset-top)) !important;
+    left:9px !important;
+    right:auto !important;
+    width:calc(100vw - 18px) !important;
+    max-width:none !important;
+    height:332px !important;
+    margin:0 !important;
+    padding:0 !important;
+    z-index:5000 !important;
+    display:block !important;
+    transform:none !important;
+    overflow:visible !important;
+    box-sizing:border-box !important;
+  }
+
+  .designer-preview-card__top {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    min-height:42px !important;
+    height:42px !important;
+    margin:0 !important;
+    box-sizing:border-box !important;
+    border-radius:14px 14px 0 0 !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    position:relative !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+    margin:0 !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    border-radius:0 0 16px 16px !important;
+  }
+
+  .designer-scene--mobile {
+    height:290px !important;
+    min-height:290px !important;
+  }
+
+  .designer-mobile-text-editor,
+  .designer-preview-card .environment-selector,
+  .designer-controls,
+  .designer-summary {
+    position:relative !important;
+    z-index:1 !important;
+    width:100% !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin:0 0 12px !important;
+  }
+}
+
+@media (max-width:520px) {
+  .designer-preview-card {
+    padding-top:322px !important;
+  }
+
+  .designer-preview-sticky {
+    top:max(64px, env(safe-area-inset-top)) !important;
+    width:calc(100vw - 18px) !important;
+    height:310px !important;
+  }
+
+  .designer-preview-card__top {
+    min-height:40px !important;
+    height:40px !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height:270px !important;
+    min-height:270px !important;
+  }
+}
+
+@media (max-width:760px) and (max-height:680px) {
+  .designer-preview-card {
+    padding-top:292px !important;
+  }
+
+  .designer-preview-sticky {
+    height:280px !important;
+  }
+
+  .designer-scene,
+  .designer-scene--mobile {
+    height:240px !important;
+    min-height:240px !important;
+  }
+}
