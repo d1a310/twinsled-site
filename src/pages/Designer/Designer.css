@@ -1738,3 +1738,36 @@
   }
 }
 
+
+/* =========================================================
+   TWINSLED — MOBILE PREVIEW FLOW FIX
+   Sabit büyütülmüş canlı önizlemenin kapladığı alanı normal
+   akışta rezerve eder; böylece METİN / ORTAM / TASARIM ŞABLONLAR
+   ve TASARIMLAR bölümleri önizlemenin altında kalır.
+   ========================================================= */
+@media (max-width:760px) {
+  .designer-preview-card {
+    padding-bottom:calc(min(35vh,250px) + 108px) !important;
+    box-sizing:border-box !important;
+  }
+
+  .designer-mobile-text-editor {
+    margin-top:0 !important;
+  }
+
+  .designer-preview-card .environment-selector {
+    margin-top:0 !important;
+  }
+}
+
+@media (max-width:520px) {
+  .designer-preview-card {
+    padding-bottom:calc(240px + 108px) !important;
+  }
+}
+
+@media (max-width:760px) and (max-height:680px) {
+  .designer-preview-card {
+    padding-bottom:calc(205px + 108px) !important;
+  }
+}
