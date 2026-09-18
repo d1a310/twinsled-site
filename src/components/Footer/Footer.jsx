@@ -180,7 +180,7 @@ function Footer() {
             <div className="footer-location">
               <MapPin size={17} />
               <div>
-                <strong>Esentepe</strong>
+                <strong>Osman Kavuncu</strong>
                 <span>Kayseri</span>
               </div>
             </div>

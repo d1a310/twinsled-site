@@ -489,7 +489,7 @@ function About() {
             </div>
 
             <p>
-              Esentepe ve Eski Sanayi olmak üzere iki farklı
+              Osman Kavuncu ve Eski Sanayi olmak üzere iki farklı
               konumla TWINSLED'i yerinde keşfedebilirsin.
             </p>
 
@@ -512,7 +512,7 @@ function About() {
 
                   <div className="location-photo__label">
                     <span>01</span>
-                    <small>ESENTEPE</small>
+                    <small>Osman Kavuncu</small>
                   </div>
                 </div>
 
@@ -522,22 +522,22 @@ function About() {
 
                 <div className="location-card__eyebrow">
                   <span>01 / LOCATION</span>
-                  <span>ESENTEPE</span>
+                  <span>Osman Kavuncu</span>
                 </div>
 
                 <h3>
-                  Esentepe
+                  Osman Kavuncu
                 </h3>
 
                 <p>
                   TWINSLED'in internet üzerindeki eski işletme
-                  kayıtlarında Esentepe bölgesinde yer alan
+                  kayıtlarında Osman Kavuncu bölgesinde yer alan
                   mağaza bilgileri bulunuyor.
                 </p>
 
                 <div className="location-link location-link--static">
                   <MapPin size={16} />
-                  Esentepe / Melikgazi / Kayseri
+                  Osman Kavuncu / Melikgazi / Kayseri
                 </div>
 
               </div>
@@ -597,7 +597,7 @@ function About() {
           <div className="about-location-note">
             <span className="about-location-note__dot" />
             <p>
-              Not: İnternette eski Esentepe adresi hâlâ bazı
+              Not: İnternette eski Osman Kavuncu adresi hâlâ bazı
               satış ve işletme kayıtlarında görünüyor. Bu nedenle
               eski sokak ve kapı numarasını güncel adres olarak
               göstermiyoruz.

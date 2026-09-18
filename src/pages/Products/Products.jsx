@@ -13,6 +13,7 @@ import {
   Palette,
 } from 'lucide-react'
 import products from '../../data/products'
+import { PRODUCT_CATEGORIES } from '../../data/PRODUCT_CATEGORIES'
 import './Product.css'
 
 const NEON_COLORS = [
@@ -33,10 +34,7 @@ function Products() {
   const [activeColor, setActiveColor] = useState(0)
   const [hoveredProduct, setHoveredProduct] = useState(null)
 
-  const categories = [
-    'Tümü',
-    ...Array.from(new Set(products.map((product) => product.category))),
-  ]
+  const categories = PRODUCT_CATEGORIES
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -239,8 +237,8 @@ function Products() {
             <div>
               <span className="products-section-kicker">01 / COLLECTION</span>
               <h2>
-                Neon tabelalar.
-                <span> Canlı, karakterli, sana ait.</span>
+                Sana Özel.
+                <span> Mekanına uygun ürünü hemen bul.</span>
               </h2>
             </div>
 
@@ -492,6 +490,7 @@ function Products() {
     </main>
   )
 }
+
 
 function ArrowDownIcon() {
   return (
